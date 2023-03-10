@@ -7,8 +7,10 @@ import '../../controllers/provider/login_provider.dart';
 
 class SignInButton extends StatelessWidget {
   final String screenFrom;
+  final GlobalKey<FormState> loginFormKey;
 
-  const SignInButton({super.key, required this.screenFrom});
+  const SignInButton(
+      {super.key, required this.screenFrom, required this.loginFormKey});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,20 @@ class SignInButton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20, left: 18, right: 18),
       child: InkWell(
         onTap: () {
-          Provider.of<LoginProvider>(context, listen: false).login();
-
-          screenFrom == 'checkout'
-              ? Navigator.pop(context)
-              : Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
+          if (loginFormKey.currentState!.validate()) {
+            Provider.of<LoginProvider>(context, listen: false).login(
+              context: context,
+              stopLoading: () {
+                Navigator.pop(context);
+              },
+              moveToDashboard: () {
+                screenFrom == 'checkout'
+                    ? Navigator.pop(context)
+                    : Navigator.pushReplacementNamed(
+                        context, Routes.dashboardRoute);
+              },
+            );
+          }
         },
         child: Container(
           decoration: BoxDecoration(

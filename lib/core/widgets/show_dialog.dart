@@ -6,15 +6,18 @@ showCustomDialog(BuildContext context, String text) {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          content: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  text,
-                  style: const TextStyle(color: Colors.black),
-                ),
-              )
-            ],
+          content: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    text,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                )
+              ],
+            ),
           ),
         );
       });

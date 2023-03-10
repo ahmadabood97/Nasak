@@ -19,12 +19,13 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       elevation: 0,
       backgroundColor: Colors.white,
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.black,
       unselectedLabelStyle: const TextStyle(color: Colors.grey),
-      showUnselectedLabels: true,
       currentIndex: widget.selectedIndex,
       onTap: (index) {
         widget._pageController.jumpToPage(index);

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/utils/constants.dart';
-import 'countries/controllers/provider/countries_provider.dart';
-import 'home/controllers/provider/home_provider.dart';
 import 'home/views/screens/home_screen.dart';
 import 'home/views/screens/shops/widgets/drawer.dart';
 import 'offers/screens/offers_screen.dart';
-import 'package:provider/provider.dart';
 import '../widgets/bottom_bar_container.dart';
 import 'favourites/screens/favourites_screen.dart';
 
@@ -18,13 +15,6 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   int selectedIndex = 0;
   static final PageController pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<CountriesProvider>(context, listen: false).getCountries();
-    Provider.of<HomeProvider>(context, listen: false).getHome();
-  }
 
   @override
   Widget build(BuildContext context) {

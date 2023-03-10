@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../auth/widgets/text_field_custom.dart';
+import '../../../../../../../../core/widgets/text_field_custom.dart';
 
 class AddAddressScreen extends StatelessWidget {
   const AddAddressScreen({super.key});
