@@ -3,14 +3,19 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../../../../core/widgets/loading_alert_dialog.dart';
+import '../../../../../../core/widgets/show_dialog.dart';
+import '../../../../../dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import '../../models/register_model.dart';
 import '../../models/register_response_model.dart';
 import '../repo/register_repo.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final RegisterRepo registerRepo;
+  CountriesProvider countriesProvider;
 
-  RegisterProvider({required this.registerRepo});
+  RegisterProvider(
+      {required this.registerRepo, required this.countriesProvider});
 
   RegisterResponseModel? _registerData;
   RegisterResponseModel? get registerData => _registerData;
@@ -20,34 +25,170 @@ class RegisterProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  TextEditingController get firstNameController => _firstNameController;
+  TextEditingController get lastNameController => _lastNameController;
+  TextEditingController get userNameController => _userNameController;
+  TextEditingController get passwordController => _passwordController;
+  TextEditingController get phoneController => _phoneController;
+
+  List<String> countryDropdownList = [];
+  List<String> citiesDropdownList = [];
+  List<String> reigonDropdownList = [];
+
+  int countrySelectedIndex = 0;
+  int citySelectedIndex = 0;
+  int reigonSelectedIndex = 0;
+
+  String countryId = '';
+  String cityId = '';
+  String reigonId = '';
+
+  String countrySelectedValue = '';
+  String citySelectedValue = '';
+  String reigonSelectedValue = '';
+  bool subscribeToNewsletter = false;
+
+  void setCountryCityReigonId() {
+    for (var element in countriesProvider.countries!.result!.countries!) {
+      if (element.name == countrySelectedValue) {
+        countryId = element.id!;
+      }
+    }
+    if (countriesProvider.countries!.result!.countries![countrySelectedIndex]
+        .cities!.isNotEmpty) {
+      for (var element in countriesProvider
+          .countries!.result!.countries![countrySelectedIndex].cities!) {
+        if (element.name == citySelectedValue) {
+          cityId = element.id!;
+        }
+      }
+      if (countriesProvider.countries!.result!.countries![countrySelectedIndex]
+          .cities![citySelectedIndex].regions!.isNotEmpty) {
+        for (var element in countriesProvider
+            .countries!
+            .result!
+            .countries![countrySelectedIndex]
+            .cities![citySelectedIndex]
+            .regions!) {
+          if (element.name == reigonSelectedValue) {
+            reigonId = element.id!;
+          }
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void setSubscribeToNewsletter() {
+    subscribeToNewsletter = !subscribeToNewsletter;
+    notifyListeners();
+  }
+
+  void clearCountryList() {
+    countryDropdownList = [];
+    countrySelectedValue = '';
+    countrySelectedIndex = 0;
+    notifyListeners();
+  }
+
+  void clearCitiesList() {
+    citiesDropdownList = [];
+    citySelectedValue = '';
+    citySelectedIndex = 0;
+    cityId = '';
+    notifyListeners();
+  }
+
+  void clearReigonList() {
+    reigonDropdownList = [];
+    reigonSelectedValue = '';
+    reigonSelectedIndex = 0;
+    reigonId = '';
+    notifyListeners();
+  }
+
+  void setCountrySelectedIndex(int index, String value) {
+    countrySelectedIndex = index;
+    countrySelectedValue = value;
+    notifyListeners();
+  }
+
+  void setCitySelectedIndex(int index, String value) {
+    citySelectedIndex = index;
+    citySelectedValue = value;
+    notifyListeners();
+  }
+
+  void setReigonSelectedIndex(int index, String value) {
+    reigonSelectedIndex = index;
+    reigonSelectedValue = value;
+    notifyListeners();
+  }
+
+  void addToCityDropdownList(String value) {
+    citiesDropdownList.add(value);
+    notifyListeners();
+  }
+
+  void addToReigonDropdownList(String value) {
+    reigonDropdownList.add(value);
+    notifyListeners();
+  }
+
   Future<void> register(
-      {bool firstRequest = false, RegisterModel? registerModel}) async {
+      {bool firstRequest = false,
+      RegisterModel? registerModel,
+      VoidCallback? moveToDashboard,
+      VoidCallback? stopLoading,
+      BuildContext? context}) async {
     getData = null;
-    _isLoading = true;
+    loading(context!);
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        log(countryId);
+        log(cityId);
+        log(reigonId);
+
         http.Response apiResponse = await registerRepo.register(RegisterModel(
-          firstName: "Ahmad",
-          lastName: "Abood",
-          password: "5555555",
-          cityGuid: "4995D82E-3203-49C0-A2D2-1DF436A2D747",
-          primaryPhoneNum: "2684933",
-          countryGuid: "51585ED2-1396-45A3-AE28-3D7DD2FACB05",
-          subscribeToNewsletter: true,
-          userName: "Ahmad1997",
+          firstName: firstNameController.text.trim(),
+          lastName: lastNameController.text.trim(),
+          password: passwordController.text.trim(),
+          cityGuid: cityId,
+          primaryPhoneNum: phoneController.text.trim(),
+          countryGuid: countryId,
+          regionGuid: reigonId,
+          subscribeToNewsletter: subscribeToNewsletter,
+          userName: userNameController.text.trim(),
         ));
         _isLoading = true;
         if (apiResponse.statusCode == 200) {
           log("Register Success");
+
           getData = true;
           _registerData =
               RegisterResponseModel.fromJson(json.decode(apiResponse.body));
           _isLoading = false;
+          _passwordController.clear();
+          _phoneController.clear();
+          _userNameController.clear();
+          _lastNameController.clear();
+          _firstNameController.clear();
+          moveToDashboard!();
+          registerRepo.saveTokenBySharedPref(_registerData!.authToken!);
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
+          stopLoading!();
+          // ignore: use_build_context_synchronously
+          showCustomDialog(context, "Phone or password is wrong...");
           notifyListeners();
           log("Register Failed");
         }
@@ -55,8 +196,14 @@ class RegisterProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
+      stopLoading!();
+      showCustomDialog(context, "Check your internet and try again...");
       notifyListeners();
       log("Register Failed");
     }
+  }
+
+  dynamic getToken() {
+    return registerRepo.getToken();
   }
 }

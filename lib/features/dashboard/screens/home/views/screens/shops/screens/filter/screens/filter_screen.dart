@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../../../../../../../core/utils/hex_colors.dart';
-import '../widgets/dropdown.dart';
+import '../../../../../../../../../../core/widgets/dropdown.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -14,8 +14,9 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool checkedValue = false;
   String? amount;
-  String dropdownvalue = 'Best match';
   bool isDelivery = false;
+
+  String dropdownvalue = 'Best match';
   final List<String> dropdownList = [
     'Best match',
     'Reviews',
@@ -78,10 +79,8 @@ class _FilterScreenState extends State<FilterScreen> {
                 fontSize: 15,
                 fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          dropDown(dropdownvalue, dropdownList),
+          dropDown('Select your target', 'Select your target', dropdownList, '',
+              context),
           const SizedBox(
             height: 30,
           ),

@@ -60,12 +60,14 @@ class _BanerListState extends State<BanerList> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: CachedNetworkImage(
-                            imageUrl: Provider.of<HomeProvider>(context,
-                                    listen: false)
-                                .home!
-                                .result!
-                                .mainBanners![id]
-                                .img!,
+                            imageUrl:
+                                //  Provider.of<HomeProvider>(context,
+                                //         listen: false)
+                                //     .home!
+                                //     .result!
+                                //     .mainBanners![id]
+                                //     .img!
+                                "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
                             height: 120,
                             fit: BoxFit.cover,
                           ),

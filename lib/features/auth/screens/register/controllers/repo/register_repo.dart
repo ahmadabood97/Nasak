@@ -35,4 +35,27 @@ class RegisterRepo {
 
     return response1;
   }
+
+  Future<void> saveTokenBySharedPref(String token) async {
+    try {
+      if (sharedPreferences.get('Token') != null) {
+        sharedPreferences.remove('Token');
+      }
+      await sharedPreferences.setString('Token', token);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  dynamic getToken() {
+    try {
+      if (sharedPreferences.get('Token') != null) {
+        return sharedPreferences.get('Token') as String;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

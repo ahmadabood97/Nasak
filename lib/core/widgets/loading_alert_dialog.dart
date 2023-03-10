@@ -11,7 +11,7 @@ loading(BuildContext context) {
             backgroundColor: Colors.white,
             content: Row(
               children: const [
-                CircularProgressIndicator(),
+                CircularProgressIndicator(color: Colors.orange),
                 SizedBox(width: 16),
                 Text(
                   "Please wait...",

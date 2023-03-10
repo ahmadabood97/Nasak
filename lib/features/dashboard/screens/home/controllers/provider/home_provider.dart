@@ -21,7 +21,8 @@ class HomeProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> getHome({bool firstRequest = false}) async {
+  Future<void> getHome(
+      {bool firstRequest = false, VoidCallback? moveTohome}) async {
     getData = null;
     _isLoading = true;
 
@@ -31,12 +32,11 @@ class HomeProvider extends ChangeNotifier {
         http.Response apiResponse = await homeRepo.getHome();
         _isLoading = true;
         if (apiResponse.statusCode == 200) {
-          // Map map = json.decode(apiResponse.body);
-          // log(map['topics'].toString());
           log("Get Home Success");
           getData = true;
           _home = HomeResponse.fromJson(json.decode(apiResponse.body));
           _isLoading = false;
+          moveTohome!();
           notifyListeners();
         } else {
           getData = null;

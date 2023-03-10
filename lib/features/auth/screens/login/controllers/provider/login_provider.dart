@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../../../core/widgets/loading_alert_dialog.dart';
+import '../../../../../../core/widgets/show_dialog.dart';
 import '../../models/login_response_model.dart';
 import '../repo/login_repo.dart';
 
@@ -21,24 +23,41 @@ class LoginProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> login({bool firstRequest = false}) async {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  TextEditingController get phoneController => _emailController;
+  TextEditingController get passwordController => _passwordController;
+
+  Future<void> login(
+      {bool firstRequest = false,
+      VoidCallback? moveToDashboard,
+      VoidCallback? stopLoading,
+      BuildContext? context}) async {
     getData = null;
-    _isLoading = true;
+
+    loading(context!);
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        http.Response apiResponse = await loginRepo.login();
-        _isLoading = true;
+        http.Response apiResponse = await loginRepo.login(
+            phoneController.text, passwordController.text);
         if (apiResponse.statusCode == 200) {
           log("Login Success");
           getData = true;
           _loginData =
               LoginResponseModel.fromJson(json.decode(apiResponse.body));
           _isLoading = false;
+          _passwordController.clear();
+          moveToDashboard!();
+          loginRepo.saveTokenBySharedPref(_loginData!.authToken!);
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
+          stopLoading!();
+          // ignore: use_build_context_synchronously
+          showCustomDialog(context, "Phone or password is wrong...");
           notifyListeners();
           log("Login Failed");
         }
@@ -46,8 +65,14 @@ class LoginProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
+      stopLoading!();
+      showCustomDialog(context, "Check your internet and try again...");
       notifyListeners();
       log("Login Failed");
     }
+  }
+
+  dynamic getToken() {
+    return loginRepo.getToken();
   }
 }

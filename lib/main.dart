@@ -8,9 +8,10 @@ import 'core/utils/connect.dart';
 import 'core/utils/di_container.dart' as di;
 import 'features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'features/auth/screens/register/controllers/provider/register_provider.dart';
+import 'features/auth/screens/register/controllers/repo/register_repo.dart';
 import 'features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import 'features/dashboard/screens/home/controllers/provider/home_provider.dart';
-import 'features/onboarding/screens/onboarding_screen.dart';
+import 'features/splash/views/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,10 +31,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
+        ChangeNotifierProxyProvider<CountriesProvider, RegisterProvider>(
+            create: (context) => RegisterProvider(
+                  registerRepo: di.sl<RegisterRepo>(),
+                  countriesProvider:
+                      Provider.of<CountriesProvider>(context, listen: false),
+                ),
+            update: (context, value, previous) => RegisterProvider(
+                registerRepo: di.sl<RegisterRepo>(),
+                countriesProvider:
+                    Provider.of<CountriesProvider>(context, listen: false))),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnBoardingScreen(),
+        home: SplashScreen(),
         onGenerateRoute: AppRoutes.onGenerateRoute,
       ),
     );
