@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/config/routes/app_routes.dart';
+import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../widgets/address_card_view.dart';
 
-class AddressScreen extends StatelessWidget {
+class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
 
+  @override
+  State<AddressScreen> createState() => _AddressScreenState();
+}
+
+class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,27 +44,29 @@ class AddressScreen extends StatelessWidget {
             )
           ],
         ),
-        body:
-            //  screenEmpty(Icons.favorite, "No favorites yet",
-            //     "You have not placed any favorites yet."))
+        body: ListView(
+          children: [
             Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-          ),
-          child: ListView(
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: ListView.separated(
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 10),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 7,
-                itemBuilder: (context, index) => addressCardView(context),
+                itemCount: Provider.of<AddressProvider>(context, listen: true)
+                            .addressList !=
+                        null
+                    ? Provider.of<AddressProvider>(context, listen: true)
+                        .addressList!
+                        .length
+                    : 0,
+                itemBuilder: (context, index) => addressCardView(
+                    context,
+                    Provider.of<AddressProvider>(context, listen: false)
+                        .addressList![index]),
               ),
-            ],
-          ),
+            ),
+          ],
         ));
   }
 }

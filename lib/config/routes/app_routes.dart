@@ -4,10 +4,6 @@ import '../../features/auth/screens/login/views/screens/signin_screen.dart';
 import '../../features/auth/screens/register/views/screens/signup_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/add_address/screens/add_address_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/address_screen.dart';
-import '../../features/dashboard/screens/countries/models/countries_model.dart';
-import '../../features/dashboard/screens/countries/views/screens/citites/models/cities_model.dart';
-import '../../features/dashboard/screens/countries/views/screens/citites/views/screens/cities_screen.dart';
-import '../../features/dashboard/screens/countries/views/screens/citites/views/screens/regions/views/screens/regions_screen.dart';
 import '../../features/dashboard/screens/countries/views/screens/countries_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/dashboard/screens/favourites/screens/favourites_screen.dart';
@@ -60,17 +56,8 @@ class AppRoutes {
         );
       case Routes.countriesRoute:
         return MaterialPageRoute(
-          builder: (context) => const CountriesScreen(),
-        );
-      case Routes.citiesRoute:
-        return MaterialPageRoute(
           builder: (context) =>
-              CitiesScreen(country: settings.arguments as Countries),
-        );
-      case Routes.regionsRoute:
-        return MaterialPageRoute(
-          builder: (context) =>
-              RegionsScreen(city: settings.arguments as Cities),
+              CountriesScreen(screen: settings.arguments as String),
         );
       case Routes.shopRoute:
         return MaterialPageRoute(

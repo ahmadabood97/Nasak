@@ -32,36 +32,52 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       },
       items: const [
         BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.home,
             color: Colors.orange,
           ),
-          icon: Icon(Icons.home_outlined),
+          icon: Icon(
+            Icons.home_outlined,
+            color: Color.fromARGB(255, 24, 15, 77),
+          ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.local_offer,
             color: Colors.orange,
           ),
-          icon: Icon(Icons.local_offer_outlined),
+          icon: Icon(
+            Icons.local_offer_outlined,
+            color: Color.fromARGB(255, 24, 15, 77),
+          ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.favorite,
             color: Colors.orange,
           ),
-          icon: Icon(Icons.favorite_outline),
+          icon: Icon(
+            Icons.favorite_outline,
+            color: Color.fromARGB(255, 24, 15, 77),
+          ),
         ),
         BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.settings,
             color: Colors.orange,
           ),
-          icon: Icon(Icons.settings_outlined),
+          icon: Icon(
+            Icons.settings_outlined,
+            color: Color.fromARGB(255, 24, 15, 77),
+          ),
         ),
       ],
     );

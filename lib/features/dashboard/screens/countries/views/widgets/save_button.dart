@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:nasak/config/routes/app_routes.dart';
+import 'package:nasak/features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
+import 'package:provider/provider.dart';
+import '../../../../../../core/utils/hex_colors.dart';
+
+class SaveButton extends StatelessWidget {
+  final GlobalKey<FormState> countryFormKey;
+  final String screen;
+
+  const SaveButton(
+      {super.key, required this.countryFormKey, required this.screen});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 18, right: 18),
+      child: Consumer<CountriesProvider>(builder: (context, value, child) {
+        return InkWell(
+          onTap: () async {
+            if (countryFormKey.currentState!.validate()) {
+              Provider.of<CountriesProvider>(context, listen: false)
+                  .saveLocation(
+                      Provider.of<CountriesProvider>(context, listen: false)
+                          .locationSelectedValue);
+              Provider.of<CountriesProvider>(context, listen: false)
+                  .saveCountry(
+                      Provider.of<CountriesProvider>(context, listen: false)
+                          .countriesValue);
+
+              if (screen == "SplashScreen") {
+                Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
+              } else if (screen == "HomeScreen") {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              }
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: HexColor('3359ba'),
+                borderRadius: const BorderRadius.all(Radius.circular(3))),
+            height: 50,
+            width: 200,
+            child: const Center(
+              child: Text(
+                "Save",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}

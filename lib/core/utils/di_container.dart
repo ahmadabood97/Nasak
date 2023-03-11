@@ -5,6 +5,8 @@ import '../../features/auth/screens/login/controllers/provider/login_provider.da
 import '../../features/auth/screens/login/controllers/repo/login_repo.dart';
 import '../../features/auth/screens/register/controllers/provider/register_provider.dart';
 import '../../features/auth/screens/register/controllers/repo/register_repo.dart';
+import '../../features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
+import '../../features/dashboard/screens/addresses/controllers/repo/address_repo.dart';
 import '../../features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import '../../features/dashboard/screens/countries/controllers/repo/countries_repo.dart';
 import '../../features/dashboard/screens/home/controllers/provider/home_provider.dart';
@@ -18,11 +20,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => HomeRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => LoginRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => RegisterRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => AddressRepo(sharedPreferences: sl()));
 
   // Provider
   sl.registerFactory(() => CountriesProvider(countriesRepo: sl()));
   sl.registerFactory(() => HomeProvider(homeRepo: sl()));
   sl.registerFactory(() => LoginProvider(loginRepo: sl()));
+  sl.registerFactory(() => AddressProvider(addressRepo: sl()));
+
   sl.registerFactory(() => RegisterProvider(
         registerRepo: sl(),
         countriesProvider: sl(),
