@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nasak/features/dashboard/screens/home/models/home_model.dart';
 
 import '../../models/countries_model.dart';
 import '../repo/countries_repo.dart';
@@ -15,6 +16,13 @@ class CountriesProvider extends ChangeNotifier {
 
   CountriesResponse? _countries;
   CountriesResponse? get countries => _countries;
+
+  List<String> countryDropdownList = [];
+
+  List<String> locationDropdownList = [];
+
+  Countries countriesValue = Countries();
+  DeliveryLocations locationSelectedValue = DeliveryLocations();
 
   bool? getData;
 
@@ -54,11 +62,40 @@ class CountriesProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> saveLocation(Countries countries) async {
-    countriesRepo.saveLocationBySharedPref(countries);
+  void setCountrySelected(Countries country) {
+    countriesValue = country;
+    notifyListeners();
   }
 
-  dynamic getLocationData() async {
-    countriesRepo.getCountries();
+  void setLocationsSelectedValue(DeliveryLocations locationsValue) {
+    locationSelectedValue = locationsValue;
+    notifyListeners();
+  }
+
+  Future<void> saveLocation(DeliveryLocations location) async {
+    countriesRepo.saveLocationBySharedPref(location);
+  }
+
+  Future<void> saveCountry(Countries country) async {
+    countriesRepo.saveCountryBySharedPref(country);
+  }
+
+  Future<dynamic> getLocationData() async {
+    if (await countriesRepo.getLocationData() != null) {
+      DeliveryLocations deliveryLocations =
+          await countriesRepo.getLocationData();
+      locationSelectedValue = deliveryLocations;
+      notifyListeners();
+    }
+    return countriesRepo.getLocationData();
+  }
+
+  Future<dynamic> getCountryData() async {
+    if (await countriesRepo.getCountryData() != null) {
+      Countries country = await countriesRepo.getCountryData();
+      countriesValue = country;
+      notifyListeners();
+    }
+    return countriesRepo.getCountryData();
   }
 }

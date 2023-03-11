@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../../../../core/utils/hex_colors.dart';
+import '../../../../../addresses/controllers/provider/address_provider.dart';
 import 'custom_button.dart';
 
 class BodyDrawer extends StatelessWidget {
@@ -98,8 +100,16 @@ class BodyDrawer extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.1),
                 ),
                 InkWell(
-                  onTap: () =>
-                      Navigator.pushNamed(context, Routes.addressesRoute),
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.addressesRoute);
+                    Provider.of<AddressProvider>(context, listen: false)
+                        .getAddress(
+                      context: context,
+                      stopLoading: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
                   child: const ListTile(
                     leading: Icon(
                       Icons.location_on,
@@ -156,7 +166,8 @@ class BodyDrawer extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.countriesRoute);
+                    Navigator.pushNamed(context, Routes.countriesRoute,
+                        arguments: "HomeScreen");
                   },
                   child: ListTile(
                     leading: const Icon(

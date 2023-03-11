@@ -79,8 +79,8 @@ class _FilterScreenState extends State<FilterScreen> {
                 fontSize: 15,
                 fontWeight: FontWeight.bold),
           ),
-          dropDown('Select your target', 'Select your target', dropdownList, '',
-              context),
+          dropDown('Select your target', '', dropdownList, '', context,
+              "FilterScreen"),
           const SizedBox(
             height: 30,
           ),

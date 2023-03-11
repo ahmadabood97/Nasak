@@ -47,7 +47,7 @@ class RegisterRepo {
     }
   }
 
-  dynamic getToken() {
+  dynamic getToken() async {
     try {
       if (sharedPreferences.get('Token') != null) {
         return sharedPreferences.get('Token') as String;

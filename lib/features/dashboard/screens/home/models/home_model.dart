@@ -372,4 +372,10 @@ class DeliveryLocations {
     deliveryRegionName = json['deliveryRegionName'];
     id = json['id'];
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['deliveryRegionName'] = deliveryRegionName;
+    data['id'] = id;
+    return data;
+  }
 }

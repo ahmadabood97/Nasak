@@ -17,11 +17,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    Provider.of<CountriesProvider>(context, listen: false).getCountryData();
+    Provider.of<CountriesProvider>(context, listen: false).getLocationData();
     Provider.of<CountriesProvider>(context, listen: false).getCountries();
     Provider.of<HomeProvider>(context, listen: false).getHome(moveTohome: () {
-      Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
+      if (Provider.of<CountriesProvider>(context, listen: false)
+                  .countriesValue
+                  .id ==
+              null ||
+          Provider.of<CountriesProvider>(context, listen: false)
+                  .locationSelectedValue
+                  .id ==
+              null) {
+        Navigator.pushReplacementNamed(context, Routes.countriesRoute,
+            arguments: "SplashScreen");
+      } else {
+        Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
+      }
     });
-
     super.initState();
   }
 
