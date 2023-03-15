@@ -16,4 +16,17 @@ class HomeRepo {
 
     return response1;
   }
+
+  Future<http.Response> getAppServices(
+      String serviceId, String locationId) async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${EndPoints.baseUrl}AppService/GetAppServiceVM?AppService_Id=$serviceId&Location_Id=$locationId&Page_Id=0&Rows_Count=10'));
+
+    http.StreamedResponse response = await request.send();
+    http.Response response1 = await http.Response.fromStream(response);
+
+    return response1;
+  }
 }

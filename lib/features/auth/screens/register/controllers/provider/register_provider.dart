@@ -168,12 +168,12 @@ class RegisterProvider extends ChangeNotifier {
           userName: userNameController.text.trim(),
         ));
         _isLoading = true;
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Register Success");
 
           getData = true;
-          _registerData =
-              RegisterResponseModel.fromJson(json.decode(apiResponse.body));
+          _registerData = RegisterResponseModel.fromJson(
+              json.decode(apiResponse.body)['result']);
           _isLoading = false;
           _passwordController.clear();
           _phoneController.clear();
@@ -181,14 +181,16 @@ class RegisterProvider extends ChangeNotifier {
           _lastNameController.clear();
           _firstNameController.clear();
           moveToDashboard!();
-          registerRepo.saveTokenBySharedPref(_registerData!.authToken!);
+          registerRepo.saveUserDataBySharedPref(_registerData!);
+          log("Save token is :${_registerData!.authToken}");
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
           stopLoading!();
           // ignore: use_build_context_synchronously
-          showCustomDialog(context, "Phone or password is wrong...");
+          showCustomDialog(
+              context, json.decode(apiResponse.body)['errorMessage']);
           notifyListeners();
           log("Register Failed");
         }
@@ -204,6 +206,6 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   dynamic getToken() {
-    return registerRepo.getToken();
+    return registerRepo.getUserData();
   }
 }

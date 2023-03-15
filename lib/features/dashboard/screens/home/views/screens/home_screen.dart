@@ -38,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
           : ListView(
-              children: [
-                const BanerList(),
-                servicesSection(context),
+              children: const [
+                BanerList(),
+                ServicesSection(),
               ],
             ),
     );

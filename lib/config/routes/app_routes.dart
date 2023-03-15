@@ -61,7 +61,8 @@ class AppRoutes {
         );
       case Routes.shopRoute:
         return MaterialPageRoute(
-          builder: (context) => const ShopsScreen(),
+          builder: (context) =>
+              ShopsScreen(deliveryLocation: settings.arguments as String),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(

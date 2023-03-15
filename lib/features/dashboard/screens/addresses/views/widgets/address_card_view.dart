@@ -30,7 +30,7 @@ Widget addressCardView(BuildContext context, Addersses address) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    address.addressName!,
+                    "Name: ${address.addressName}",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 14),
                   ),
@@ -39,7 +39,7 @@ Widget addressCardView(BuildContext context, Addersses address) {
                   ),
                   Text(
                     maxLines: 1,
-                    address.userAddress!,
+                    "Address: ${address.userAddress}",
                     style: TextStyle(
                         overflow: TextOverflow.ellipsis,
                         color: Colors.black.withOpacity(0.5),
@@ -51,7 +51,7 @@ Widget addressCardView(BuildContext context, Addersses address) {
                   ),
                   Text(
                     maxLines: 1,
-                    address.addressExtraDesc!,
+                    "Extra Description: ${address.addressExtraDesc}",
                     style: TextStyle(
                         overflow: TextOverflow.ellipsis,
                         color: Colors.black.withOpacity(0.5),
@@ -62,8 +62,8 @@ Widget addressCardView(BuildContext context, Addersses address) {
                     height: 10,
                   ),
                   Text(
-                    maxLines: 1,
-                    address.phonenumber!,
+                    maxLines: 3,
+                    "Build Name: ${address.buildName} / Entrance Num: ${address.entranceNum} / Floor Num: ${address.floorNum} ",
                     style: TextStyle(
                         overflow: TextOverflow.ellipsis,
                         color: Colors.black.withOpacity(0.5),

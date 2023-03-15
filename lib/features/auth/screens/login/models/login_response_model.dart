@@ -40,4 +40,21 @@ class LoginResponseModel {
     principal = json['principal'];
     authToken = json['authToken'];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['userName'] = userName;
+    data['password'] = password;
+    data['primaryPhoneNum'] = primaryPhoneNum;
+    data['secondPhoneNum'] = secondPhoneNum;
+    data['cus_countryent'] = cusCountryent;
+    data['cus_cityent'] = cusCityent;
+    data['cus_regionent'] = cusRegionent;
+    data['principal'] = principal;
+    data['authToken'] = authToken;
+    return data;
+  }
 }
