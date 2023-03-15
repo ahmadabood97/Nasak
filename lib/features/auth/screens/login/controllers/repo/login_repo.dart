@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../core/api/end_points.dart';
+import '../../models/login_response_model.dart';
 
 class LoginRepo {
   final SharedPreferences sharedPreferences;
@@ -29,21 +30,24 @@ class LoginRepo {
     return response1;
   }
 
-  Future<void> saveTokenBySharedPref(String token) async {
+  Future<void> saveUserDataBySharedPref(LoginResponseModel userData) async {
     try {
-      if (sharedPreferences.get('Token') != null) {
-        sharedPreferences.remove('Token');
+      if (sharedPreferences.get('UserData') != null) {
+        sharedPreferences.remove('UserData');
       }
-      await sharedPreferences.setString('Token', token);
+      await sharedPreferences.setString(
+          'UserData', jsonEncode(userData.toJson()));
     } catch (e) {
       rethrow;
     }
   }
 
-  dynamic getToken() {
+  dynamic getUserData() async {
     try {
-      if (sharedPreferences.get('Token') != null) {
-        return sharedPreferences.get('Token') as String;
+      if (sharedPreferences.get('UserData') != null) {
+        Map<String, dynamic> map =
+            await jsonDecode(sharedPreferences.get('UserData') as String);
+        return LoginResponseModel.fromJson(map);
       } else {
         return null;
       }

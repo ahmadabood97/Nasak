@@ -67,7 +67,7 @@ class _BanerListState extends State<BanerList> {
                                 //     .result!
                                 //     .mainBanners![id]
                                 //     .img!
-                                "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
+                                "https://static.vecteezy.com/system/resources/previews/003/692/287/original/big-sale-discount-promotion-banner-template-with-blank-product-podium-scene-graphic-free-vector.jpg",
                             height: 120,
                             fit: BoxFit.cover,
                           ),

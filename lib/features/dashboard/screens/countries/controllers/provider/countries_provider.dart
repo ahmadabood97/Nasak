@@ -80,7 +80,7 @@ class CountriesProvider extends ChangeNotifier {
     countriesRepo.saveCountryBySharedPref(country);
   }
 
-  Future<dynamic> getLocationData() async {
+  dynamic getLocationData() async {
     if (await countriesRepo.getLocationData() != null) {
       DeliveryLocations deliveryLocations =
           await countriesRepo.getLocationData();
@@ -90,7 +90,7 @@ class CountriesProvider extends ChangeNotifier {
     return countriesRepo.getLocationData();
   }
 
-  Future<dynamic> getCountryData() async {
+  dynamic getCountryData() async {
     if (await countriesRepo.getCountryData() != null) {
       Countries country = await countriesRepo.getCountryData();
       countriesValue = country;

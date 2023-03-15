@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../core/utils/constants.dart';
+import '../../../../models/app_services_model.dart';
 import 'icon_with_text.dart';
 
-Widget shopItemCard(int index, BuildContext context) => Padding(
+Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
+    Padding(
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, Routes.shopDetailsRoute),
@@ -14,7 +16,7 @@ Widget shopItemCard(int index, BuildContext context) => Padding(
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: CachedNetworkImage(
-                imageUrl:
+                imageUrl: serviceProviders.serviceProvBackImg ??
                     'https://assets.bonappetit.com/photos/57aceacc1b3340441497532d/master/pass/double-rl-ranch-burger.jpg',
                 height: Constants.getHeight(context) * 0.25,
                 width: double.infinity,
@@ -27,9 +29,9 @@ Widget shopItemCard(int index, BuildContext context) => Padding(
                 left: 0,
                 right: 0,
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(
+                      image: NetworkImage(serviceProviders.serviceProvBackImg ??
                           'https://i.pinimg.com/736x/33/b8/69/33b869f90619e81763dbf1fccc896d8d--lion-logo-modern-logo.jpg'),
                       fit: BoxFit.contain,
                     ),
@@ -55,13 +57,13 @@ Widget shopItemCard(int index, BuildContext context) => Padding(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Expanded(
+                          Expanded(
                             flex: 2,
                             child: Text(
-                              "Konig Grill & Burger Haus",
+                              serviceProviders.name.toString(),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -78,9 +80,9 @@ Widget shopItemCard(int index, BuildContext context) => Padding(
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                const Text(
-                                  "4.3",
-                                  style: TextStyle(
+                                Text(
+                                  serviceProviders.approvedRatingSum.toString(),
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.orange,
@@ -90,7 +92,7 @@ Widget shopItemCard(int index, BuildContext context) => Padding(
                                   width: 5,
                                 ),
                                 Text(
-                                  "(15)",
+                                  "(${serviceProviders.approvedTotalReviews.toString()})",
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,

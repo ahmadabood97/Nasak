@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/auth/screens/login/models/login_response_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../../../../core/utils/hex_colors.dart';
+import '../../../../../../../../core/widgets/show_dialog.dart';
+import '../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../../../addresses/controllers/provider/address_provider.dart';
 import 'custom_button.dart';
 
-class BodyDrawer extends StatelessWidget {
+class BodyDrawer extends StatefulWidget {
   const BodyDrawer({super.key});
 
+  @override
+  State<BodyDrawer> createState() => _BodyDrawerState();
+}
+
+class _BodyDrawerState extends State<BodyDrawer> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -100,15 +108,29 @@ class BodyDrawer extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.1),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.addressesRoute);
-                    Provider.of<AddressProvider>(context, listen: false)
-                        .getAddress(
-                      context: context,
-                      stopLoading: () {
-                        Navigator.pop(context);
-                      },
-                    );
+                  onTap: () async {
+                    if (!mounted) return;
+
+                    if (await Provider.of<LoginProvider>(context, listen: false)
+                            .getUserData() !=
+                        null) {
+                      LoginResponseModel userData =
+                          await Provider.of<LoginProvider>(context,
+                                  listen: false)
+                              .getUserData();
+                      if (!mounted) return;
+                      Navigator.pushNamed(context, Routes.addressesRoute);
+                      Provider.of<AddressProvider>(context, listen: false)
+                          .getAddress(
+                        context: context,
+                        token: userData.authToken,
+                        stopLoading: () {
+                          Navigator.pop(context);
+                        },
+                      );
+                    } else {
+                      showCustomDialog(context, 'Please Login...');
+                    }
                   },
                   child: const ListTile(
                     leading: Icon(

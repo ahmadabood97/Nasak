@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../config/routes/app_routes.dart';
 
 class SelectAddress extends StatelessWidget {
-  const SelectAddress({super.key});
+  final String deliveryLocation;
+  const SelectAddress({super.key, required this.deliveryLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +22,12 @@ class SelectAddress extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: const Icon(Icons.arrow_back))),
-          const Expanded(
+          Expanded(
             flex: 6,
             child: Center(
-              child: Text("Untermainanlage 7, 60329 Fr",
-                  style: TextStyle(fontSize: 15),
+              child: Text(deliveryLocation,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1),
             ),

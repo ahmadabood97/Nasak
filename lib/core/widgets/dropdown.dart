@@ -44,7 +44,7 @@ Widget dropDown(String hint, String value, List<String> items, String title,
           );
         }).toList(),
         onChanged: (Object? value) {
-          if (screen == "SignUpScreen") {
+          if (screen == "SignUpScreen" || screen == "AddAddressScreen") {
             if (title == "Country") {
               Provider.of<RegisterProvider>(context, listen: false)
                   .clearCitiesList();

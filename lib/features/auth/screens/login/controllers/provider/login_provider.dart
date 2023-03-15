@@ -42,22 +42,25 @@ class LoginProvider extends ChangeNotifier {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse = await loginRepo.login(
             phoneController.text, passwordController.text);
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Login Success");
           getData = true;
-          _loginData =
-              LoginResponseModel.fromJson(json.decode(apiResponse.body));
+          _loginData = LoginResponseModel.fromJson(
+              json.decode(apiResponse.body)['result']);
           _isLoading = false;
           _passwordController.clear();
           moveToDashboard!();
-          loginRepo.saveTokenBySharedPref(_loginData!.authToken!);
+
+          log("Save token is :${_loginData!.authToken}");
+          loginRepo.saveUserDataBySharedPref(_loginData!);
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
           stopLoading!();
           // ignore: use_build_context_synchronously
-          showCustomDialog(context, "Phone or password is wrong...");
+          showCustomDialog(
+              context, json.decode(apiResponse.body)['errorMessage']);
           notifyListeners();
           log("Login Failed");
         }
@@ -72,7 +75,7 @@ class LoginProvider extends ChangeNotifier {
     }
   }
 
-  dynamic getToken() {
-    return loginRepo.getToken();
+  dynamic getUserData() {
+    return loginRepo.getUserData();
   }
 }

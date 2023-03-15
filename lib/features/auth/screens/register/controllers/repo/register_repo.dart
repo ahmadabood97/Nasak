@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:nasak/features/auth/screens/register/models/register_response_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../core/api/end_points.dart';
@@ -36,21 +37,24 @@ class RegisterRepo {
     return response1;
   }
 
-  Future<void> saveTokenBySharedPref(String token) async {
+  Future<void> saveUserDataBySharedPref(RegisterResponseModel userData) async {
     try {
-      if (sharedPreferences.get('Token') != null) {
-        sharedPreferences.remove('Token');
+      if (sharedPreferences.get('UserData') != null) {
+        sharedPreferences.remove('UserData');
       }
-      await sharedPreferences.setString('Token', token);
+      await sharedPreferences.setString(
+          'UserData', jsonEncode(userData.toJson()));
     } catch (e) {
       rethrow;
     }
   }
 
-  dynamic getToken() async {
+  dynamic getUserData() async {
     try {
-      if (sharedPreferences.get('Token') != null) {
-        return sharedPreferences.get('Token') as String;
+      if (sharedPreferences.get('UserData') != null) {
+        Map<String, dynamic> map =
+            await jsonDecode(sharedPreferences.get('UserData') as String);
+        return RegisterResponseModel.fromJson(map);
       } else {
         return null;
       }
