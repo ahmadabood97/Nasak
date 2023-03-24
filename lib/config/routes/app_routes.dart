@@ -10,6 +10,7 @@ import '../../features/dashboard/screens/countries/views/screens/countries_scree
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/dashboard/screens/favourites/screens/favourites_screen.dart';
 import '../../features/dashboard/screens/home/models/app_services_model.dart';
+import '../../features/dashboard/screens/home/views/screens/categories/views/screens/category_products/views/screens/category_product_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/filter/screens/filter_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/search/screens/search_screen.dart';
@@ -49,6 +50,7 @@ class Routes {
   static const String countriesRoute = '/countries';
   static const String citiesRoute = '/cities';
   static const String regionsRoute = '/regions';
+  static const String categoryProductRoute = '/categoryProduct';
 }
 
 class AppRoutes {
@@ -144,6 +146,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) =>
               CategoriesScreen(params: settings.arguments as Params),
+        );
+      case Routes.categoryProductRoute:
+        return MaterialPageRoute(
+          builder: (context) => const CategoryProductScreen(),
         );
 
       default:

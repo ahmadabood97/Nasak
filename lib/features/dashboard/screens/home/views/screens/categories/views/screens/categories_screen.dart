@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../../../../../core/utils/constants.dart';
 import '../../../../../controllers/provider/home_provider.dart';
 import '../../../shops/widgets/services_section.dart';
+import '../widgets/category_card_view.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final Params params;
@@ -60,43 +60,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               primary: false,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () async {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(3)),
-                        border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Image.asset(
-                                ImageAssets.resturantIcon,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              Provider.of<HomeProvider>(context, listen: false)
-                                  .categoriesList[index]
-                                  .name!,
-                              style: const TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return categoryCardView(context, index);
               },
             ),
     );
