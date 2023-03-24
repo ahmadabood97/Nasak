@@ -12,6 +12,7 @@ import 'features/auth/screens/register/controllers/repo/register_repo.dart';
 import 'features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
 import 'features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import 'features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'features/dashboard/screens/home/views/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'features/splash/views/screens/splash_screen.dart';
 
 void main() async {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<AddressProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<ShopProvider>()),
         ChangeNotifierProxyProvider<CountriesProvider, RegisterProvider>(
             create: (context) => RegisterProvider(
                   registerRepo: di.sl<RegisterRepo>(),

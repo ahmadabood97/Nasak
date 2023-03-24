@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/categories/views/screens/categories_screen.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
 
 import '../../features/auth/screens/login/views/screens/signin_screen.dart';
 import '../../features/auth/screens/register/views/screens/signup_screen.dart';
@@ -7,14 +9,15 @@ import '../../features/dashboard/screens/addresses/views/screens/address_screen.
 import '../../features/dashboard/screens/countries/views/screens/countries_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/dashboard/screens/favourites/screens/favourites_screen.dart';
+import '../../features/dashboard/screens/home/models/app_services_model.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/filter/screens/filter_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/search/screens/search_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/screens/about/screens/about_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/screens/basket/screens/basket_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/screens/checkout/screens/add_voucher_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/screens/checkout/screens/checkout_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/screens/shop_details_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/about/screens/about_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/basket/screens/basket_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/checkout/screens/add_voucher_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/checkout/screens/checkout_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/shop_details_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/shops_screen.dart';
 import '../../features/dashboard/screens/inbox/inbox_screen.dart';
 import '../../features/dashboard/screens/offers/screens/offers_screen.dart';
@@ -42,6 +45,7 @@ class Routes {
   static const String addVoucherRoute = '/addVoucher';
   static const String homeRoute = '/home';
   static const String shopRoute = '/shop';
+  static const String categoriesRoute = '/categories';
   static const String countriesRoute = '/countries';
   static const String citiesRoute = '/cities';
   static const String regionsRoute = '/regions';
@@ -62,7 +66,7 @@ class AppRoutes {
       case Routes.shopRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              ShopsScreen(deliveryLocation: settings.arguments as String),
+              ShopsScreen(params: settings.arguments as Params),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(
@@ -129,11 +133,17 @@ class AppRoutes {
         );
       case Routes.shopDetailsRoute:
         return MaterialPageRoute(
-          builder: (context) => const ShopDetailsScreen(),
+          builder: (context) => ShopDetailsScreen(
+              serviceProviders: settings.arguments as ServiceProviders),
         );
       case Routes.basketRoute:
         return MaterialPageRoute(
           builder: (context) => const BasketScreen(),
+        );
+      case Routes.categoriesRoute:
+        return MaterialPageRoute(
+          builder: (context) =>
+              CategoriesScreen(params: settings.arguments as Params),
         );
 
       default:

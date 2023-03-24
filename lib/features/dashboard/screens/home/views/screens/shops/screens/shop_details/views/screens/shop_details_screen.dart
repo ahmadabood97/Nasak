@@ -1,17 +1,21 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-import '../../../../../../../../../../config/routes/app_routes.dart';
-import '../example_data.dart';
+import '../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../models/app_services_model.dart';
+import '../../controllers/provider/shop_provider.dart';
+import '../../example_data.dart';
+import '../../models/shop_model.dart';
 import '../widgets/appbar_section.dart';
 import '../widgets/bag_icon.dart';
 import '../widgets/body_section.dart';
 
 class ShopDetailsScreen extends StatefulWidget {
-  const ShopDetailsScreen({super.key});
+  final ServiceProviders serviceProviders;
+
+  const ShopDetailsScreen({super.key, required this.serviceProviders});
 
   @override
   ShopDetailsScreenState createState() => ShopDetailsScreenState();
@@ -34,9 +38,13 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
 
   @override
   void initState() {
-    HttpOverrides.global = MyHttpOverrides();
-
-    tabController = TabController(length: data.categories.length, vsync: this);
+    tabController = TabController(
+        length: Provider.of<ShopProvider>(context, listen: false)
+            .shopDetails!
+            .result!
+            .sPcategories!
+            .length,
+        vsync: this);
     scrollController = AutoScrollController();
     super.initState();
   }
@@ -100,13 +108,19 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
-      body: RectGetter(
-        key: listViewKey,
-        child: NotificationListener<ScrollNotification>(
-          onNotification: onScrollNotification,
-          child: buildSliverScrollView(),
-        ),
-      ),
+      body: Provider.of<ShopProvider>(context, listen: true).isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
+            )
+          : RectGetter(
+              key: listViewKey,
+              child: NotificationListener<ScrollNotification>(
+                onNotification: onScrollNotification,
+                child: buildSliverScrollView(),
+              ),
+            ),
     );
   }
 
@@ -116,7 +130,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
         CustomScrollView(
           controller: scrollController,
           slivers: [
-            buildAppBarSection(),
+            buildAppBarSection(widget.serviceProviders),
             buildBody(),
           ],
         ),
@@ -158,8 +172,9 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     );
   }
 
-  SliverAppBar buildAppBarSection() {
+  SliverAppBar buildAppBarSection(ServiceProviders serviceProviders) {
     return AppBarSection(
+      serviceProviders: serviceProviders,
       data: data,
       context: context,
       scrollController: scrollController,
@@ -176,32 +191,47 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) => buildBodySection(index),
-        childCount: data.categories.length,
+        childCount: Provider.of<ShopProvider>(context, listen: false)
+            .shopDetails!
+            .result!
+            .sPcategories!
+            .length,
       ),
     );
   }
 
   Widget buildBodySection(int index) {
     itemKeys[index] = RectGetter.createGlobalKey();
-    Category category = data.categories[index];
-    return RectGetter(
-      key: itemKeys[index],
-      child: AutoScrollTag(
-        color: Colors.white,
-        key: ValueKey(index),
-        index: index,
-        controller: scrollController,
-        child: BodySection(category: category),
-      ),
+    SPcategories category = Provider.of<ShopProvider>(context, listen: false)
+        .shopDetails!
+        .result!
+        .sPcategories![index];
+    return Column(
+      children: [
+        RectGetter(
+          key: itemKeys[index],
+          child: AutoScrollTag(
+            color: Colors.white,
+            key: ValueKey(index),
+            index: index,
+            controller: scrollController,
+            child: BodySection(category: category),
+          ),
+        ),
+        index !=
+                Provider.of<ShopProvider>(context, listen: false)
+                        .shopDetails!
+                        .result!
+                        .sPcategories!
+                        .length -
+                    1
+            ? const SizedBox(
+                height: 0,
+              )
+            : const SizedBox(
+                height: 50,
+              )
+      ],
     );
-  }
-}
-
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
   }
 }

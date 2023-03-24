@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../../core/utils/hex_colors.dart';
+import '../../../../../../../../../../../core/utils/hex_colors.dart';
 
 Widget switchToDelivery() {
   return Container(

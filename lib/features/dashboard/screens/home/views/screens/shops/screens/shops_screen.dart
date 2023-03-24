@@ -1,23 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/core/utils/constants.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../../../core/utils/constants.dart';
-import '../widgets/drawer.dart';
-import '../widgets/home_tab_view.dart';
+import '../widgets/categories_tab_view.dart';
+import '../widgets/no_more_data.dart';
 import '../widgets/select_address.dart';
 import '../widgets/select_service_type.dart';
 import '../widgets/shop_item_card.dart';
 
 class ShopsScreen extends StatefulWidget {
-  final String deliveryLocation;
-  const ShopsScreen({super.key, required this.deliveryLocation});
+  final Params params;
+  const ShopsScreen({super.key, required this.params});
 
   @override
   State<ShopsScreen> createState() => _ShopsScreenState();
 }
 
 class _ShopsScreenState extends State<ShopsScreen> {
+  final controller = ScrollController();
+
+  @override
+  void initState() {
+    Provider.of<HomeProvider>(context, listen: false).getShops(
+        widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        Provider.of<HomeProvider>(context, listen: false).getShops(
+            widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -44,7 +68,8 @@ class _ShopsScreenState extends State<ShopsScreen> {
                         title: Column(
                           children: [
                             SelectAddress(
-                                deliveryLocation: widget.deliveryLocation),
+                                deliveryLocation: widget.params
+                                    .deliveryLocations!.deliveryRegionName!),
                             const SelectServiceType()
                           ],
                         ),
@@ -53,121 +78,80 @@ class _ShopsScreenState extends State<ShopsScreen> {
                     ),
                   )
                 ],
-            body: Provider.of<HomeProvider>(context, listen: true)
-                            .appServicesResponse ==
-                        null ||
-                    Provider.of<HomeProvider>(context, listen: true).isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.orange,
-                    ),
-                  )
-                : ListView(
-                    padding: const EdgeInsets.all(0),
-                    children: [
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.all(10),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: List.generate(
-                                Provider.of<HomeProvider>(context, listen: true)
-                                    .appServicesResponse!
-                                    .result!
-                                    .serviceCategories!
-                                    .length,
-                                (index) => Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () =>
-                                              Provider.of<HomeProvider>(context,
-                                                      listen: false)
-                                                  .setTabSelected(index),
-                                          child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 20),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      Provider.of<HomeProvider>(
-                                                                      context,
-                                                                      listen:
-                                                                          true)
-                                                                  .tabSelected ==
-                                                              index
-                                                          ? Colors.orange
-                                                          : Colors.white,
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(50))),
-                                              child: Text(
-                                                Provider.of<HomeProvider>(
-                                                        context,
-                                                        listen: true)
-                                                    .appServicesResponse!
-                                                    .result!
-                                                    .serviceCategories![index]
-                                                    .name!,
-                                                style: TextStyle(
-                                                    color: Provider.of<HomeProvider>(
-                                                                    context,
-                                                                    listen:
-                                                                        true)
-                                                                .tabSelected ==
-                                                            index
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        )
-                                      ],
-                                    ))),
-                      ),
-                      Provider.of<HomeProvider>(context, listen: true)
-                              .shopsList
-                              .isNotEmpty
-                          ? ListView.separated(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: Provider.of<HomeProvider>(context,
-                                      listen: true)
-                                  .shopsList
-                                  .length,
-                              itemBuilder: (context, index) {
-                                return shopItemCard(
-                                    Provider.of<HomeProvider>(context,
-                                            listen: true)
-                                        .shopsList[index],
-                                    context);
-                              },
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                height: 10,
+            body: RefreshIndicator(
+              color: Colors.orange,
+              onRefresh: () {
+                return Provider.of<HomeProvider>(context, listen: false)
+                    .refresh(widget.params.serviceId!,
+                        widget.params.deliveryLocations!.id!);
+              },
+              child: ListView(
+                controller: controller,
+                padding: EdgeInsets.zero,
+                children: [
+                  categoriesTabView(context, widget.params.serviceId!,
+                      widget.params.deliveryLocations!.id!),
+                  Provider.of<HomeProvider>(context, listen: true).isLoading
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              height: Constants.getHeight(context) * 0.3,
+                            ),
+                            const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.orange,
                               ),
-                            )
-                          : Column(
+                            ),
+                          ],
+                        )
+                      : Provider.of<HomeProvider>(context, listen: true)
+                              .shopsList
+                              .isEmpty
+                          ? Column(
                               children: [
                                 SizedBox(
                                   height: Constants.getHeight(context) * 0.3,
                                 ),
                                 const Center(
-                                    child: Text(
-                                  "There is not any product",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
+                                  child: Text(
+                                    "This category doesn't have any product",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ],
+                            )
+                          : ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              shrinkWrap: true,
+                              itemCount: Provider.of<HomeProvider>(context,
+                                          listen: true)
+                                      .shopsList
+                                      .length +
+                                  1,
+                              itemBuilder: (context, index) {
+                                return index <
+                                        Provider.of<HomeProvider>(context,
+                                                listen: true)
+                                            .shopsList
+                                            .length
+                                    ? shopItemCard(
+                                        Provider.of<HomeProvider>(context,
+                                                listen: true)
+                                            .shopsList[index],
+                                        context)
+                                    : noMoreData(context);
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                height: 10,
+                              ),
                             ),
-                      const SizedBox(
-                        height: 15,
-                      )
-                    ],
-                  )),
+                ],
+              ),
+            )),
       ),
     );
   }

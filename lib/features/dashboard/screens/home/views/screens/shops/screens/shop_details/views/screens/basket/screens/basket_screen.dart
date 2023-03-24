@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../widgets/switch_to_delivery.dart';
 import '../widgets/basket_item_card_view.dart';
 

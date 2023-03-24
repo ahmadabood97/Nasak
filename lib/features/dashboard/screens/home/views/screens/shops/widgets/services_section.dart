@@ -42,25 +42,31 @@ class _ServicesSectionState extends State<ServicesSection> {
                         .getLocationData();
 
                 if (!mounted) return;
-                Provider.of<HomeProvider>(context, listen: false)
-                    .getAppServices(
-                        serviceId:
-                            Provider.of<HomeProvider>(context, listen: false)
-                                .home!
-                                .result!
-                                .appServices![index]
-                                .id!,
-                        locationId: deliveryLocations.id!);
-
                 if (Provider.of<HomeProvider>(context, listen: false)
                     .home!
                     .result!
                     .appServices![index]
                     .showCategories!) {
-                } else {
                   if (!mounted) return;
+                  Navigator.pushNamed(context, Routes.categoriesRoute,
+                      arguments: Params(
+                          deliveryLocations: deliveryLocations,
+                          serviceId:
+                              Provider.of<HomeProvider>(context, listen: false)
+                                  .home!
+                                  .result!
+                                  .appServices![index]
+                                  .id!));
+                } else {
                   Navigator.pushNamed(context, Routes.shopRoute,
-                      arguments: deliveryLocations.deliveryRegionName);
+                      arguments: Params(
+                          deliveryLocations: deliveryLocations,
+                          serviceId:
+                              Provider.of<HomeProvider>(context, listen: false)
+                                  .home!
+                                  .result!
+                                  .appServices![index]
+                                  .id!));
                 }
               },
               child: Container(
@@ -101,4 +107,10 @@ class _ServicesSectionState extends State<ServicesSection> {
       ),
     );
   }
+}
+
+class Params {
+  DeliveryLocations? deliveryLocations;
+  String? serviceId;
+  Params({required this.deliveryLocations, required this.serviceId});
 }

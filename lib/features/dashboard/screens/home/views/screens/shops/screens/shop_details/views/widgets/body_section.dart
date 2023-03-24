@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../example_data.dart';
+import '../../models/shop_model.dart';
 import 'category_card_view.dart';
-import 'items_of_category.dart';
 
 class BodySection extends StatefulWidget {
   const BodySection({
@@ -10,7 +9,7 @@ class BodySection extends StatefulWidget {
     required this.category,
   }) : super(key: key);
 
-  final Category category;
+  final SPcategories category;
 
   @override
   State<BodySection> createState() => _BodySectionState();
@@ -25,8 +24,8 @@ class _BodySectionState extends State<BodySection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          categorySection(context, widget.category.title),
-          itemsOfCategory(context, widget.category),
+          categorySection(context, widget.category.name!),
+          // itemsOfCategory(context, widget.category),
         ],
       ),
     );
