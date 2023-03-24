@@ -17,12 +17,25 @@ class HomeRepo {
     return response1;
   }
 
-  Future<http.Response> getAppServices(
-      String serviceId, String locationId) async {
+  Future<http.Response> getShops(String serviceId, String locationId, int page,
+      String catIdSelected) async {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${EndPoints.baseUrl}AppService/GetAppServiceVM?AppService_Id=$serviceId&Location_Id=$locationId&Page_Id=0&Rows_Count=10'));
+            '${EndPoints.baseUrl}AppService/GetAppServiceVM?AppService_Id=$serviceId&Location_Id=$locationId&Page_Id=${page.toString()}&Rows_Count=5&Category_Id=$catIdSelected'));
+
+    http.StreamedResponse response = await request.send();
+    http.Response response1 = await http.Response.fromStream(response);
+
+    return response1;
+  }
+
+  Future<http.Response> getCategories(String serviceId, String locationId,
+      int page, String catIdSelected) async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${EndPoints.baseUrl}AppService/GetAppServiceVM?AppService_Id=$serviceId'));
 
     http.StreamedResponse response = await request.send();
     http.Response response1 = await http.Response.fromStream(response);

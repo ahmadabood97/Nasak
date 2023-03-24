@@ -1,14 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-import '../../../../../../../../../../config/routes/app_routes.dart';
-import '../../../../../../../../../../core/utils/helper.dart';
-import '../example_data.dart';
+import '../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../core/utils/helper.dart';
+import '../../../../../../../models/app_services_model.dart';
+import '../../example_data.dart';
 import 'ficon_button.dart';
 
 class AppBarSection extends SliverAppBar {
+  final ServiceProviders serviceProviders;
   final PageData data;
   final BuildContext context;
   final bool isCollapsed;
@@ -24,6 +28,7 @@ class AppBarSection extends SliverAppBar {
 
   const AppBarSection({
     super.key,
+    required this.serviceProviders,
     required this.data,
     required this.context,
     required this.isCollapsed,
@@ -88,7 +93,7 @@ class AppBarSection extends SliverAppBar {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Vietnam Resturant",
+            serviceProviders.name!,
             style: textTheme.subtitle1?.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
             strutStyle: Helper.buildStrutStyle(textTheme.subtitle1),
@@ -103,6 +108,7 @@ class AppBarSection extends SliverAppBar {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Container(
+        width: double.infinity,
         color: const Color.fromARGB(255, 255, 245, 240),
         child: TabBar(
           indicator: BoxDecoration(
@@ -118,9 +124,13 @@ class AppBarSection extends SliverAppBar {
           labelColor: Colors.white,
           unselectedLabelColor: Colors.black.withOpacity(0.7),
           indicatorWeight: 3.0,
-          labelStyle: const TextStyle(fontSize: 12),
-          tabs: data.categories.map((e) {
-            return Tab(text: e.title);
+          labelStyle: const TextStyle(fontSize: 15),
+          tabs: Provider.of<ShopProvider>(context, listen: false)
+              .shopDetails!
+              .result!
+              .sPcategories!
+              .map((e) {
+            return Tab(text: e.name);
           }).toList(),
           onTap: onTap,
         ),
@@ -179,11 +189,21 @@ class AppBarSection extends SliverAppBar {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
-                                        "Vietnam Resturant Vietnam Resturant Vietnam Resturant",
+                                      Text(
+                                        serviceProviders.name!,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
-                                        style: TextStyle(
+                                        style: const TextStyle(
+                                            height: 1.5,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        serviceProviders.shortDesc!,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                            height: 1,
                                             fontSize: 17,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -194,7 +214,9 @@ class AppBarSection extends SliverAppBar {
                                         children: [
                                           RatingBar.builder(
                                             ignoreGestures: true,
-                                            initialRating: 3,
+                                            initialRating: serviceProviders
+                                                .approvedRatingSum!
+                                                .toDouble(),
                                             itemSize: 20,
                                             minRating: 1,
                                             direction: Axis.horizontal,
@@ -208,9 +230,9 @@ class AppBarSection extends SliverAppBar {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          const Text(
-                                            "2584 reviews",
-                                            style: TextStyle(
+                                          Text(
+                                            "${serviceProviders.approvedTotalReviews!} reviews",
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.orange),

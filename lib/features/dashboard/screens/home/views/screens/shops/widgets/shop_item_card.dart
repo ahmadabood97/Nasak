@@ -1,22 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../core/utils/constants.dart';
 import '../../../../models/app_services_model.dart';
+import '../screens/shop_details/controllers/provider/shop_provider.dart';
 import 'icon_with_text.dart';
 
 Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
     Padding(
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, Routes.shopDetailsRoute),
+        onTap: () {
+          Provider.of<ShopProvider>(context, listen: false).getShopDetails(
+            serviceProviders.id!,
+            () {
+              Navigator.pushNamed(context, Routes.shopDetailsRoute,
+                  arguments: serviceProviders);
+            },
+          );
+        },
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: CachedNetworkImage(
-                imageUrl: serviceProviders.serviceProvBackImg ??
+                imageUrl:
                     'https://assets.bonappetit.com/photos/57aceacc1b3340441497532d/master/pass/double-rl-ranch-burger.jpg',
                 height: Constants.getHeight(context) * 0.25,
                 width: double.infinity,
@@ -29,9 +39,9 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
                 left: 0,
                 right: 0,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(serviceProviders.serviceProvBackImg ??
+                      image: NetworkImage(
                           'https://i.pinimg.com/736x/33/b8/69/33b869f90619e81763dbf1fccc896d8d--lion-logo-modern-logo.jpg'),
                       fit: BoxFit.contain,
                     ),

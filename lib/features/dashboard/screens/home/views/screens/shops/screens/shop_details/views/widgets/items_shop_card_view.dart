@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../example_data.dart';
-
 class ItemsShopCardView extends StatefulWidget {
-  final Food food;
   final bool isLastIndex;
-  const ItemsShopCardView(
-      {super.key, required this.food, required this.isLastIndex});
+  const ItemsShopCardView({super.key, required this.isLastIndex});
 
   @override
   State<ItemsShopCardView> createState() => _ItemsShopCardViewState();

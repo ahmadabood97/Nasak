@@ -23,26 +23,34 @@ class HomeProvider extends ChangeNotifier {
   final List<ServiceProviders> _shopsList = [];
   List<ServiceProviders> get shopsList => _shopsList;
 
+  final List<ServiceProviders> _shopsByCategoryList = [];
+  List<ServiceProviders> get shopsByCategoryList => _shopsByCategoryList;
+
+  final List<ServiceCategories> _categoriesShopsList = [];
+  List<ServiceCategories> get categoriesShopsList => _categoriesShopsList;
+
+  final List<ServiceCategories> _categoriesList = [];
+  List<ServiceCategories> get categoriesList => _categoriesList;
+
+  int page = 0;
+  bool hasMore = true;
+
   int tabSelected = 0;
+  String catIdSelected = '';
 
   bool? getData;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  void setTabSelected(int value) {
+  void setTabSelected(
+      int value, String catId, String serviceId, String locationId) {
     tabSelected = value;
+    catIdSelected = catId;
+    hasMore = true;
+    page = 0;
     _shopsList.clear();
-    for (var element in _appServicesResponse!.result!.serviceProviders!) {
-      element.serviceproviderCats!.split(',').forEach((catIdInShop) {
-        if (catIdInShop.trim().toLowerCase() ==
-            _appServicesResponse!.result!.serviceCategories![value].id!
-                .trim()
-                .toLowerCase()) {
-          _shopsList.add(element);
-        }
-      });
-    }
+    getShops(serviceId, locationId);
     notifyListeners();
   }
 
@@ -77,10 +85,18 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getAppServices(
-      {bool firstRequest = false,
-      required String serviceId,
-      required String locationId}) async {
+  Future refresh(String serviceId, String locationId) async {
+    _isLoading = false;
+    hasMore = true;
+    page = 0;
+    _shopsList.clear();
+
+    getShops(serviceId, locationId);
+
+    notifyListeners();
+  }
+
+  Future getShops(String serviceId, String locationId) async {
     getData = null;
     _isLoading = true;
 
@@ -88,25 +104,69 @@ class HomeProvider extends ChangeNotifier {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse =
-            await homeRepo.getAppServices(serviceId, locationId);
+            await homeRepo.getShops(serviceId, locationId, page, catIdSelected);
         _isLoading = true;
         if (apiResponse.statusCode == 200) {
-          log("Get AppServices Success");
+          log("Get Shops Success");
           getData = true;
           _appServicesResponse =
               AppServicesResponse.fromJson(json.decode(apiResponse.body));
-          if (_appServicesResponse!.result!.serviceProviders != null) {
-            for (var element
-                in _appServicesResponse!.result!.serviceProviders!) {
-              element.serviceproviderCats!.split(',').forEach((catIdInShop) {
-                if (catIdInShop.trim().toLowerCase() ==
-                    _appServicesResponse!.result!.serviceCategories![0].id!
-                        .trim()
-                        .toLowerCase()) {
-                  _shopsList.add(element);
-                }
-              });
-            }
+
+          if (_appServicesResponse!.result!.serviceProviders != null &&
+              _appServicesResponse!.result!.serviceProviders!.length < 5) {
+            hasMore = false;
+          }
+
+          _shopsList.addAll(_appServicesResponse!.result!.serviceProviders!);
+          if (page == 0 &&
+              _appServicesResponse!.result!.serviceCategories != null) {
+            _categoriesShopsList.clear();
+
+            _categoriesShopsList.add(ServiceCategories(name: 'الكل', id: ''));
+
+            _categoriesShopsList
+                .addAll(_appServicesResponse!.result!.serviceCategories!);
+          }
+          page++;
+
+          _isLoading = false;
+          notifyListeners();
+        } else {
+          getData = null;
+          _isLoading = false;
+          notifyListeners();
+          log("Get Shops Failed");
+        }
+      }
+    } on SocketException catch (_) {
+      getData = null;
+      _isLoading = false;
+      notifyListeners();
+      log("Get Shops Failed");
+    }
+  }
+
+  Future getCategories(String serviceId, String locationId) async {
+    getData = null;
+    _isLoading = true;
+
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        http.Response apiResponse = await homeRepo.getCategories(
+            serviceId, locationId, page, catIdSelected);
+        _isLoading = true;
+        if (apiResponse.statusCode == 200) {
+          log("Get Categories Success");
+          getData = true;
+          _appServicesResponse =
+              AppServicesResponse.fromJson(json.decode(apiResponse.body));
+
+          if (_appServicesResponse!.result!.serviceCategories != null) {
+            _categoriesList.clear();
+
+            _categoriesList
+                .addAll(_appServicesResponse!.result!.serviceCategories!);
           }
 
           _isLoading = false;
@@ -115,14 +175,14 @@ class HomeProvider extends ChangeNotifier {
           getData = null;
           _isLoading = false;
           notifyListeners();
-          log("Get AppServices Failed");
+          log("Get Categories Failed");
         }
       }
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
       notifyListeners();
-      log("Get AppServices Failed");
+      log("Get Categories Failed");
     }
   }
 }

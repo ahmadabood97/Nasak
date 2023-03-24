@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../../../../../../../../core/utils/hex_colors.dart';
+import '../../../../../../../../../../../../../core/utils/hex_colors.dart';
 
 Widget agreeTerms() {
   return Column(

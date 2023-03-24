@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../../../../../config/routes/app_routes.dart';
-import '../../../../../../../../../../../../core/utils/assets_manager.dart';
-import '../../../../../../../../../../../../core/utils/hex_colors.dart';
+import '../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../../../core/utils/assets_manager.dart';
+import '../../../../../../../../../../../../../core/utils/hex_colors.dart';
 import '../../../widgets/bag_icon.dart';
 import '../widgets/agree_terms.dart';
 import '../widgets/custom_button.dart';
