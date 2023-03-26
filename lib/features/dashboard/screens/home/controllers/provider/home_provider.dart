@@ -23,9 +23,6 @@ class HomeProvider extends ChangeNotifier {
   final List<ServiceProviders> _shopsList = [];
   List<ServiceProviders> get shopsList => _shopsList;
 
-  final List<ServiceProviders> _shopsByCategoryList = [];
-  List<ServiceProviders> get shopsByCategoryList => _shopsByCategoryList;
-
   final List<ServiceCategories> _categoriesShopsList = [];
   List<ServiceCategories> get categoriesShopsList => _categoriesShopsList;
 
@@ -89,11 +86,20 @@ class HomeProvider extends ChangeNotifier {
     _isLoading = false;
     hasMore = true;
     page = 0;
+
     _shopsList.clear();
 
     getShops(serviceId, locationId);
 
     notifyListeners();
+  }
+
+  clear() {
+    hasMore = true;
+    page = 0;
+    _shopsList.clear();
+    tabSelected = 0;
+    catIdSelected = '';
   }
 
   Future getShops(String serviceId, String locationId) async {
@@ -111,13 +117,14 @@ class HomeProvider extends ChangeNotifier {
           getData = true;
           _appServicesResponse =
               AppServicesResponse.fromJson(json.decode(apiResponse.body));
-
           if (_appServicesResponse!.result!.serviceProviders != null &&
               _appServicesResponse!.result!.serviceProviders!.length < 5) {
             hasMore = false;
           }
 
-          _shopsList.addAll(_appServicesResponse!.result!.serviceProviders!);
+          if (_appServicesResponse!.result!.serviceProviders != null) {
+            _shopsList.addAll(_appServicesResponse!.result!.serviceProviders!);
+          }
           if (page == 0 &&
               _appServicesResponse!.result!.serviceCategories != null) {
             _categoriesShopsList.clear();
@@ -127,6 +134,7 @@ class HomeProvider extends ChangeNotifier {
             _categoriesShopsList
                 .addAll(_appServicesResponse!.result!.serviceCategories!);
           }
+
           page++;
 
           _isLoading = false;
@@ -149,6 +157,7 @@ class HomeProvider extends ChangeNotifier {
   Future getCategories(String serviceId, String locationId) async {
     getData = null;
     _isLoading = true;
+    _categoriesList.clear();
 
     try {
       final result = await InternetAddress.lookup('example.com');
@@ -161,14 +170,10 @@ class HomeProvider extends ChangeNotifier {
           getData = true;
           _appServicesResponse =
               AppServicesResponse.fromJson(json.decode(apiResponse.body));
-
           if (_appServicesResponse!.result!.serviceCategories != null) {
-            _categoriesList.clear();
-
             _categoriesList
                 .addAll(_appServicesResponse!.result!.serviceCategories!);
           }
-
           _isLoading = false;
           notifyListeners();
         } else {

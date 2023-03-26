@@ -10,6 +10,7 @@ import '../../features/dashboard/screens/countries/views/screens/countries_scree
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/dashboard/screens/favourites/screens/favourites_screen.dart';
 import '../../features/dashboard/screens/home/models/app_services_model.dart';
+import '../../features/dashboard/screens/home/views/screens/categories/views/screens/category_products/views/screens/category_product_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/filter/screens/filter_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/shops/screens/search/screens/search_screen.dart';
@@ -49,6 +50,7 @@ class Routes {
   static const String countriesRoute = '/countries';
   static const String citiesRoute = '/cities';
   static const String regionsRoute = '/regions';
+  static const String categoryProductRoute = '/categoryProduct';
 }
 
 class AppRoutes {
@@ -66,7 +68,7 @@ class AppRoutes {
       case Routes.shopRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              ShopsScreen(params: settings.arguments as Params),
+              ShopsScreen(params: settings.arguments as ParamsServiceSection),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(
@@ -142,8 +144,13 @@ class AppRoutes {
         );
       case Routes.categoriesRoute:
         return MaterialPageRoute(
-          builder: (context) =>
-              CategoriesScreen(params: settings.arguments as Params),
+          builder: (context) => CategoriesScreen(
+              params: settings.arguments as ParamsServiceSection),
+        );
+      case Routes.categoryProductRoute:
+        return MaterialPageRoute(
+          builder: (context) => CategoryProductScreen(
+              params: settings.arguments as ParamsCategoryProduct),
         );
 
       default:

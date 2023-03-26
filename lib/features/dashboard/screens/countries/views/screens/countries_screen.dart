@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/countries/views/widgets/save_button.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../../core/widgets/dropdown.dart';
 import '../../../home/controllers/provider/home_provider.dart';
 import '../../controllers/provider/countries_provider.dart';
@@ -23,22 +22,29 @@ class _CountriesScreenState extends State<CountriesScreen> {
         [];
     Provider.of<CountriesProvider>(context, listen: false)
         .locationDropdownList = [];
-    for (var element in Provider.of<CountriesProvider>(context, listen: false)
-        .countries!
-        .result!
-        .countries!) {
-      Provider.of<CountriesProvider>(context, listen: false)
-          .countryDropdownList
-          .add(element.name!);
+
+    if (Provider.of<CountriesProvider>(context, listen: false)
+            .countries!
+            .result !=
+        null) {
+      for (var element in Provider.of<CountriesProvider>(context, listen: false)
+          .countries!
+          .result!
+          .countries!) {
+        Provider.of<CountriesProvider>(context, listen: false)
+            .countryDropdownList
+            .add(element.name!);
+      }
+      for (var element in Provider.of<HomeProvider>(context, listen: false)
+          .home!
+          .result!
+          .deliveryLocations!) {
+        Provider.of<CountriesProvider>(context, listen: false)
+            .locationDropdownList
+            .add(element.deliveryRegionName!);
+      }
     }
-    for (var element in Provider.of<HomeProvider>(context, listen: false)
-        .home!
-        .result!
-        .deliveryLocations!) {
-      Provider.of<CountriesProvider>(context, listen: false)
-          .locationDropdownList
-          .add(element.deliveryRegionName!);
-    }
+
     super.initState();
   }
 
