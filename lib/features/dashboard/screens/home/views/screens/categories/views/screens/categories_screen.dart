@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../../../../core/utils/constants.dart';
+import '../../../../../../../../../core/widgets/circular_progress_indicator.dart';
 import '../../../../../controllers/provider/home_provider.dart';
 import '../../../shops/widgets/services_section.dart';
 import '../widgets/category_card_view.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  final Params params;
+  final ParamsServiceSection params;
 
   const CategoriesScreen({super.key, required this.params});
 
@@ -38,18 +38,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       .appServicesResponse ==
                   null ||
               Provider.of<HomeProvider>(context, listen: true).isLoading
-          ? Column(
-              children: [
-                SizedBox(
-                  height: Constants.getHeight(context) * 0.3,
-                ),
-                const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.orange,
-                  ),
-                ),
-              ],
-            )
+          ? progressIndicator(context)
           : GridView.builder(
               padding: const EdgeInsets.all(15),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -60,7 +49,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               primary: false,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return categoryCardView(context, index);
+                return CategoryCardView(
+                    serviceCategory:
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .categoriesList[index]);
               },
             ),
     );

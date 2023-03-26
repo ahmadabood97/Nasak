@@ -68,7 +68,7 @@ class AppRoutes {
       case Routes.shopRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              ShopsScreen(params: settings.arguments as Params),
+              ShopsScreen(params: settings.arguments as ParamsServiceSection),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(
@@ -144,12 +144,13 @@ class AppRoutes {
         );
       case Routes.categoriesRoute:
         return MaterialPageRoute(
-          builder: (context) =>
-              CategoriesScreen(params: settings.arguments as Params),
+          builder: (context) => CategoriesScreen(
+              params: settings.arguments as ParamsServiceSection),
         );
       case Routes.categoryProductRoute:
         return MaterialPageRoute(
-          builder: (context) => const CategoryProductScreen(),
+          builder: (context) => CategoryProductScreen(
+              params: settings.arguments as ParamsCategoryProduct),
         );
 
       default:

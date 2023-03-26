@@ -4,6 +4,7 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../core/widgets/circular_progress_indicator.dart';
 import '../widgets/categories_tab_view.dart';
 import '../widgets/no_more_data.dart';
 import '../widgets/select_address.dart';
@@ -11,7 +12,7 @@ import '../widgets/select_service_type.dart';
 import '../widgets/shop_item_card.dart';
 
 class ShopsScreen extends StatefulWidget {
-  final Params params;
+  final ParamsServiceSection params;
   const ShopsScreen({super.key, required this.params});
 
   @override
@@ -23,6 +24,8 @@ class _ShopsScreenState extends State<ShopsScreen> {
 
   @override
   void initState() {
+    Provider.of<HomeProvider>(context, listen: false).clear();
+
     Provider.of<HomeProvider>(context, listen: false).getShops(
         widget.params.serviceId!, widget.params.deliveryLocations!.id!);
 
@@ -92,18 +95,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
                   categoriesTabView(context, widget.params.serviceId!,
                       widget.params.deliveryLocations!.id!),
                   Provider.of<HomeProvider>(context, listen: true).isLoading
-                      ? Column(
-                          children: [
-                            SizedBox(
-                              height: Constants.getHeight(context) * 0.3,
-                            ),
-                            const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.orange,
-                              ),
-                            ),
-                          ],
-                        )
+                      ? progressIndicator(context)
                       : Provider.of<HomeProvider>(context, listen: true)
                               .shopsList
                               .isEmpty

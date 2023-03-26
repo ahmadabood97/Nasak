@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../countries/controllers/provider/countries_provider.dart';
@@ -24,7 +23,6 @@ class _ServiceCardViewState extends State<ServiceCardView> {
         DeliveryLocations deliveryLocations =
             await Provider.of<CountriesProvider>(context, listen: false)
                 .getLocationData();
-
         if (!mounted) return;
         if (Provider.of<HomeProvider>(context, listen: false)
             .home!
@@ -33,7 +31,7 @@ class _ServiceCardViewState extends State<ServiceCardView> {
             .showCategories!) {
           if (!mounted) return;
           Navigator.pushNamed(context, Routes.categoriesRoute,
-              arguments: Params(
+              arguments: ParamsServiceSection(
                   deliveryLocations: deliveryLocations,
                   serviceId: Provider.of<HomeProvider>(context, listen: false)
                       .home!
@@ -42,7 +40,7 @@ class _ServiceCardViewState extends State<ServiceCardView> {
                       .id!));
         } else {
           Navigator.pushNamed(context, Routes.shopRoute,
-              arguments: Params(
+              arguments: ParamsServiceSection(
                   deliveryLocations: deliveryLocations,
                   serviceId: Provider.of<HomeProvider>(context, listen: false)
                       .home!

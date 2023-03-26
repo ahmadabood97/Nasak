@@ -40,8 +40,9 @@ class _ServicesSectionState extends State<ServicesSection> {
   }
 }
 
-class Params {
+class ParamsServiceSection {
   DeliveryLocations? deliveryLocations;
   String? serviceId;
-  Params({required this.deliveryLocations, required this.serviceId});
+  ParamsServiceSection(
+      {required this.deliveryLocations, required this.serviceId});
 }

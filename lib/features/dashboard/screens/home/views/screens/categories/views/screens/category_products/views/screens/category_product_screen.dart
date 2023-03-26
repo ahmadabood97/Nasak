@@ -1,70 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/countries/models/countries_model.dart';
+import 'package:nasak/features/dashboard/screens/home/models/home_model.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/categories/views/screens/category_products/views/widgets/category_tab_view.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/categories/views/screens/category_products/views/widgets/list_category_product.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../../../../../../../../../core/utils/assets_manager.dart';
+import '../../../../../../../../../../../../core/widgets/circular_progress_indicator.dart';
+import '../../../../../../../../models/app_services_model.dart';
 
 class CategoryProductScreen extends StatefulWidget {
-  const CategoryProductScreen({super.key});
+  final ParamsCategoryProduct params;
+
+  const CategoryProductScreen({super.key, required this.params});
 
   @override
   State<CategoryProductScreen> createState() => _CategoryProductScreenState();
 }
 
 class _CategoryProductScreenState extends State<CategoryProductScreen> {
+  final controller = ScrollController();
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        Provider.of<CategoryDetailsProvider>(context, listen: false)
+            .getCategoryDetails(
+                widget.params.category.id!,
+                widget.params.location.id!,
+                widget.params.country!.currencyId!,
+                () {});
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.orange,
-        title: const Text(
-          'Category Product',
-          style: TextStyle(color: Colors.white, fontSize: 15),
+        title: Text(
+          widget.params.category.name!,
+          style: const TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(15),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 1.4),
-        itemCount: 3,
-        primary: false,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () async {},
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(3)),
-                  border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Image.asset(
-                          ImageAssets.resturantIcon,
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                      flex: 1,
-                      child: Text(
-                        'Hey',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+      body: ListView(
+        controller: controller,
+        children: [
+          categoriesTabView(
+            context,
+            widget.params.location.id!,
+            widget.params.country!.currencyId!,
+          ),
+          Provider.of<CategoryDetailsProvider>(context, listen: true).isLoading
+              ? progressIndicator(context)
+              : listCategorProduct(
+                  context,
+                  controller,
+                  Provider.of<CategoryDetailsProvider>(context, listen: true)
+                      .catProductsList),
+        ],
       ),
     );
   }
+}
+
+class ParamsCategoryProduct {
+  Countries? country;
+  DeliveryLocations location;
+  ServiceCategories category;
+
+  ParamsCategoryProduct(
+      {required this.country, required this.category, required this.location});
 }
