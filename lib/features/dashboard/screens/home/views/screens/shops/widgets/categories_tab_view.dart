@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../models/app_services_model.dart';
+
 Widget categoriesTabView(
-        BuildContext context, String serviceId, String deliveryLocationsId) =>
+        BuildContext context,
+        List<ServiceCategories> categoriesShopsList,
+        String serviceId,
+        String deliveryLocationsId) =>
     SingleChildScrollView(
       padding: const EdgeInsets.all(10),
       scrollDirection: Axis.horizontal,
       child: Row(
           children: List.generate(
-              Provider.of<HomeProvider>(context, listen: true)
-                  .categoriesShopsList
-                  .length,
+              categoriesShopsList.length,
               (index) => Row(
                     children: [
                       GestureDetector(
@@ -21,10 +24,7 @@ Widget categoriesTabView(
                             Provider.of<HomeProvider>(context, listen: false)
                                 .setTabSelected(
                                     index,
-                                    Provider.of<HomeProvider>(context,
-                                            listen: false)
-                                        .categoriesShopsList[index]
-                                        .id!,
+                                    categoriesShopsList[index].id!,
                                     serviceId,
                                     deliveryLocationsId);
                           }
@@ -42,9 +42,7 @@ Widget categoriesTabView(
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(50))),
                             child: Text(
-                              Provider.of<HomeProvider>(context, listen: true)
-                                  .categoriesShopsList[index]
-                                  .name!,
+                              categoriesShopsList[index].name!,
                               style: TextStyle(
                                   color: Provider.of<HomeProvider>(context,
                                                   listen: true)

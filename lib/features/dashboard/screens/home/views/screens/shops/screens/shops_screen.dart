@@ -92,7 +92,11 @@ class _ShopsScreenState extends State<ShopsScreen> {
                 controller: controller,
                 padding: EdgeInsets.zero,
                 children: [
-                  categoriesTabView(context, widget.params.serviceId!,
+                  categoriesTabView(
+                      context,
+                      Provider.of<HomeProvider>(context, listen: true)
+                          .categoriesShopsList,
+                      widget.params.serviceId!,
                       widget.params.deliveryLocations!.id!),
                   Provider.of<HomeProvider>(context, listen: true).isLoading
                       ? progressIndicator(context)

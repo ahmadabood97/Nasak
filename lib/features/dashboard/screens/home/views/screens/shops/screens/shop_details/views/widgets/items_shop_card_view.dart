@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../models/shop_model.dart';
+
 class ItemsShopCardView extends StatefulWidget {
-  final bool isLastIndex;
-  const ItemsShopCardView({super.key, required this.isLastIndex});
+  final SpProducts product;
+  const ItemsShopCardView({super.key, required this.product});
 
   @override
   State<ItemsShopCardView> createState() => _ItemsShopCardViewState();
@@ -30,31 +32,31 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                     flex: 8,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("Gebrate Einerdeln",
-                              style: TextStyle(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(widget.product.name!,
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
-                            "industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-                            style: TextStyle(fontSize: 12),
+                            widget.product.shortDescription!,
+                            style: const TextStyle(fontSize: 12),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(bottom: 8, right: 8, left: 8),
-                          child: Text("4.50 \$",
-                              style: TextStyle(
+                          padding: const EdgeInsets.only(
+                              bottom: 8, right: 8, left: 8),
+                          child: Text("${widget.product.price} \$",
+                              style: const TextStyle(
                                   color: Colors.orange,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),

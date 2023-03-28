@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/provider/category_details_provider.dart';
+import '../../models/category_details.dart';
 
 Widget categoriesTabView(
-        BuildContext context, String locationId, String currencyId) =>
+        BuildContext context,
+        List<SubCategories> subCategoriesList,
+        String locationId,
+        String currencyId,
+        String parentId) =>
     SingleChildScrollView(
       padding: const EdgeInsets.all(10),
       scrollDirection: Axis.horizontal,
       child: Row(
           children: List.generate(
-              Provider.of<CategoryDetailsProvider>(context, listen: true)
-                  .subCategoriesList
-                  .length,
+              subCategoriesList.length,
               (index) => Row(
                     children: [
                       GestureDetector(
@@ -23,13 +26,10 @@ Widget categoriesTabView(
                                     listen: false)
                                 .setTabSelected(
                                     index,
-                                    Provider.of<CategoryDetailsProvider>(
-                                            context,
-                                            listen: false)
-                                        .subCategoriesList[index]
-                                        .id!,
+                                    subCategoriesList[index].id!,
                                     locationId,
-                                    currencyId);
+                                    currencyId,
+                                    parentId);
                           }
                         },
                         child: Container(
@@ -46,10 +46,7 @@ Widget categoriesTabView(
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(50))),
                             child: Text(
-                              Provider.of<CategoryDetailsProvider>(context,
-                                      listen: true)
-                                  .subCategoriesList[index]
-                                  .name!,
+                              subCategoriesList[index].name!,
                               style: TextStyle(
                                   color: Provider.of<CategoryDetailsProvider>(
                                                   context,

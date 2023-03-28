@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:nasak/features/dashboard/screens/home/views/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-
 import '../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../../core/utils/helper.dart';
 import '../../../../../../../models/app_services_model.dart';
+import '../../controllers/provider/shop_provider.dart';
 import '../../example_data.dart';
+import 'category_tab_view.dart';
 import 'ficon_button.dart';
 
 class AppBarSection extends SliverAppBar {
@@ -108,33 +108,12 @@ class AppBarSection extends SliverAppBar {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Container(
-        width: double.infinity,
-        color: const Color.fromARGB(255, 255, 245, 240),
-        child: TabBar(
-          indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              25.0,
-            ),
-            color: Colors.orange,
-          ),
-          isScrollable: true,
-          controller: tabController,
-          indicatorPadding: const EdgeInsets.all(10),
-          indicatorColor: Colors.white,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.black.withOpacity(0.7),
-          indicatorWeight: 3.0,
-          labelStyle: const TextStyle(fontSize: 15),
-          tabs: Provider.of<ShopProvider>(context, listen: false)
-              .shopDetails!
-              .result!
-              .sPcategories!
-              .map((e) {
-            return Tab(text: e.name);
-          }).toList(),
-          onTap: onTap,
-        ),
-      ),
+          width: double.infinity,
+          color: const Color.fromARGB(255, 255, 245, 240),
+          child: categoryTabView(
+              Provider.of<ShopProvider>(context, listen: true).categoriesList!,
+              serviceProviders.id!,
+              context)),
     );
   }
 

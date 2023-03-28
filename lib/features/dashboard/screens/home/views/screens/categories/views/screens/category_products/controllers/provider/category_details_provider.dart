@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nasak/core/widgets/loading_alert_dialog.dart';
 
 import '../../models/category_details.dart';
 import '../repo/category_details_repo.dart';
@@ -26,7 +27,7 @@ class CategoryDetailsProvider extends ChangeNotifier {
   int page = 0;
   bool hasMore = true;
 
-  int? tabSelected;
+  int tabSelected = 0;
   String catIdSelected = '';
 
   bool? getData;
@@ -34,12 +35,8 @@ class CategoryDetailsProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  void setTabSelected(
-    int value,
-    String catId,
-    String locationId,
-    String currencyId,
-  ) {
+  void setTabSelected(int value, String catId, String locationId,
+      String currencyId, String parentId) {
     tabSelected = value;
     catIdSelected = catId;
     hasMore = true;
@@ -63,25 +60,33 @@ class CategoryDetailsProvider extends ChangeNotifier {
 
   clear() {
     hasMore = true;
-    tabSelected = null;
+    tabSelected = 0;
     page = 0;
     _catProductsList.clear();
     _subCategoriesList.clear();
   }
 
   Future getCategoryDetails(String categoryId, String locationId,
-      String currencyId, VoidCallback success) async {
+      String currencyId, VoidCallback success,
+      {VoidCallback? closeLoading, BuildContext? context}) async {
     getData = null;
     _isLoading = true;
     hasMore = true;
 
     try {
+      if (context != null) {
+        loading(context);
+      }
+
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse = await categoryDetailsRepo
             .getCategoryDetails(categoryId, locationId, currencyId, page);
         _isLoading = true;
         if (apiResponse.statusCode == 200) {
+          if (context != null) {
+            closeLoading!();
+          }
           log("Get Category Details Success");
           getData = true;
           _categoryDetailsResponse =
@@ -95,7 +100,7 @@ class CategoryDetailsProvider extends ChangeNotifier {
           if (page == 0 &&
               _categoryDetailsResponse!.result!.subCategories != null) {
             _subCategoriesList.clear();
-
+            _subCategoriesList.add(SubCategories(name: 'الكل', id: categoryId));
             _subCategoriesList
                 .addAll(_categoryDetailsResponse!.result!.subCategories!);
           }
@@ -108,8 +113,6 @@ class CategoryDetailsProvider extends ChangeNotifier {
           } else if (_categoryDetailsResponse!.result!.catProducts != null) {
             _catProductsList
                 .addAll(_categoryDetailsResponse!.result!.catProducts!);
-
-            notifyListeners();
           }
           page++;
 

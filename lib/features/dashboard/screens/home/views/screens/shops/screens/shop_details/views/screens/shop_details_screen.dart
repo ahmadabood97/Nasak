@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-
-import '../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../models/app_services_model.dart';
 import '../../controllers/provider/shop_provider.dart';
 import '../../example_data.dart';
 import '../../models/shop_model.dart';
 import '../widgets/appbar_section.dart';
-import '../widgets/bag_icon.dart';
 import '../widgets/body_section.dart';
 
 class ShopDetailsScreen extends StatefulWidget {
@@ -23,28 +19,30 @@ class ShopDetailsScreen extends StatefulWidget {
 
 class ShopDetailsScreenState extends State<ShopDetailsScreen>
     with SingleTickerProviderStateMixin {
+  final controller = ScrollController();
+
   bool isCollapsed = false;
   late AutoScrollController scrollController;
   late TabController tabController;
-  final double expandedHeight = 460.0;
+  final double expandedHeight = 480.0;
   final PageData data = ExampleData.data;
   final double collapsedHeight = kToolbarHeight;
-
-  final listViewKey = RectGetter.createGlobalKey();
-  Map<int, dynamic> itemKeys = {};
-
-  // prevent animate when press on tab bar
-  bool pauseRectGetterIndex = false;
 
   @override
   void initState() {
     tabController = TabController(
         length: Provider.of<ShopProvider>(context, listen: false)
-            .shopDetails!
-            .result!
-            .sPcategories!
+            .categoriesList!
             .length,
         vsync: this);
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        Provider.of<ShopProvider>(context, listen: false).getShopDetails(
+          widget.serviceProviders.id!,
+          Provider.of<ShopProvider>(context, listen: false).catIdSelected,
+        );
+      }
+    });
     scrollController = AutoScrollController();
     super.initState();
   }
@@ -56,51 +54,9 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     super.dispose();
   }
 
-  List<int> getVisibleItemsIndex() {
-    Rect? rect = RectGetter.getRectFromKey(listViewKey);
-    List<int> items = [];
-    if (rect == null) return items;
-    itemKeys.forEach((index, key) {
-      Rect? itemRect = RectGetter.getRectFromKey(key);
-      if (itemRect == null) return;
-      if (itemRect.top > rect.bottom) return;
-      if (itemRect.bottom < rect.top) return;
-      items.add(index);
-    });
-    return items;
-  }
-
   void onCollapsed(bool value) {
     if (isCollapsed == value) return;
     setState(() => isCollapsed = value);
-  }
-
-  bool onScrollNotification(ScrollNotification notification) {
-    if (pauseRectGetterIndex) return true;
-    int lastTabIndex = tabController.length - 1;
-    List<int> visibleItems = getVisibleItemsIndex();
-
-    bool reachLastTabIndex = visibleItems.isNotEmpty &&
-        visibleItems.length <= 2 &&
-        visibleItems.last == lastTabIndex;
-    if (reachLastTabIndex) {
-      tabController.animateTo(lastTabIndex);
-    } else if (visibleItems.isNotEmpty) {
-      int sumIndex = visibleItems.reduce((value, element) => value + element);
-      int middleIndex = sumIndex ~/ visibleItems.length;
-      if (tabController.index != middleIndex) {
-        tabController.animateTo(middleIndex);
-      }
-    }
-    return false;
-  }
-
-  void animateAndScrollTo(int index) {
-    pauseRectGetterIndex = true;
-    tabController.animateTo(index);
-    scrollController
-        .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
-        .then((value) => pauseRectGetterIndex = false);
   }
 
   @override
@@ -108,19 +64,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
-      body: Provider.of<ShopProvider>(context, listen: true).isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            )
-          : RectGetter(
-              key: listViewKey,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: onScrollNotification,
-                child: buildSliverScrollView(),
-              ),
-            ),
+      body: buildSliverScrollView(),
     );
   }
 
@@ -128,46 +72,13 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     return Stack(
       children: [
         CustomScrollView(
-          controller: scrollController,
+          controller: controller,
           slivers: [
             buildAppBarSection(widget.serviceProviders),
             buildBody(),
           ],
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: InkWell(
-            onTap: () => Navigator.pushNamed(context, Routes.basketRoute),
-            child: Container(
-              width: double.infinity,
-              height: 50,
-              color: const Color.fromARGB(255, 3, 59, 107),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: bagIcon(Colors.orange, "88"),
-                  ),
-                  const Expanded(
-                    flex: 3,
-                    child: Center(
-                      child: Text(
-                        "Go to basket (117.50 \$)",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  const Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
+        // goToBasket(context)
       ],
     );
   }
@@ -183,7 +94,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
       isCollapsed: isCollapsed,
       onCollapsed: onCollapsed,
       tabController: tabController,
-      onTap: (index) => animateAndScrollTo(index),
+      onTap: (index) {},
     );
   }
 
@@ -191,47 +102,54 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) => buildBodySection(index),
-        childCount: Provider.of<ShopProvider>(context, listen: false)
-            .shopDetails!
-            .result!
-            .sPcategories!
-            .length,
+        childCount: Provider.of<ShopProvider>(context, listen: true)
+                .productsList!
+                .length +
+            1,
       ),
     );
   }
 
   Widget buildBodySection(int index) {
-    itemKeys[index] = RectGetter.createGlobalKey();
-    SPcategories category = Provider.of<ShopProvider>(context, listen: false)
-        .shopDetails!
-        .result!
-        .sPcategories![index];
-    return Column(
-      children: [
-        RectGetter(
-          key: itemKeys[index],
-          child: AutoScrollTag(
-            color: Colors.white,
-            key: ValueKey(index),
-            index: index,
-            controller: scrollController,
-            child: BodySection(category: category),
+    if (index <
+        Provider.of<ShopProvider>(context, listen: true).productsList!.length) {
+      SpProducts product =
+          Provider.of<ShopProvider>(context, listen: true).productsList![index];
+
+      return Column(
+        children: [
+          const SizedBox(
+            height: 15,
           ),
-        ),
-        index !=
-                Provider.of<ShopProvider>(context, listen: false)
-                        .shopDetails!
-                        .result!
-                        .sPcategories!
-                        .length -
-                    1
-            ? const SizedBox(
-                height: 0,
-              )
-            : const SizedBox(
-                height: 50,
-              )
-      ],
-    );
+          BodySection(product: product),
+          index !=
+                  Provider.of<ShopProvider>(context, listen: false)
+                          .productsList!
+                          .length -
+                      1
+              ? const SizedBox(
+                  height: 0,
+                )
+              : const SizedBox(
+                  height: 15,
+                )
+        ],
+      );
+    } else {
+      return Provider.of<ShopProvider>(context, listen: true).hasMore
+          ? Provider.of<ShopProvider>(context, listen: true)
+                  .productsList!
+                  .isEmpty
+              ? const SizedBox()
+              : const Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.orange,
+                    ),
+                  ),
+                )
+          : const SizedBox();
+    }
   }
 }

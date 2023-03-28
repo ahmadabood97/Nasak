@@ -7,9 +7,7 @@ import '../widgets/category_card_view.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final ParamsServiceSection params;
-
   const CategoriesScreen({super.key, required this.params});
-
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
