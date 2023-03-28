@@ -12,13 +12,15 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
-          Provider.of<ShopProvider>(context, listen: false).getShopDetails(
-            serviceProviders.id!,
-            () {
-              Navigator.pushNamed(context, Routes.shopDetailsRoute,
-                  arguments: serviceProviders);
-            },
-          );
+          Provider.of<ShopProvider>(context, listen: false).clear();
+
+          Provider.of<ShopProvider>(context, listen: false)
+              .getShopDetails(serviceProviders.id!, '', showShopDetails: () {
+            Navigator.pushNamed(context, Routes.shopDetailsRoute,
+                arguments: serviceProviders);
+          }, closeLoading: () {
+            Navigator.pop(context);
+          }, context: context, showLoading: true);
         },
         child: Stack(
           alignment: Alignment.bottomCenter,

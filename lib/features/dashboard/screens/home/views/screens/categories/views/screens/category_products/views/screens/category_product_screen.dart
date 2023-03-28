@@ -58,10 +58,12 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
         controller: controller,
         children: [
           categoriesTabView(
-            context,
-            widget.params.location.id!,
-            widget.params.country!.currencyId!,
-          ),
+              context,
+              Provider.of<CategoryDetailsProvider>(context, listen: true)
+                  .subCategoriesList,
+              widget.params.location.id!,
+              widget.params.country!.currencyId!,
+              widget.params.category.id!),
           Provider.of<CategoryDetailsProvider>(context, listen: true).isLoading
               ? progressIndicator(context)
               : listCategorProduct(

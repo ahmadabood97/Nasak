@@ -338,13 +338,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  onboarding:
-    dependency: "direct main"
-    description:
-      name: onboarding
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   path:
     dependency: "direct main"
     description:
@@ -513,13 +506,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-  sk_onboarding_screen:
-    dependency: "direct main"
-    description:
-      name: sk_onboarding_screen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   sky_engine:
     dependency: transitive
     description: flutter

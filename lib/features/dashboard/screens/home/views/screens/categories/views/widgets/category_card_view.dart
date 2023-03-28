@@ -44,7 +44,9 @@ class _CategoryCardViewState extends State<CategoryCardView> {
                     category: widget.serviceCategory,
                     location: deliveryLocations,
                     country: country));
-          });
+          }, closeLoading: () {
+            Navigator.pop(context);
+          }, context: context);
         },
         child: Container(
           decoration: BoxDecoration(
