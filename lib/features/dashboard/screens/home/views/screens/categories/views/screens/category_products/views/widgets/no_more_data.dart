@@ -11,10 +11,7 @@ Widget noMoreData(BuildContext context) {
           ? const CircularProgressIndicator(
               color: Colors.orange,
             )
-          : const Text(
-              "No more data to load",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+          : const SizedBox(),
     ),
   );
 }

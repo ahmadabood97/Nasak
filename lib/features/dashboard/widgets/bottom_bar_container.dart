@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/favorites/controllers/provider/favorite_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/widgets/show_dialog.dart';
+import '../../auth/screens/login/controllers/provider/login_provider.dart';
+import '../../auth/screens/login/models/login_response_model.dart';
 
 class BottomBarContainer extends StatefulWidget {
   const BottomBarContainer({
@@ -27,8 +33,29 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       unselectedItemColor: Colors.black,
       unselectedLabelStyle: const TextStyle(color: Colors.grey),
       currentIndex: widget.selectedIndex,
-      onTap: (index) {
-        widget._pageController.jumpToPage(index);
+      onTap: (index) async {
+        if (index == 1) {
+          if (Provider.of<LoginProvider>(context, listen: false).userData !=
+              null) {
+            LoginResponseModel userData =
+                Provider.of<LoginProvider>(context, listen: false).userData!;
+            if (!mounted) return;
+            Provider.of<FavoriteProvider>(context, listen: false).getFavorites(
+              context: context,
+              token: userData.authToken,
+              moveToFavoriteScreen: () {
+                widget._pageController.jumpToPage(index);
+              },
+              stopLoading: () {
+                Navigator.pop(context);
+              },
+            );
+          } else {
+            showCustomDialog(context, 'Please Login...');
+          }
+        } else {
+          widget._pageController.jumpToPage(index);
+        }
       },
       items: const [
         BottomNavigationBarItem(
@@ -40,18 +67,6 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
           ),
           icon: Icon(
             Icons.home_outlined,
-            color: Color.fromARGB(255, 24, 15, 77),
-          ),
-        ),
-        BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
-          label: '',
-          activeIcon: Icon(
-            Icons.local_offer,
-            color: Colors.orange,
-          ),
-          icon: Icon(
-            Icons.local_offer_outlined,
             color: Color.fromARGB(255, 24, 15, 77),
           ),
         ),

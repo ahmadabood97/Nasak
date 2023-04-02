@@ -65,8 +65,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               onTap: () async {
                 if (addAddressFormKey.currentState!.validate()) {
                   LoginResponseModel userData =
-                      await Provider.of<LoginProvider>(context, listen: false)
-                          .getUserData();
+                      Provider.of<LoginProvider>(context, listen: false)
+                          .userData!;
                   if (!mounted) return;
                   Provider.of<RegisterProvider>(context, listen: false)
                       .setCountryCityReigonId();

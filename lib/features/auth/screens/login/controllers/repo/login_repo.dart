@@ -42,13 +42,16 @@ class LoginRepo {
     }
   }
 
-  dynamic getUserData() async {
+  Future<dynamic> getUserData() async {
     try {
       if (sharedPreferences.get('UserData') != null) {
         Map<String, dynamic> map =
             await jsonDecode(sharedPreferences.get('UserData') as String);
+        log(map.toString());
+
         return LoginResponseModel.fromJson(map);
       } else {
+        log('null');
         return null;
       }
     } catch (e) {

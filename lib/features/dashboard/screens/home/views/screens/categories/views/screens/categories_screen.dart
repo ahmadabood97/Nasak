@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../core/widgets/circular_progress_indicator.dart';
 import '../../../../../controllers/provider/home_provider.dart';
-import '../../../shops/widgets/services_section.dart';
+import '../../../dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../widgets/category_card_view.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           : GridView.builder(
               padding: const EdgeInsets.all(15),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 1.4),
+                  crossAxisCount: 3, childAspectRatio: 1.2),
               itemCount: Provider.of<HomeProvider>(context, listen: false)
                   .categoriesList
                   .length,
