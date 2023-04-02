@@ -58,6 +58,7 @@ class AddressProvider extends ChangeNotifier {
           _addressList = _addressData!.result!.addersses!;
           _isLoading = false;
           stopLoading!();
+          log("Get Address Success");
 
           notifyListeners();
         } else {

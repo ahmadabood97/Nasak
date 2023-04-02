@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/categories/views/screens/categories_screen.dart';
-import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
-
 import '../../features/auth/screens/login/views/screens/signin_screen.dart';
 import '../../features/auth/screens/register/views/screens/signup_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/add_address/screens/add_address_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/address_screen.dart';
 import '../../features/dashboard/screens/countries/views/screens/countries_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
-import '../../features/dashboard/screens/favourites/screens/favourites_screen.dart';
+import '../../features/dashboard/screens/favorites/views/screens/favorites_screen.dart';
 import '../../features/dashboard/screens/home/models/app_services_model.dart';
 import '../../features/dashboard/screens/home/views/screens/categories/views/screens/category_products/views/screens/category_product_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/dashboard_shops_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/offers/views/screens/offers_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/orders/screens/order_details/screens/order_details_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/orders/screens/orders_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/filter/screens/filter_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/search/screens/search_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/screens/about_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/basket/screens/basket_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/add_voucher_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/checkout_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/shop_details_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shops_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/filter/screens/filter_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/search/screens/search_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/about/screens/about_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/basket/screens/basket_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/checkout/screens/add_voucher_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/checkout/screens/checkout_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shop_details/views/screens/shop_details_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/shops/screens/shops_screen.dart';
 import '../../features/dashboard/screens/inbox/inbox_screen.dart';
-import '../../features/dashboard/screens/offers/screens/offers_screen.dart';
-import '../../features/dashboard/screens/orders/screens/order_details/screens/order_details_screen.dart';
-import '../../features/dashboard/screens/orders/screens/orders_screen.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -51,6 +51,7 @@ class Routes {
   static const String citiesRoute = '/cities';
   static const String regionsRoute = '/regions';
   static const String categoryProductRoute = '/categoryProduct';
+  static const String dashboardShopRoute = '/dashboardShop';
 }
 
 class AppRoutes {
@@ -69,6 +70,11 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) =>
               ShopsScreen(params: settings.arguments as ParamsServiceSection),
+        );
+      case Routes.dashboardShopRoute:
+        return MaterialPageRoute(
+          builder: (context) => DashboardShopScreen(
+              params: settings.arguments as ParamsServiceSection),
         );
       case Routes.homeRoute:
         return MaterialPageRoute(

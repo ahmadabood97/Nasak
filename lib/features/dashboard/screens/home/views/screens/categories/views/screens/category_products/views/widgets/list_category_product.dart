@@ -20,16 +20,38 @@ Widget listCategorProduct(BuildContext context, ScrollController controller,
             ),
           ],
         )
-      : GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, childAspectRatio: 1.05),
-          itemCount: categorProducts.length + 1,
-          primary: false,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return index < categorProducts.length
-                ? categoryProductCardView(categorProducts[index], context)
-                : noMoreData(context);
-          },
+      : SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: List.generate(
+                          categorProducts.length + 1,
+                          (index) => index % 2 == 0
+                              ? index < categorProducts.length
+                                  ? categoryProductCardView(
+                                      categorProducts[index], context)
+                                  : noMoreData(context)
+                              : const SizedBox()),
+                    )),
+                Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: List.generate(
+                          categorProducts.length + 1,
+                          (index) => index % 2 == 1
+                              ? index < categorProducts.length
+                                  ? categoryProductCardView(
+                                      categorProducts[index], context)
+                                  : noMoreData(context)
+                              : const SizedBox()),
+                    )),
+              ],
+            ),
+          ),
         );
 }

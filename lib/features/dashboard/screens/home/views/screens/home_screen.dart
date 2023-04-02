@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nasak/features/dashboard/screens/home/views/screens/shops/widgets/services_section.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/provider/home_provider.dart';
 import '../widgets/baner_list.dart';
+import 'dashboard_shops/screens/shops/widgets/services_section.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

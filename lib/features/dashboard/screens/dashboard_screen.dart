@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../core/utils/constants.dart';
+import 'favorites/views/screens/favorites_screen.dart';
+import 'home/views/screens/dashboard_shops/screens/shops/widgets/drawer.dart';
 import 'home/views/screens/home_screen.dart';
-import 'home/views/screens/shops/widgets/drawer.dart';
-import 'offers/screens/offers_screen.dart';
 import '../widgets/bottom_bar_container.dart';
-import 'favourites/screens/favourites_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -31,7 +30,6 @@ class DashboardScreenState extends State<DashboardScreen> {
         }),
         children: const [
           HomeScreen(),
-          OffersScreen(),
           FavoritesScreen(fromScreen: "Dashboard"),
           MyDrawer(),
         ],

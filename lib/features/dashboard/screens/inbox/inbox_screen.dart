@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../home/views/screens/shops/widgets/screen_empty.dart';
+import '../home/views/screens/dashboard_shops/screens/shops/widgets/screen_empty.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});

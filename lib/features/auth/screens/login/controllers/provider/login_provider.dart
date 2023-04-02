@@ -15,8 +15,8 @@ class LoginProvider extends ChangeNotifier {
 
   LoginProvider({required this.loginRepo});
 
-  LoginResponseModel? _loginData;
-  LoginResponseModel? get loginData => _loginData;
+  LoginResponseModel? _userDate;
+  LoginResponseModel? get userData => _userDate;
 
   bool? getData;
 
@@ -45,14 +45,14 @@ class LoginProvider extends ChangeNotifier {
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Login Success");
           getData = true;
-          _loginData = LoginResponseModel.fromJson(
+          _userDate = LoginResponseModel.fromJson(
               json.decode(apiResponse.body)['result']);
           _isLoading = false;
           _passwordController.clear();
           moveToDashboard!();
 
-          log("Save token is :${_loginData!.authToken}");
-          loginRepo.saveUserDataBySharedPref(_loginData!);
+          log("Save token is :${_userDate!.authToken}");
+          loginRepo.saveUserDataBySharedPref(_userDate!);
           notifyListeners();
         } else {
           getData = null;
@@ -75,7 +75,7 @@ class LoginProvider extends ChangeNotifier {
     }
   }
 
-  dynamic getUserData() {
-    return loginRepo.getUserData();
+  Future<dynamic> getUserData() async {
+    return _userDate = await loginRepo.getUserData();
   }
 }

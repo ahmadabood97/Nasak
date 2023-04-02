@@ -5,6 +5,7 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:provider/provider.dart';
 
 import '../../../../config/routes/app_routes.dart';
+import '../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../dashboard/screens/countries/controllers/provider/countries_provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Provider.of<CountriesProvider>(context, listen: false).getCountryData();
     Provider.of<CountriesProvider>(context, listen: false).getLocationData();
     Provider.of<CountriesProvider>(context, listen: false).getCountries();
+    Provider.of<LoginProvider>(context, listen: false).getUserData();
     Provider.of<HomeProvider>(context, listen: false).getHome(moveTohome: () {
       if (Provider.of<CountriesProvider>(context, listen: false)
                   .countriesValue
