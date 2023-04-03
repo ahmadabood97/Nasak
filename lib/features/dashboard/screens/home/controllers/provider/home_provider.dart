@@ -60,7 +60,7 @@ class HomeProvider extends ChangeNotifier {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse = await homeRepo.getHome();
         _isLoading = true;
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Home Success");
           getData = true;
           _home = HomeResponse.fromJson(json.decode(apiResponse.body));
@@ -112,7 +112,7 @@ class HomeProvider extends ChangeNotifier {
         http.Response apiResponse =
             await homeRepo.getShops(serviceId, locationId, page, catIdSelected);
         _isLoading = true;
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Shops Success");
           getData = true;
           _appServicesResponse =
@@ -165,7 +165,7 @@ class HomeProvider extends ChangeNotifier {
         http.Response apiResponse = await homeRepo.getCategories(
             serviceId, locationId, page, catIdSelected);
         _isLoading = true;
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Categories Success");
           getData = true;
           _appServicesResponse =

@@ -31,7 +31,7 @@ class _ServiceCardViewState extends State<ServiceCardView> {
             .appServices![widget.index]
             .showCategories!) {
           if (!mounted) return;
-          Navigator.pushNamed(context, Routes.categoriesRoute,
+          Navigator.pushNamed(context, Routes.dashboardCategoryRoute,
               arguments: ParamsServiceSection(
                   deliveryLocations: deliveryLocations,
                   serviceId: Provider.of<HomeProvider>(context, listen: false)

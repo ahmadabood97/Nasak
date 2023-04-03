@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/shop_model.dart';
+import 'extra_card_view.dart';
 
 class ItemsShopCardView extends StatefulWidget {
   final SpProducts product;
@@ -155,41 +156,15 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                         //   height: 30,
                         // ),
 
-                        Text(
-                          widget.product.productDetails![0].groupName!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Color.fromARGB(255, 35, 109, 170),
-                          ),
-                        ),
                         ListView.builder(
-                          padding: const EdgeInsets.all(0),
-                          itemCount: 1,
-                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.product.extraList.length,
                           itemBuilder: (context, index) {
-                            return CheckboxListTile(
-                              contentPadding: const EdgeInsets.all(0),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              title: Text(
-                                widget.product.productDetails![0].optionName!,
-                                style: const TextStyle(
-                                    color: Colors.black87, fontSize: 12),
-                              ),
-                              secondary: const Icon(
-                                Icons.info_outline,
-                                size: 20,
-                              ),
-                              value: false,
-                              onChanged: (newValue) {
-                                setState(() {});
-                              },
-                            );
+                            return extraCardView(
+                                widget.product.extraList[index]);
                           },
-                        ),
-                        const SizedBox(
-                          height: 10,
                         ),
                         // Row(
                         //   children: const [

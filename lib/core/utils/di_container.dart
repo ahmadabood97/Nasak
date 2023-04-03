@@ -13,10 +13,12 @@ import '../../features/dashboard/screens/favorites/controllers/provider/favorite
 import '../../features/dashboard/screens/favorites/controllers/repo/favorite_repo.dart';
 import '../../features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import '../../features/dashboard/screens/home/controllers/repo/home_repo.dart';
-import '../../features/dashboard/screens/home/views/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
-import '../../features/dashboard/screens/home/views/screens/categories/views/screens/category_products/controllers/repo/category_details_repo.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/repo/category_details_repo.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/repo/shop_repo.dart';
+import '../../features/dashboard/screens/home/views/screens/offers/controllers/provider/offer_provider.dart';
+import '../../features/dashboard/screens/home/views/screens/offers/controllers/repo/offers_repo.dart';
 
 final sl = GetIt.instance;
 
@@ -30,6 +32,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ShopRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => CategoryDetailsRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => FavoriteRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => OffersRepo(sharedPreferences: sl()));
 
   // Provider
   sl.registerFactory(() => CountriesProvider(countriesRepo: sl()));
@@ -39,6 +42,7 @@ Future<void> init() async {
   sl.registerFactory(() => ShopProvider(shopRepo: sl()));
   sl.registerFactory(() => CategoryDetailsProvider(categoryDetailsRepo: sl()));
   sl.registerFactory(() => FavoriteProvider(favoriteRepo: sl()));
+  sl.registerFactory(() => OffersProvider(offerRepo: sl()));
   sl.registerFactory(() => RegisterProvider(
         registerRepo: sl(),
         countriesProvider: sl(),
