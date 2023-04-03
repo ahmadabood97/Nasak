@@ -37,10 +37,12 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
         vsync: this);
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
-        Provider.of<ShopProvider>(context, listen: false).getShopDetails(
-          widget.serviceProviders.id!,
-          Provider.of<ShopProvider>(context, listen: false).catIdSelected,
-        );
+        if (Provider.of<ShopProvider>(context, listen: false).hasMore) {
+          Provider.of<ShopProvider>(context, listen: false).getShopDetails(
+            widget.serviceProviders.id!,
+            Provider.of<ShopProvider>(context, listen: false).catIdSelected,
+          );
+        }
       }
     });
     scrollController = AutoScrollController();

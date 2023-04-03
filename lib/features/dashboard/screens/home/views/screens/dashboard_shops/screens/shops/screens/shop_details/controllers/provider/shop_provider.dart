@@ -74,7 +74,7 @@ class ShopProvider extends ChangeNotifier {
         http.Response apiResponse =
             await shopRepo.getShopDetails(shopId, catId, page);
         _isLoading = true;
-        if (apiResponse.statusCode == 200) {
+        if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Shops Details Success");
 
           if (showLoading) {
@@ -97,9 +97,32 @@ class ShopProvider extends ChangeNotifier {
                               .decode(_productsList[i].productAttAsJson!)
                               .length;
                       j++) {
+                    if (!_productsList[i].extraHelpList.contains(
+                        json.decode(_productsList[i].productAttAsJson!)[j]
+                            ['GroupName'])) {
+                      _productsList[i].extraHelpList.add(
+                          json.decode(_productsList[i].productAttAsJson!)[j]
+                              ['GroupName']);
+                    }
                     _productsList[i].productDetails!.add(
                         ProductDetails.fromJson(json
                             .decode(_productsList[i].productAttAsJson!)[j]));
+                  }
+
+                  for (int k = 0;
+                      k < _productsList[i].extraHelpList.length;
+                      k++) {
+                    _productsList[i].extraList.add([]);
+                    for (int g = 0;
+                        g < _productsList[i].productDetails!.length;
+                        g++) {
+                      if (_productsList[i].productDetails![g].groupName ==
+                          _productsList[i].extraHelpList[k]) {
+                        _productsList[i]
+                            .extraList[k]
+                            .add(_productsList[i].productDetails![g]);
+                      }
+                    }
                   }
                 }
               }
@@ -117,9 +140,35 @@ class ShopProvider extends ChangeNotifier {
                                   _productsPaginationList[i].productAttAsJson!)
                               .length;
                       j++) {
+                    if (!_productsPaginationList[i].extraHelpList.contains(
+                        json.decode(
+                                _productsPaginationList[i].productAttAsJson!)[j]
+                            ['GroupName'])) {
+                      _productsPaginationList[i].extraHelpList.add(json.decode(
+                              _productsPaginationList[i].productAttAsJson!)[j]
+                          ['GroupName']);
+                    }
                     _productsPaginationList[i].productDetails!.add(
                         ProductDetails.fromJson(json.decode(
                             _productsPaginationList[i].productAttAsJson!)[j]));
+                  }
+                  for (int k = 0;
+                      k < _productsPaginationList[i].extraHelpList.length;
+                      k++) {
+                    _productsPaginationList[i].extraList.add([]);
+
+                    for (int g = 0;
+                        g < _productsPaginationList[i].productDetails!.length;
+                        g++) {
+                      if (_productsPaginationList[i]
+                              .productDetails![g]
+                              .groupName ==
+                          _productsPaginationList[i].extraHelpList[k]) {
+                        _productsPaginationList[i]
+                            .extraList[k]
+                            .add(_productsPaginationList[i].productDetails![g]);
+                      }
+                    }
                   }
                 }
               }

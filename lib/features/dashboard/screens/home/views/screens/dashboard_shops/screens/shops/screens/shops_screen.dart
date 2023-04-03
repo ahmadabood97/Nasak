@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../core/widgets/circular_progress_indicator.dart';
+import '../../../../../../../../../../core/widgets/no_more_data.dart';
 import '../../../../../../controllers/provider/home_provider.dart';
 import '../widgets/categories_tab_view.dart';
-import '../widgets/no_more_data.dart';
 import '../widgets/select_address.dart';
 import '../widgets/select_service_type.dart';
 import '../widgets/services_section.dart';
@@ -31,8 +31,10 @@ class _ShopsScreenState extends State<ShopsScreen> {
 
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
-        Provider.of<HomeProvider>(context, listen: false).getShops(
-            widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+        if (Provider.of<HomeProvider>(context, listen: false).hasMore) {
+          Provider.of<HomeProvider>(context, listen: false).getShops(
+              widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+        }
       }
     });
 
@@ -138,7 +140,11 @@ class _ShopsScreenState extends State<ShopsScreen> {
                                                 listen: true)
                                             .shopsList[index],
                                         context)
-                                    : noMoreData(context);
+                                    : noMoreData(
+                                        context,
+                                        Provider.of<HomeProvider>(context,
+                                                listen: true)
+                                            .hasMore);
                               },
                               separatorBuilder: (context, index) =>
                                   const SizedBox(

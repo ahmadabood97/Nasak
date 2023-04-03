@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shops_screen.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../../offers/views/screens/offers_screen.dart';
 import '../../orders/screens/orders_screen.dart';
-import '../widgets/bottom_bar_container_shops.dart';
+import '../widgets/bottom_bar_container_categories.dart';
+import 'categories/views/screens/categories_screen.dart';
 
-class DashboardShopScreen extends StatefulWidget {
+class DashboardCategoriesScreen extends StatefulWidget {
   final ParamsServiceSection params;
 
-  const DashboardShopScreen({Key? key, required this.params}) : super(key: key);
+  const DashboardCategoriesScreen({Key? key, required this.params})
+      : super(key: key);
   @override
-  State<DashboardShopScreen> createState() => DashboardShopScreenState();
+  State<DashboardCategoriesScreen> createState() =>
+      DashboardCategoriesScreenState();
 }
 
-class DashboardShopScreenState extends State<DashboardShopScreen> {
+class DashboardCategoriesScreenState extends State<DashboardCategoriesScreen> {
   int selectedIndex = 0;
   static final PageController pageController = PageController(initialPage: 0);
 
@@ -27,12 +29,12 @@ class DashboardShopScreenState extends State<DashboardShopScreen> {
           selectedIndex = index;
         }),
         children: [
-          ShopsScreen(params: widget.params),
+          CategoriesScreen(params: widget.params),
           OffersScreen(params: widget.params),
           OrdersScreen(params: widget.params),
         ],
       ),
-      bottomNavigationBar: BottomBarContainerShops(
+      bottomNavigationBar: BottomBarContainerCategories(
         selectedIndex: selectedIndex,
         pageController: pageController,
       ),

@@ -284,6 +284,8 @@ class SpProducts {
   dynamic brandName;
   String? productimgurl;
   List<ProductDetails>? productDetails;
+  List<List<ProductDetails>> extraList = [];
+  List<String> extraHelpList = [];
 
   SpProducts(
       {this.id,
