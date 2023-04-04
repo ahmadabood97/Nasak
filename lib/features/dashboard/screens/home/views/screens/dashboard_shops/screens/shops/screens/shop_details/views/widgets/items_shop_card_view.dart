@@ -162,8 +162,9 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: widget.product.extraList.length,
                           itemBuilder: (context, index) {
-                            return extraCardView(
-                                widget.product.extraList[index]);
+                            return ExtraCardView(
+                              productDetails: widget.product.extraList[index],
+                            );
                           },
                         ),
                         // Row(

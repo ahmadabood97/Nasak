@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../core/utils/constants.dart';
 
@@ -34,18 +36,21 @@ class HeaderDrawer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                "Hi there!",
-                style: TextStyle(
+                Provider.of<LoginProvider>(context, listen: true).userData ==
+                        null
+                    ? "Hi there!"
+                    : "${Provider.of<LoginProvider>(context, listen: true).userData!.firstName!} ${Provider.of<LoginProvider>(context, listen: true).userData!.lastName!}",
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 18),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              Text("View personal information",
+              const Text("View personal information",
                   style: TextStyle(color: Colors.white, fontSize: 15))
             ],
           ),

@@ -92,7 +92,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                           listen: true)
                                       .offersList!
                                       .length
-                              ? offersCardView(
+                              ? offerCardView(
                                   context,
                                   Provider.of<OffersProvider>(context,
                                           listen: true)

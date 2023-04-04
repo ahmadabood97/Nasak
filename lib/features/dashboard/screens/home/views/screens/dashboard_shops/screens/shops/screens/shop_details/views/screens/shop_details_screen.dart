@@ -24,7 +24,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
   bool isCollapsed = false;
   late AutoScrollController scrollController;
   late TabController tabController;
-  final double expandedHeight = 480.0;
+  final double expandedHeight = 350.0;
   final PageData data = ExampleData.data;
   final double collapsedHeight = kToolbarHeight;
 

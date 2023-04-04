@@ -78,4 +78,10 @@ class LoginProvider extends ChangeNotifier {
   Future<dynamic> getUserData() async {
     return _userDate = await loginRepo.getUserData();
   }
+
+  void logout() {
+    loginRepo.logout();
+    _userDate = null;
+    notifyListeners();
+  }
 }

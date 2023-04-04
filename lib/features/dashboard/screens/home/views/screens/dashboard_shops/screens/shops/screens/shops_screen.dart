@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../core/utils/constants.dart';
@@ -27,13 +28,19 @@ class _ShopsScreenState extends State<ShopsScreen> {
     Provider.of<HomeProvider>(context, listen: false).clear();
 
     Provider.of<HomeProvider>(context, listen: false).getShops(
-        widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+        widget.params.serviceId!,
+        Provider.of<CountriesProvider>(context, listen: false)
+            .locationSelectedValue
+            .id!);
 
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
         if (Provider.of<HomeProvider>(context, listen: false).hasMore) {
           Provider.of<HomeProvider>(context, listen: false).getShops(
-              widget.params.serviceId!, widget.params.deliveryLocations!.id!);
+              widget.params.serviceId!,
+              Provider.of<CountriesProvider>(context, listen: false)
+                  .locationSelectedValue
+                  .id!);
         }
       }
     });
@@ -72,9 +79,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
                         toolbarHeight: 100,
                         title: Column(
                           children: [
-                            SelectAddress(
-                                deliveryLocation: widget.params
-                                    .deliveryLocations!.deliveryRegionName!),
+                            SelectAddress(serviceId: widget.params.serviceId!),
                             const SelectServiceType()
                           ],
                         ),
@@ -87,8 +92,11 @@ class _ShopsScreenState extends State<ShopsScreen> {
               color: Colors.orange,
               onRefresh: () {
                 return Provider.of<HomeProvider>(context, listen: false)
-                    .refresh(widget.params.serviceId!,
-                        widget.params.deliveryLocations!.id!);
+                    .refresh(
+                        widget.params.serviceId!,
+                        Provider.of<CountriesProvider>(context, listen: false)
+                            .locationSelectedValue
+                            .id!);
               },
               child: ListView(
                 controller: controller,
@@ -99,7 +107,9 @@ class _ShopsScreenState extends State<ShopsScreen> {
                       Provider.of<HomeProvider>(context, listen: true)
                           .categoriesShopsList,
                       widget.params.serviceId!,
-                      widget.params.deliveryLocations!.id!),
+                      Provider.of<CountriesProvider>(context, listen: true)
+                          .locationSelectedValue
+                          .id!),
                   Provider.of<HomeProvider>(context, listen: true).isLoading
                       ? progressIndicator(context)
                       : Provider.of<HomeProvider>(context, listen: true)

@@ -102,9 +102,15 @@ class HomeProvider extends ChangeNotifier {
     catIdSelected = '';
   }
 
-  Future getShops(String serviceId, String locationId) async {
+  Future getShops(String serviceId, String locationId,
+      {bool showLoading = false}) async {
     getData = null;
+
     _isLoading = true;
+
+    if (showLoading) {
+      notifyListeners();
+    }
 
     try {
       final result = await InternetAddress.lookup('example.com');

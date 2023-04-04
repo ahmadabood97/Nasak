@@ -140,7 +140,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ],
             ),
           ),
-          Center(child: customButton(HexColor('3359ba'), 'Order and pay'))
+          Center(
+              child: customButton(
+                  HexColor('3359ba'), 'Order and pay', Colors.white))
         ],
       ),
     );

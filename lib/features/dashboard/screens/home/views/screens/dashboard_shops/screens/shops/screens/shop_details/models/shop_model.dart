@@ -44,6 +44,7 @@ class ProductDetails {
   String? optionguid;
   String? optionPriceAdj;
   bool? isavaliable;
+  bool isSelected = false;
 
   ProductDetails(
       {required this.attrType,

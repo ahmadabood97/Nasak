@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/offers_model.dart';
+import '../../models/about_model.dart';
 
-Widget offerCardView(BuildContext context, Items item) {
+Widget offerCardView(BuildContext context, SpOffers item) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(

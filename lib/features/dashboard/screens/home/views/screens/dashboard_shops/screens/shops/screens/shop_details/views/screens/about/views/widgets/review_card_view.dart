@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-Widget reviewCardView() {
+import '../../models/about_model.dart';
+
+Widget reviewCardView(SpReviews review) {
   return Container(
     padding: const EdgeInsets.all(15),
     decoration: const BoxDecoration(
@@ -10,14 +12,17 @@ Widget reviewCardView() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Fabian Bleesz",
-          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+        Text(
+          review.title.toString(),
+          style: const TextStyle(
+              color: Colors.orange, fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           height: 10,
         ),
-        const Text("Sunday, 15 January"),
+        Text(
+          review.createdOn.toString(),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -32,7 +37,7 @@ Widget reviewCardView() {
             ),
             RatingBar.builder(
               ignoreGestures: true,
-              initialRating: 3,
+              initialRating: review.productRating!.toDouble(),
               itemSize: 20,
               minRating: 1,
               unratedColor: Colors.grey.withOpacity(0.5),
@@ -59,7 +64,7 @@ Widget reviewCardView() {
             ),
             RatingBar.builder(
               ignoreGestures: true,
-              initialRating: 3,
+              initialRating: review.deliveryRating!.toDouble(),
               itemSize: 20,
               minRating: 1,
               unratedColor: Colors.grey.withOpacity(0.5),
@@ -75,9 +80,9 @@ Widget reviewCardView() {
         const SizedBox(
           height: 10,
         ),
-        const Text(
-          "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-          style: TextStyle(height: 2),
+        Text(
+          review.reviewText.toString(),
+          style: const TextStyle(height: 2),
         )
       ],
     ),

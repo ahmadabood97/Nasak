@@ -77,8 +77,8 @@ class AddVoucherScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  customButton(
-                      const Color.fromARGB(255, 3, 59, 107), "Apply code")
+                  customButton(const Color.fromARGB(255, 3, 59, 107),
+                      "Apply code", Colors.white)
                 ],
               ),
             ),
