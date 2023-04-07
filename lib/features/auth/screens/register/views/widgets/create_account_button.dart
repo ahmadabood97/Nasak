@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../config/routes/app_routes.dart';
 import '../../../../../../core/utils/hex_colors.dart';
@@ -25,6 +26,8 @@ class CreateAccountButton extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 moveToDashboard: () {
+                  Provider.of<LoginProvider>(context, listen: false)
+                      .getUserData();
                   Navigator.pushReplacementNamed(
                       context, Routes.dashboardRoute);
                 },

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nasak/core/utils/constants.dart';
+import 'package:provider/provider.dart';
+
+import '../../controllers/provider/about_provider.dart';
 
 Widget headSection(BuildContext context) {
   return Container(
@@ -59,15 +62,15 @@ Widget headSection(BuildContext context) {
                   height: 15,
                 ),
                 Row(
-                  children: const [
+                  children: [
                     Text(
-                      "out of 161 reviews",
-                      style: TextStyle(color: Colors.white),
+                      "out of ${Provider.of<AboutProvider>(context, listen: true).reviewsList.length} reviews",
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(
+                    const Icon(
                       size: 20,
                       Icons.info_outline,
                       color: Colors.white,

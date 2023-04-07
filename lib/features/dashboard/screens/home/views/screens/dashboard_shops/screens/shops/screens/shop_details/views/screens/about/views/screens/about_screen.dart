@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../controllers/provider/about_provider.dart';
 import 'info.dart';
+import 'offers.dart';
 import 'reviews.dart';
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+class AboutScreen extends StatefulWidget {
+  final String shopId;
+  const AboutScreen({super.key, required this.shopId});
+
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  @override
+  void initState() {
+    Provider.of<AboutProvider>(context, listen: false).clear();
+    Provider.of<AboutProvider>(context, listen: false).getAbout(widget.shopId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
@@ -23,7 +38,8 @@ class AboutScreen extends StatelessWidget {
                 Tab(
                   text: 'Info',
                 ),
-                Tab(text: 'Reviews')
+                Tab(text: 'Reviews'),
+                Tab(text: 'Offers'),
               ],
             ),
             title: Text(
@@ -39,7 +55,7 @@ class AboutScreen extends StatelessWidget {
               ),
             )),
         body: const TabBarView(
-          children: [Info(), Reviews()],
+          children: [Info(), Reviews(), Offers()],
         ),
       ),
     );

@@ -16,8 +16,8 @@ class OffersProvider extends ChangeNotifier {
   OffersResponseModel? _offersResponse;
   OffersResponseModel? get offersResponse => _offersResponse;
 
-  List<Items> _offersList = [];
-  List<Items>? get offersList => _offersList;
+  List<Offer> _offersList = [];
+  List<Offer>? get offersList => _offersList;
 
   int page = 0;
   bool hasMore = true;

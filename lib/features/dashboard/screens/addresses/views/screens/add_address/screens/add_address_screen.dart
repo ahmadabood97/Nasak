@@ -66,7 +66,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 if (addAddressFormKey.currentState!.validate()) {
                   LoginResponseModel userData =
                       Provider.of<LoginProvider>(context, listen: false)
-                          .userData!;
+                          .loginData!;
                   if (!mounted) return;
                   Provider.of<RegisterProvider>(context, listen: false)
                       .setCountryCityReigonId();

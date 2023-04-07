@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget customButton(Color color, String title) {
+Widget customButton(Color color, String title, hexColor) {
   return Container(
     decoration: BoxDecoration(
         color: color,

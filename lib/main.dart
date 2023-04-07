@@ -13,7 +13,10 @@ import 'features/dashboard/screens/favorites/controllers/provider/favorite_provi
 import 'features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
 import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
+import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/controllers/provider/about_provider.dart';
 import 'features/dashboard/screens/home/views/screens/offers/controllers/provider/offer_provider.dart';
+import 'features/dashboard/screens/home/views/screens/orders/controllers/provider/order_provider.dart';
+import 'features/dashboard/screens/home/views/screens/orders/views/screens/order_details/controllers/provider/order_details_provider.dart';
 import 'features/splash/views/screens/splash_screen.dart';
 
 void main() async {
@@ -35,9 +38,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<AddressProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
-        ChangeNotifierProvider(create: (context) => di.sl<FavoriteProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<ShopProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<OffersProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<FavoriteProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<AboutProvider>()),
+        ChangeNotifierProvider(create: (context) => di.sl<OrdersProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.sl<OrderDetailsProvider>()),
         ChangeNotifierProvider(
             create: (context) => di.sl<CategoryDetailsProvider>()),
         ChangeNotifierProxyProvider<CountriesProvider, RegisterProvider>(

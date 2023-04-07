@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-Widget orderCardView(BuildContext context) {
+import '../../models/order_model.dart';
+
+Widget orderCardView(BuildContext context, Order order) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(

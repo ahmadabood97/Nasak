@@ -150,7 +150,7 @@ class AppBarSection extends SliverAppBar {
                     ),
                   ),
                   Container(
-                    height: 300,
+                    height: 150,
                     width: double.infinity,
                     color: Colors.white,
                     child: Container(
@@ -236,13 +236,14 @@ class AppBarSection extends SliverAppBar {
                                         onPressed: (int index) async {
                                           if (index == 0) {
                                             Navigator.pushNamed(
-                                                context, Routes.aboutRoute);
+                                                context, Routes.aboutRoute,
+                                                arguments: serviceProviders.id);
                                           } else {
                                             var userData =
                                                 Provider.of<LoginProvider>(
                                                         context,
                                                         listen: false)
-                                                    .userData;
+                                                    .loginData;
 
                                             if (userData != null) {
                                               Provider.of<FavoriteProvider>(
@@ -250,6 +251,12 @@ class AppBarSection extends SliverAppBar {
                                                       listen: false)
                                                   .addToFavorites(
                                                       context: context,
+                                                      editIsFav: () {
+                                                        Provider.of<ShopProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .editIsFav();
+                                                      },
                                                       stopLoading: () {
                                                         Navigator.pop(context);
                                                       },
@@ -263,16 +270,29 @@ class AppBarSection extends SliverAppBar {
                                             }
                                           }
                                         },
-                                        children: const [
-                                          SizedBox(
+                                        children: [
+                                          const SizedBox(
                                               height: 45,
                                               width: 45,
                                               child: Icon(Icons.info_outlined)),
                                           SizedBox(
                                               height: 45,
                                               width: 45,
-                                              child:
-                                                  Icon(Icons.favorite_outline)),
+                                              child: Icon(
+                                                Provider.of<ShopProvider>(
+                                                            context,
+                                                            listen: true)
+                                                        .isFav
+                                                    ? Icons.favorite
+                                                    : Icons.favorite_outline,
+                                                color:
+                                                    Provider.of<ShopProvider>(
+                                                                context,
+                                                                listen: true)
+                                                            .isFav
+                                                        ? Colors.red
+                                                        : Colors.black,
+                                              )),
                                         ],
                                       ),
                                     ],
@@ -283,75 +303,75 @@ class AppBarSection extends SliverAppBar {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "Offers",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 247, 194, 50),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3))),
-                              height: 80,
-                              width: 260,
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        flex: 2,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              "30% RABATT auf Burger Sushi",
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            const SizedBox(
-                                              height: 3,
-                                            ),
-                                            Text(
-                                              "30% RABATT auf Burger Sushi",
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                color: Colors.black
-                                                    .withOpacity(0.6),
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "Delivery and pickup",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black
-                                                    .withOpacity(0.5),
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ]),
-                            )
+                            // const Text(
+                            //   "Offers",
+                            //   overflow: TextOverflow.ellipsis,
+                            //   maxLines: 2,
+                            //   style: TextStyle(
+                            //       fontSize: 15, fontWeight: FontWeight.bold),
+                            // ),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Container(
+                            //   padding: const EdgeInsets.all(10),
+                            //   decoration: const BoxDecoration(
+                            //       color: Color.fromARGB(255, 247, 194, 50),
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(3))),
+                            //   height: 80,
+                            //   width: 260,
+                            //   child: Column(
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: [
+                            //         Expanded(
+                            //             flex: 2,
+                            //             child: Column(
+                            //               crossAxisAlignment:
+                            //                   CrossAxisAlignment.start,
+                            //               children: [
+                            //                 const Text(
+                            //                   "30% RABATT auf Burger Sushi",
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                   maxLines: 1,
+                            //                   style: TextStyle(
+                            //                       fontSize: 14,
+                            //                       fontWeight: FontWeight.bold),
+                            //                 ),
+                            //                 const SizedBox(
+                            //                   height: 3,
+                            //                 ),
+                            //                 Text(
+                            //                   "30% RABATT auf Burger Sushi",
+                            //                   overflow: TextOverflow.ellipsis,
+                            //                   maxLines: 1,
+                            //                   style: TextStyle(
+                            //                     color: Colors.black
+                            //                         .withOpacity(0.6),
+                            //                     fontSize: 12,
+                            //                   ),
+                            //                 ),
+                            //               ],
+                            //             )),
+                            //         Expanded(
+                            //           flex: 1,
+                            //           child: Column(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.end,
+                            //             children: [
+                            //               Text(
+                            //                 "Delivery and pickup",
+                            //                 style: TextStyle(
+                            //                     fontSize: 10,
+                            //                     color: Colors.black
+                            //                         .withOpacity(0.5),
+                            //                     fontWeight: FontWeight.bold),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ]),
+                            // )
                           ],
                         )),
                   ),

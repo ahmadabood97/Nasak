@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/offers_model.dart';
 
-Widget offersCardView(BuildContext context, Items item) {
+Widget offerCardView(BuildContext context, Offer item) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(

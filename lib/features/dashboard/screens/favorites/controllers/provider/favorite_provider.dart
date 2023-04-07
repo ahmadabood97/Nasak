@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../../../core/widgets/loading_alert_dialog.dart';
 import '../../../../../../core/widgets/show_dialog.dart';
 import '../../models/favorite_model.dart';
@@ -26,43 +24,43 @@ class FavoriteProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  clear() {
+    _favoriteList.clear();
+  }
+
   Future<void> getFavorites(
-      {bool firstRequest = false,
-      VoidCallback? stopLoading,
-      VoidCallback? moveToFavoriteScreen,
-      BuildContext? context,
-      String? token}) async {
+    String serviceId, {
+    bool firstRequest = false,
+    BuildContext? context,
+    String? token,
+  }) async {
     getData = null;
-    loading(context!);
+    _isLoading = true;
+
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        http.Response apiResponse = await favoriteRepo.getFavorites(token!);
+        http.Response apiResponse =
+            await favoriteRepo.getFavorites(token!, serviceId);
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           getData = true;
           _favoriteData =
               FavoriteResponseModel.fromJson(json.decode(apiResponse.body));
 
           _favoriteList = _favoriteData!.result!.items!;
-
+          log(_favoriteList.length.toString());
           _isLoading = false;
-          stopLoading!();
-          if (moveToFavoriteScreen != null) {
-            moveToFavoriteScreen();
-          }
+
           log("Get Favorite Success");
           notifyListeners();
         } else if (json.decode(apiResponse.body)['statusCode'] == 204) {
           log(" Favorite is empty");
-
-          if (moveToFavoriteScreen != null) {
-            moveToFavoriteScreen();
-          }
-          stopLoading!();
+          getData = null;
+          _isLoading = false;
+          notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
-          stopLoading!();
           notifyListeners();
           log("Get Favorite Failed");
         }
@@ -70,8 +68,7 @@ class FavoriteProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
-      stopLoading!();
-      showCustomDialog(context, "Check your internet and try again...");
+      showCustomDialog(context!, "Check your internet and try again...");
       notifyListeners();
       log("Get Favorite Failed");
     }
@@ -80,11 +77,11 @@ class FavoriteProvider extends ChangeNotifier {
   Future<void> addToFavorites(
       {bool firstRequest = false,
       VoidCallback? stopLoading,
+      VoidCallback? editIsFav,
       String? token,
       String? shopId,
       BuildContext? context}) async {
     getData = null;
-
     loading(context!);
     try {
       final result = await InternetAddress.lookup('example.com');
@@ -93,10 +90,10 @@ class FavoriteProvider extends ChangeNotifier {
             await favoriteRepo.addToFavorites(shopId!, token!);
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Add To Favorite Success");
-
           getData = true;
           _isLoading = false;
           stopLoading!();
+          editIsFav!();
           notifyListeners();
         } else {
           getData = null;

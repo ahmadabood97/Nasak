@@ -27,8 +27,8 @@ class SignInButton extends StatelessWidget {
               moveToDashboard: () {
                 screenFrom == 'checkout'
                     ? Navigator.pop(context)
-                    : Navigator.pushReplacementNamed(
-                        context, Routes.dashboardRoute);
+                    : Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
               },
             );
           }

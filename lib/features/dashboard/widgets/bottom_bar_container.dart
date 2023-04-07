@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nasak/features/dashboard/screens/favorites/controllers/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/widgets/show_dialog.dart';
 import '../../auth/screens/login/controllers/provider/login_provider.dart';
-import '../../auth/screens/login/models/login_response_model.dart';
 
 class BottomBarContainer extends StatefulWidget {
   const BottomBarContainer({
@@ -35,21 +32,9 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       currentIndex: widget.selectedIndex,
       onTap: (index) async {
         if (index == 1) {
-          if (Provider.of<LoginProvider>(context, listen: false).userData !=
+          if (Provider.of<LoginProvider>(context, listen: false).loginData !=
               null) {
-            LoginResponseModel userData =
-                Provider.of<LoginProvider>(context, listen: false).userData!;
-            if (!mounted) return;
-            Provider.of<FavoriteProvider>(context, listen: false).getFavorites(
-              context: context,
-              token: userData.authToken,
-              moveToFavoriteScreen: () {
-                widget._pageController.jumpToPage(index);
-              },
-              stopLoading: () {
-                Navigator.pop(context);
-              },
-            );
+            widget._pageController.jumpToPage(index);
           } else {
             showCustomDialog(context, 'Please Login...');
           }

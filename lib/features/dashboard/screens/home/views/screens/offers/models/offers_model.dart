@@ -22,21 +22,21 @@ class OffersResponseModel {
 }
 
 class Result {
-  List<Items>? items;
+  List<Offer>? items;
 
   Result({this.items});
 
   Result.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
-      items = <Items>[];
+      items = <Offer>[];
       json['items'].forEach((v) {
-        items!.add(Items.fromJson(v));
+        items!.add(Offer.fromJson(v));
       });
     }
   }
 }
 
-class Items {
+class Offer {
   String? id;
   String? serviceProviderGuid;
   String? appServiceGuid;
@@ -50,7 +50,7 @@ class Items {
   dynamic specialofferProducts;
   dynamic appServiceent;
 
-  Items(
+  Offer(
       {this.id,
       this.serviceProviderGuid,
       this.appServiceGuid,
@@ -64,7 +64,7 @@ class Items {
       this.specialofferProducts,
       this.appServiceent});
 
-  Items.fromJson(Map<String, dynamic> json) {
+  Offer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     serviceProviderGuid = json['serviceProviderGuid'];
     appServiceGuid = json['appServiceGuid'];

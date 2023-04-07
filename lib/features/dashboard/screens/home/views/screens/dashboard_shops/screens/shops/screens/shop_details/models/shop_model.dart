@@ -19,18 +19,6 @@ class ShopDetailsResponse {
     errorMessage = json['errorMessage'];
     result = json['result'] != null ? Result.fromJson(json['result']) : null;
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['appVersion'] = appVersion;
-    data['apiVersion'] = apiVersion;
-    data['statusCode'] = statusCode;
-    data['errorMessage'] = errorMessage;
-    if (result != null) {
-      data['result'] = result!.toJson();
-    }
-    return data;
-  }
 }
 
 class ProductDetails {
@@ -44,6 +32,7 @@ class ProductDetails {
   String? optionguid;
   String? optionPriceAdj;
   bool? isavaliable;
+  bool isSelected = false;
 
   ProductDetails(
       {required this.attrType,
@@ -73,6 +62,7 @@ class ProductDetails {
 
 class Result {
   SpModel? spModel;
+  bool? isFav;
   List<SPcategories>? sPcategories;
   List<SpProducts>? spProducts;
 
@@ -81,6 +71,7 @@ class Result {
   Result.fromJson(Map<String, dynamic> json) {
     spModel =
         json['spModel'] != null ? SpModel.fromJson(json['spModel']) : null;
+    isFav = json['isFav'];
     if (json['sPcategories'] != null) {
       sPcategories = <SPcategories>[];
       json['sPcategories'].forEach((v) {
@@ -93,20 +84,6 @@ class Result {
         spProducts!.add(SpProducts.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (spModel != null) {
-      data['spModel'] = spModel!.toJson();
-    }
-    if (sPcategories != null) {
-      data['sPcategories'] = sPcategories!.map((v) => v.toJson()).toList();
-    }
-    if (spProducts != null) {
-      data['spProducts'] = spProducts!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -182,33 +159,6 @@ class SpModel {
     locLat = json['locLat'];
     locLong = json['locLong'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['appServiceGuid'] = appServiceGuid;
-    data['name'] = name;
-    data['shortDesc'] = shortDesc;
-    data['desc'] = desc;
-    data['normalizeLocation'] = normalizeLocation;
-    data['serviceProvLogo'] = serviceProvLogo;
-    data['serviceProvBackImg'] = serviceProvBackImg;
-    data['deliveryDurationNormalized'] = deliveryDurationNormalized;
-    data['contactPrimaryPhone'] = contactPrimaryPhone;
-    data['contactSecPhone'] = contactSecPhone;
-    data['contactAddress'] = contactAddress;
-    data['supportPhone'] = supportPhone;
-    data['isPickupAvailable'] = isPickupAvailable;
-    data['approvedRatingSum'] = approvedRatingSum;
-    data['approvedTotalReviews'] = approvedTotalReviews;
-    data['pCountryent'] = pCountryent;
-    data['pCityent'] = pCityent;
-    data['pRegionent'] = pRegionent;
-    data['serviceproviderCats'] = serviceproviderCats;
-    data['locLat'] = locLat;
-    data['locLong'] = locLong;
-    return data;
-  }
 }
 
 class SPcategories {
@@ -243,20 +193,6 @@ class SPcategories {
     appServiceGuid = json['appServiceGuid'];
     appservice = json['appservice'];
     parent = json['parent'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['displayOrder'] = displayOrder;
-    data['catImgUrl'] = catImgUrl;
-    data['catCoverBackImgUrl'] = catCoverBackImgUrl;
-    data['subCats'] = subCats;
-    data['appServiceGuid'] = appServiceGuid;
-    data['appservice'] = appservice;
-    data['parent'] = parent;
-    return data;
   }
 }
 
@@ -334,32 +270,5 @@ class SpProducts {
     categoryGuid = json['categoryGuid'];
     brandName = json['brandName'];
     productimgurl = json['productimgurl'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['displayOrder'] = displayOrder;
-    data['shortDescription'] = shortDescription;
-    data['fullHTMLDescription'] = fullHTMLDescription;
-    data['allowCustomerReviews'] = allowCustomerReviews;
-    data['approvedRatingSum'] = approvedRatingSum;
-    data['approvedTotalReviews'] = approvedTotalReviews;
-    data['disableBuyButton'] = disableBuyButton;
-    data['disableWishlistButton'] = disableWishlistButton;
-    data['markAsNew'] = markAsNew;
-    data['price'] = price;
-    data['oldPrice'] = oldPrice;
-    data['foreignPrice'] = foreignPrice;
-    data['orderMinimumQuantity'] = orderMinimumQuantity;
-    data['orderMaximumQuantity'] = orderMaximumQuantity;
-    data['additionalShippingCharge'] = additionalShippingCharge;
-    data['productAttAsJson'] = productAttAsJson;
-    data['categoryName'] = categoryName;
-    data['categoryGuid'] = categoryGuid;
-    data['brandName'] = brandName;
-    data['productimgurl'] = productimgurl;
-    return data;
   }
 }

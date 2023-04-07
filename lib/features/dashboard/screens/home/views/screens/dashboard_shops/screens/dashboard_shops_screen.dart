@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shops_screen.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
+import '../../../../../favorites/views/screens/favorites_screen.dart';
 import '../../offers/views/screens/offers_screen.dart';
-import '../../orders/screens/orders_screen.dart';
+import '../../orders/views/screens/orders_screen.dart';
 import '../widgets/bottom_bar_container_shops.dart';
 
 class DashboardShopScreen extends StatefulWidget {
@@ -29,7 +30,8 @@ class DashboardShopScreenState extends State<DashboardShopScreen> {
         children: [
           ShopsScreen(params: widget.params),
           OffersScreen(params: widget.params),
-          OrdersScreen(params: widget.params),
+          FavoritesScreen(serviceId: widget.params.serviceId!),
+          OrdersScreen(serviceId: widget.params.serviceId),
         ],
       ),
       bottomNavigationBar: BottomBarContainerShops(

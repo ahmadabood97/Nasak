@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../../../../../../../core/utils/assets_manager.dart';
+import '../../../../../../../../../../../../../../../../core/utils/assets_manager.dart';
 
 Widget paymentOptions() {
   return Column(

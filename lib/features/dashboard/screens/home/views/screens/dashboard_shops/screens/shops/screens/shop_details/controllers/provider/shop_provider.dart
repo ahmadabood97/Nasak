@@ -24,6 +24,8 @@ class ShopProvider extends ChangeNotifier {
 
   List<SpProducts> _productsPaginationList = [];
 
+  bool isFav = false;
+
   int page = 0;
   bool hasMore = true;
 
@@ -35,13 +37,19 @@ class ShopProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  void setTabSelected(int value, String shopId, String catId,
+  void editIsFav() {
+    isFav = true;
+    log("message");
+    notifyListeners();
+  }
+
+  void setTabSelected(int value, String shopId, String catId, String token,
       BuildContext context, VoidCallback closeLoading) {
     tabSelected = value;
     catIdSelected = catId;
     hasMore = true;
     page = 0;
-    getShopDetails(shopId, catId,
+    getShopDetails(shopId, catId, token,
         showLoading: true, closeLoading: closeLoading, context: context);
     notifyListeners();
   }
@@ -54,9 +62,10 @@ class ShopProvider extends ChangeNotifier {
     _productsList = [];
     _categoriesList = [];
     _productsPaginationList = [];
+    isFav = false;
   }
 
-  Future getShopDetails(String shopId, String catId,
+  Future getShopDetails(String shopId, String catId, String token,
       {bool showLoading = false,
       VoidCallback? showShopDetails,
       VoidCallback? closeLoading,
@@ -72,7 +81,7 @@ class ShopProvider extends ChangeNotifier {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse =
-            await shopRepo.getShopDetails(shopId, catId, page);
+            await shopRepo.getShopDetails(shopId, catId, token, page);
         _isLoading = true;
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Shops Details Success");
@@ -84,6 +93,7 @@ class ShopProvider extends ChangeNotifier {
           _shopDetailsResponse =
               ShopDetailsResponse.fromJson(json.decode(apiResponse.body));
 
+          isFav = _shopDetailsResponse!.result!.isFav!;
           if (_shopDetailsResponse!.result!.spProducts != null) {
             if (page == 0) {
               _productsList = _shopDetailsResponse!.result!.spProducts!;

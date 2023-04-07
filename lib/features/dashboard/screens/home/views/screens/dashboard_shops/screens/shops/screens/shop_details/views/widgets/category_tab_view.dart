@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../controllers/provider/shop_provider.dart';
 import '../../models/shop_model.dart';
 
@@ -19,8 +20,15 @@ Widget categoryTabView(
                         if (!Provider.of<ShopProvider>(context, listen: false)
                             .isLoading) {
                           Provider.of<ShopProvider>(context, listen: false)
-                              .setTabSelected(index, shopId,
-                                  categoriesList[index].id!, context, () {
+                              .setTabSelected(
+                                  index,
+                                  shopId,
+                                  categoriesList[index].id!,
+                                  Provider.of<LoginProvider>(context,
+                                          listen: false)
+                                      .loginData!
+                                      .authToken!,
+                                  context, () {
                             Navigator.pop(context);
                           });
                         }

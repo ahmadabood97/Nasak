@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../config/routes/app_routes.dart';
 
 class SelectAddress extends StatelessWidget {
-  final String deliveryLocation;
-  const SelectAddress({super.key, required this.deliveryLocation});
+  final String serviceId;
+
+  const SelectAddress({super.key, required this.serviceId});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +27,20 @@ class SelectAddress extends StatelessWidget {
                   child: const Icon(Icons.arrow_back))),
           Expanded(
             flex: 6,
-            child: Center(
-              child: Text(deliveryLocation,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1),
+            child: InkWell(
+              onTap: () => Navigator.pushNamed(
+                  context, Routes.selectAddressRoute,
+                  arguments: serviceId),
+              child: Center(
+                child: Text(
+                    Provider.of<CountriesProvider>(context, listen: true)
+                        .locationSelectedValue
+                        .deliveryRegionName!,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1),
+              ),
             ),
           ),
           Expanded(

@@ -58,4 +58,8 @@ class LoginRepo {
       rethrow;
     }
   }
+
+  void logout() {
+    sharedPreferences.remove('UserData');
+  }
 }

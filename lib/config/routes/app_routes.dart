@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/widgets/select_addrees_screen.dart';
 import '../../features/auth/screens/login/views/screens/signin_screen.dart';
 import '../../features/auth/screens/register/views/screens/signup_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/add_address/screens/add_address_screen.dart';
@@ -14,7 +15,7 @@ import '../../features/dashboard/screens/home/views/screens/dashboard_categories
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/dashboard_shops_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/filter/screens/filter_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/search/screens/search_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/screens/about_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/views/screens/about_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/basket/screens/basket_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/add_voucher_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/checkout_screen.dart';
@@ -23,8 +24,8 @@ import '../../features/dashboard/screens/home/views/screens/dashboard_shops/scre
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/offers/views/screens/offers_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/orders/screens/order_details/screens/order_details_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/orders/screens/orders_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/orders/views/screens/order_details/views/screens/order_details_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/orders/views/screens/orders_screen.dart';
 import '../../features/dashboard/screens/inbox/inbox_screen.dart';
 
 class Routes {
@@ -55,6 +56,7 @@ class Routes {
   static const String categoryProductRoute = '/categoryProduct';
   static const String dashboardShopRoute = '/dashboardShop';
   static const String dashboardCategoryRoute = '/dashboardCategory';
+  static const String selectAddressRoute = '/selectAddress';
 }
 
 class AppRoutes {
@@ -63,6 +65,11 @@ class AppRoutes {
       case Routes.checkoutRoute:
         return MaterialPageRoute(
           builder: (context) => const CheckoutScreen(),
+        );
+      case Routes.selectAddressRoute:
+        return MaterialPageRoute(
+          builder: (context) =>
+              SelectAddressScreen(serviceId: settings.arguments as String),
         );
       case Routes.countriesRoute:
         return MaterialPageRoute(
@@ -120,11 +127,13 @@ class AppRoutes {
         );
       case Routes.ordersDetailsRoute:
         return MaterialPageRoute(
-          builder: (context) => const OrderDetailsScreen(),
+          builder: (context) =>
+              OrderDetailsScreen(orderId: settings.arguments as String),
         );
       case Routes.aboutRoute:
         return MaterialPageRoute(
-          builder: (context) => const AboutScreen(),
+          builder: (context) =>
+              AboutScreen(shopId: settings.arguments as String),
         );
       case Routes.signupRoute:
         return MaterialPageRoute(
@@ -142,12 +151,12 @@ class AppRoutes {
       case Routes.ordersRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              OrdersScreen(params: settings.arguments as ParamsServiceSection),
+              OrdersScreen(serviceId: settings.arguments as String),
         );
       case Routes.favoriteRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              FavoritesScreen(fromScreen: settings.arguments as String),
+              FavoritesScreen(serviceId: settings.arguments as String),
         );
       case Routes.shopDetailsRoute:
         return MaterialPageRoute(

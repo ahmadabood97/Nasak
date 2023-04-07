@@ -30,7 +30,7 @@ class DashboardScreenState extends State<DashboardScreen> {
         }),
         children: const [
           HomeScreen(),
-          FavoritesScreen(fromScreen: "Dashboard"),
+          FavoritesScreen(serviceId: ''),
           MyDrawer(),
         ],
       ),

@@ -9,11 +9,13 @@ class ShopRepo {
   ShopRepo({required this.sharedPreferences});
 
   Future<http.Response> getShopDetails(
-      String shopId, String catId, int page) async {
+      String shopId, String catId, String token, int page) async {
+    var headers = {'Authorization': 'Bearer $token'};
     var request = http.Request(
         'GET',
         Uri.parse(
             '${EndPoints.baseUrl}AppServiceProvider/GetAppServiceProviderDetailVM?AppServiceProvider_Id=$shopId&Category_Id=$catId&Page_Id=${page.toString()}&Rows_Count=10'));
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
     http.Response response1 = await http.Response.fromStream(response);
