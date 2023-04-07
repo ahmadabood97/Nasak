@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../../../../../../../../models/app_services_model.dart';
@@ -39,9 +40,11 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
       if (controller.position.maxScrollExtent == controller.offset) {
         if (Provider.of<ShopProvider>(context, listen: false).hasMore) {
           Provider.of<ShopProvider>(context, listen: false).getShopDetails(
-            widget.serviceProviders.id!,
-            Provider.of<ShopProvider>(context, listen: false).catIdSelected,
-          );
+              widget.serviceProviders.id!,
+              Provider.of<ShopProvider>(context, listen: false).catIdSelected,
+              Provider.of<LoginProvider>(context, listen: false)
+                  .loginData!
+                  .authToken!);
         }
       }
     });

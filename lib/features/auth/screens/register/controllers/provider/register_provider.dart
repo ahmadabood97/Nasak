@@ -180,8 +180,9 @@ class RegisterProvider extends ChangeNotifier {
           _userNameController.clear();
           _lastNameController.clear();
           _firstNameController.clear();
-          moveToDashboard!();
           registerRepo.saveUserDataBySharedPref(_registerData!);
+          moveToDashboard!();
+
           log("Save token is :${_registerData!.authToken}");
           notifyListeners();
         } else {
@@ -203,9 +204,5 @@ class RegisterProvider extends ChangeNotifier {
       notifyListeners();
       log("Register Failed");
     }
-  }
-
-  dynamic getToken() {
-    return registerRepo.getUserData();
   }
 }

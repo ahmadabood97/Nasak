@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/signout_section.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import 'address_section.dart';
 import 'auth_section.dart';
@@ -21,17 +22,18 @@ class _BodyDrawerState extends State<BodyDrawer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Provider.of<LoginProvider>(context, listen: true).userData != null
+        Provider.of<LoginProvider>(context, listen: true).loginData != null
             ? const SizedBox()
             : const AuthSection(),
         Padding(
           padding: EdgeInsets.only(
               left: 17,
               right: 17,
-              top: Provider.of<LoginProvider>(context, listen: true).userData !=
-                      null
-                  ? 20
-                  : 10),
+              top:
+                  Provider.of<LoginProvider>(context, listen: true).loginData !=
+                          null
+                      ? 20
+                      : 10),
           child: Container(
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -55,7 +57,16 @@ class _BodyDrawerState extends State<BodyDrawer> {
                   color: Colors.grey.withOpacity(0.1),
                 ),
                 InkWell(
-                  onTap: () => Navigator.pushNamed(context, Routes.ordersRoute),
+                  onTap: () {
+                    if (Provider.of<LoginProvider>(context, listen: false)
+                            .loginData !=
+                        null) {
+                      Navigator.pushNamed(context, Routes.ordersRoute,
+                          arguments: '');
+                    } else {
+                      showCustomDialog(context, 'Please Login...');
+                    }
+                  },
                   child: const ListTile(
                     leading: Icon(
                       Icons.shopping_bag,
@@ -94,7 +105,7 @@ class _BodyDrawerState extends State<BodyDrawer> {
         ),
         needHelpSection(),
         countryLanguageSection(context),
-        Provider.of<LoginProvider>(context, listen: true).userData == null
+        Provider.of<LoginProvider>(context, listen: true).loginData == null
             ? const SizedBox()
             : signoutSection(context)
       ],

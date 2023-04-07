@@ -48,18 +48,4 @@ class RegisterRepo {
       rethrow;
     }
   }
-
-  dynamic getUserData() async {
-    try {
-      if (sharedPreferences.get('UserData') != null) {
-        Map<String, dynamic> map =
-            await jsonDecode(sharedPreferences.get('UserData') as String);
-        return RegisterResponseModel.fromJson(map);
-      } else {
-        return null;
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
 }

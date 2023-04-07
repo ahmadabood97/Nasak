@@ -24,8 +24,8 @@ import '../../features/dashboard/screens/home/views/screens/dashboard_shops/scre
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../../features/dashboard/screens/home/views/screens/home_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/offers/views/screens/offers_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/orders/screens/order_details/screens/order_details_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/orders/screens/orders_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/orders/views/screens/order_details/views/screens/order_details_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/orders/views/screens/orders_screen.dart';
 import '../../features/dashboard/screens/inbox/inbox_screen.dart';
 
 class Routes {
@@ -127,7 +127,8 @@ class AppRoutes {
         );
       case Routes.ordersDetailsRoute:
         return MaterialPageRoute(
-          builder: (context) => const OrderDetailsScreen(),
+          builder: (context) =>
+              OrderDetailsScreen(orderId: settings.arguments as String),
         );
       case Routes.aboutRoute:
         return MaterialPageRoute(
@@ -150,12 +151,12 @@ class AppRoutes {
       case Routes.ordersRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              OrdersScreen(params: settings.arguments as ParamsServiceSection),
+              OrdersScreen(serviceId: settings.arguments as String),
         );
       case Routes.favoriteRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              FavoritesScreen(fromScreen: settings.arguments as String),
+              FavoritesScreen(serviceId: settings.arguments as String),
         );
       case Routes.shopDetailsRoute:
         return MaterialPageRoute(

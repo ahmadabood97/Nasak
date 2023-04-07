@@ -96,7 +96,6 @@ class CategoryDetailsProvider extends ChangeNotifier {
               (_categoryDetailsResponse!.result!.catProducts == null)) {
             hasMore = false;
           }
-
           if (page == 0 &&
               _categoryDetailsResponse!.result!.subCategories != null) {
             _subCategoriesList.clear();
@@ -115,13 +114,17 @@ class CategoryDetailsProvider extends ChangeNotifier {
                 .addAll(_categoryDetailsResponse!.result!.catProducts!);
           }
           page++;
-
           success();
           _isLoading = false;
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
+          if (context != null) {
+            closeLoading!();
+          }
+          hasMore = false;
+
           notifyListeners();
           log("Get Category Details Failed");
         }
@@ -129,6 +132,10 @@ class CategoryDetailsProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
+      if (context != null) {
+        closeLoading!();
+      }
+
       notifyListeners();
       log("Get Category Details Failed");
     }

@@ -9,13 +9,13 @@ class FavoriteRepo {
 
   FavoriteRepo({required this.sharedPreferences});
 
-  Future<http.Response> getFavorites(String token) async {
+  Future<http.Response> getFavorites(String token, String serviceId) async {
     log("Favorite Token is :$token");
     var headers = {
       'Authorization': 'Bearer $token',
     };
-    var request =
-        http.Request('GET', Uri.parse('${EndPoints.baseUrl}Fav/GetFavVM'));
+    var request = http.Request('GET',
+        Uri.parse('${EndPoints.baseUrl}Fav/GetFavVM?AppserviceId=$serviceId'));
 
     request.headers.addAll(headers);
 
@@ -54,8 +54,8 @@ class FavoriteRepo {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('DELETE', Uri.parse('${EndPoints.baseUrl}Fav'));
-    request.body = json.encode({"serviceProvider_Id": shopId});
+    var request = http.Request('DELETE',
+        Uri.parse('${EndPoints.baseUrl}Fav?ServiceProivder_Id=$shopId'));
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

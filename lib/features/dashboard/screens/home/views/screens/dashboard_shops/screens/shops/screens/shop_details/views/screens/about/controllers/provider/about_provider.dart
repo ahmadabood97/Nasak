@@ -70,9 +70,12 @@ class AboutProvider extends ChangeNotifier {
               AboutResponseModel.fromJson(json.decode(apiResponse.body));
 
           if (_aboutResponse!.result != null &&
-              _aboutResponse!.result!.todayDeliveryPeroid != null &&
-              _aboutResponse!.result!.tomorrowDeliveryPeroid != null) {
+              _aboutResponse!.result!.todayDeliveryPeroid != null) {
             _todayDeliveryPeroid = _aboutResponse!.result!.todayDeliveryPeroid!;
+          }
+
+          if (_aboutResponse!.result != null &&
+              _aboutResponse!.result!.tomorrowDeliveryPeroid != null) {
             _tomorrowDeliveryPeroid =
                 _aboutResponse!.result!.tomorrowDeliveryPeroid!;
           }

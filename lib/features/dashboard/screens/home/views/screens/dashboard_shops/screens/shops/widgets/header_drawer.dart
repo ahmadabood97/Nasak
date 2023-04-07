@@ -38,10 +38,10 @@ class HeaderDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                Provider.of<LoginProvider>(context, listen: true).userData ==
+                Provider.of<LoginProvider>(context, listen: true).loginData ==
                         null
                     ? "Hi there!"
-                    : "${Provider.of<LoginProvider>(context, listen: true).userData!.firstName!} ${Provider.of<LoginProvider>(context, listen: true).userData!.lastName!}",
+                    : "${Provider.of<LoginProvider>(context, listen: true).loginData!.firstName!} ${Provider.of<LoginProvider>(context, listen: true).loginData!.lastName!}",
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

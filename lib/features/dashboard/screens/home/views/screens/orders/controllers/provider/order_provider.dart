@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../../../../../../../../../../core/widgets/loading_alert_dialog.dart';
-import '../../models/offers_model.dart';
-import '../repo/offers_repo.dart';
+import '../../models/order_model.dart';
+import '../repo/order_repo.dart';
 
-class OffersProvider extends ChangeNotifier {
-  final OffersRepo offerRepo;
+class OrdersProvider extends ChangeNotifier {
+  final OrdersRepo orderRepo;
 
-  OffersProvider({required this.offerRepo});
+  OrdersProvider({required this.orderRepo});
 
-  OffersResponseModel? _offersResponse;
-  OffersResponseModel? get offersResponse => _offersResponse;
+  OrderResponseModel? _ordersResponse;
+  OrderResponseModel? get ordersResponse => _ordersResponse;
 
-  List<Offer> _offersList = [];
-  List<Offer>? get offersList => _offersList;
+  List<Order> _ordersList = [];
+  List<Order>? get ordersList => _ordersList;
 
   int page = 0;
   bool hasMore = true;
@@ -30,64 +30,56 @@ class OffersProvider extends ChangeNotifier {
   clear() {
     hasMore = true;
     page = 0;
-    _offersList.clear();
+    _ordersList.clear();
   }
 
-  Future getOffers(String serviceId, String locationId,
+  Future getOrders(String serviceId, String token,
       {bool showLoading = false,
       VoidCallback? closeLoading,
       BuildContext? context}) async {
     getData = null;
     _isLoading = true;
-
     if (showLoading) {
       loading(context!);
     }
-
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         http.Response apiResponse =
-            await offerRepo.getOffers(serviceId, locationId, page);
+            await orderRepo.getOrders(serviceId, token, page);
         _isLoading = true;
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           page++;
-
-          log("Get Offers Success");
-
+          log("Get Orders Success");
           if (showLoading) {
             closeLoading!();
           }
           getData = true;
-
-          _offersResponse =
-              OffersResponseModel.fromJson(json.decode(apiResponse.body));
-
-          if (page == 0 && _offersResponse!.result!.items != null) {
-            _offersList = _offersResponse!.result!.items!;
+          _ordersResponse =
+              OrderResponseModel.fromJson(json.decode(apiResponse.body));
+          if (page == 0 && _ordersResponse!.result!.items != null) {
+            _ordersList = _ordersResponse!.result!.items!;
           } else {
-            _offersList.addAll(_offersResponse!.result!.items!);
+            _ordersList.addAll(_ordersResponse!.result!.items!);
           }
-
-          if (_offersResponse!.result!.items != null &&
-              _offersResponse!.result!.items!.length < 10) {
+          if (_ordersResponse!.result!.items != null &&
+              _ordersResponse!.result!.items!.length < 10) {
             hasMore = false;
           }
-
           _isLoading = false;
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
           notifyListeners();
-          log("Get Offers Failed");
+          log("Get Orders Failed");
         }
       }
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
       notifyListeners();
-      log("Get Offers Failed");
+      log("Get Orders Failed");
     }
   }
 }

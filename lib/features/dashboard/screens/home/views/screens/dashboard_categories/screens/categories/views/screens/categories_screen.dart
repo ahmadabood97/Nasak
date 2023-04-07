@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../../../../../../core/widgets/circular_progress_indicator.dart';
 import '../../../../../../../controllers/provider/home_provider.dart';
 import '../../../../../dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../widgets/category_card_view.dart';
@@ -36,23 +35,36 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       .appServicesResponse ==
                   null ||
               Provider.of<HomeProvider>(context, listen: true).isLoading
-          ? progressIndicator(context)
-          : GridView.builder(
-              padding: const EdgeInsets.all(15),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 1.2),
-              itemCount: Provider.of<HomeProvider>(context, listen: false)
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
+            )
+          : Provider.of<HomeProvider>(context, listen: false)
                   .categoriesList
-                  .length,
-              primary: false,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return CategoryCardView(
-                    serviceCategory:
-                        Provider.of<HomeProvider>(context, listen: false)
-                            .categoriesList[index]);
-              },
-            ),
+                  .isEmpty
+              ? const Center(
+                  child: Text(
+                    "This category is empty",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              : GridView.builder(
+                  padding: const EdgeInsets.all(15),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, childAspectRatio: 1.2),
+                  itemCount: Provider.of<HomeProvider>(context, listen: false)
+                      .categoriesList
+                      .length,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CategoryCardView(
+                        serviceCategory:
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .categoriesList[index]);
+                  },
+                ),
     );
   }
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../../../../core/widgets/show_dialog.dart';
+import '../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 
 class BottomBarContainerShops extends StatefulWidget {
   const BottomBarContainerShops({
@@ -29,7 +33,16 @@ class _BottomBarContainerShopsState extends State<BottomBarContainerShops> {
       unselectedLabelStyle: const TextStyle(color: Colors.grey),
       currentIndex: widget.selectedIndex,
       onTap: (index) async {
-        widget._pageController.jumpToPage(index);
+        if (index == 2 || index == 3) {
+          if (Provider.of<LoginProvider>(context, listen: false).loginData !=
+              null) {
+            widget._pageController.jumpToPage(index);
+          } else {
+            showCustomDialog(context, 'Please Login...');
+          }
+        } else {
+          widget._pageController.jumpToPage(index);
+        }
       },
       items: const [
         BottomNavigationBarItem(
@@ -53,6 +66,18 @@ class _BottomBarContainerShopsState extends State<BottomBarContainerShops> {
           ),
           icon: Icon(
             Icons.local_offer_outlined,
+            color: Color.fromARGB(255, 24, 15, 77),
+          ),
+        ),
+        BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          label: '',
+          activeIcon: Icon(
+            Icons.favorite,
+            color: Colors.orange,
+          ),
+          icon: Icon(
+            Icons.favorite_outline,
             color: Color.fromARGB(255, 24, 15, 77),
           ),
         ),

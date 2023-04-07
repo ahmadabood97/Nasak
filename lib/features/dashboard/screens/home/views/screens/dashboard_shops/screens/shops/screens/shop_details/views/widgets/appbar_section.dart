@@ -243,7 +243,7 @@ class AppBarSection extends SliverAppBar {
                                                 Provider.of<LoginProvider>(
                                                         context,
                                                         listen: false)
-                                                    .userData;
+                                                    .loginData;
 
                                             if (userData != null) {
                                               Provider.of<FavoriteProvider>(
@@ -251,6 +251,12 @@ class AppBarSection extends SliverAppBar {
                                                       listen: false)
                                                   .addToFavorites(
                                                       context: context,
+                                                      editIsFav: () {
+                                                        Provider.of<ShopProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .editIsFav();
+                                                      },
                                                       stopLoading: () {
                                                         Navigator.pop(context);
                                                       },
@@ -264,16 +270,29 @@ class AppBarSection extends SliverAppBar {
                                             }
                                           }
                                         },
-                                        children: const [
-                                          SizedBox(
+                                        children: [
+                                          const SizedBox(
                                               height: 45,
                                               width: 45,
                                               child: Icon(Icons.info_outlined)),
                                           SizedBox(
                                               height: 45,
                                               width: 45,
-                                              child:
-                                                  Icon(Icons.favorite_outline)),
+                                              child: Icon(
+                                                Provider.of<ShopProvider>(
+                                                            context,
+                                                            listen: true)
+                                                        .isFav
+                                                    ? Icons.favorite
+                                                    : Icons.favorite_outline,
+                                                color:
+                                                    Provider.of<ShopProvider>(
+                                                                context,
+                                                                listen: true)
+                                                            .isFav
+                                                        ? Colors.red
+                                                        : Colors.black,
+                                              )),
                                         ],
                                       ),
                                     ],

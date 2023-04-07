@@ -29,7 +29,7 @@ class _FavoriteItemCardViewState extends State<FavoriteItemCardView> {
                 onPressed: (_) {
                   var userData =
                       Provider.of<LoginProvider>(context, listen: false)
-                          .userData;
+                          .loginData;
                   Provider.of<FavoriteProvider>(context, listen: false)
                       .deleteFromFavorites(
                           context: context,

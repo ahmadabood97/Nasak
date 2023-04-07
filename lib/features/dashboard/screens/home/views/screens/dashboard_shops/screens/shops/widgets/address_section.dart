@@ -21,10 +21,10 @@ class _AddressSectionState extends State<AddressSection> {
       onTap: () async {
         if (!mounted) return;
 
-        if (Provider.of<LoginProvider>(context, listen: false).userData !=
+        if (Provider.of<LoginProvider>(context, listen: false).loginData !=
             null) {
           LoginResponseModel userData =
-              Provider.of<LoginProvider>(context, listen: false).userData!;
+              Provider.of<LoginProvider>(context, listen: false).loginData!;
           if (!mounted) return;
           Navigator.pushNamed(context, Routes.addressesRoute);
           Provider.of<AddressProvider>(context, listen: false).getAddress(
