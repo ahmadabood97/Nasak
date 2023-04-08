@@ -44,6 +44,7 @@ class OrderDetailsProvider extends ChangeNotifier {
           getData = true;
           _orderDetailsResponse =
               OrderDetailsResponseModel.fromJson(json.decode(apiResponse.body));
+
           _isLoading = false;
           notifyListeners();
         } else {

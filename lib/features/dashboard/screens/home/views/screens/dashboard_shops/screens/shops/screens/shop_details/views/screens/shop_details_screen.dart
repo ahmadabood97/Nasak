@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../../../../../../../../models/app_services_model.dart';
@@ -8,6 +9,7 @@ import '../../example_data.dart';
 import '../../models/shop_model.dart';
 import '../widgets/appbar_section.dart';
 import '../widgets/body_section.dart';
+import '../widgets/go_to_basket.dart';
 
 class ShopDetailsScreen extends StatefulWidget {
   final ServiceProviders serviceProviders;
@@ -42,9 +44,12 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
           Provider.of<ShopProvider>(context, listen: false).getShopDetails(
               widget.serviceProviders.id!,
               Provider.of<ShopProvider>(context, listen: false).catIdSelected,
-              Provider.of<LoginProvider>(context, listen: false)
-                  .loginData!
-                  .authToken!);
+              Provider.of<LoginProvider>(context, listen: false).loginData !=
+                      null
+                  ? Provider.of<LoginProvider>(context, listen: false)
+                      .loginData!
+                      .authToken!
+                  : "");
         }
       }
     });
@@ -83,7 +88,9 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
             buildBody(),
           ],
         ),
-        // goToBasket(context)
+        Provider.of<HomeProvider>(context, listen: true).cartList.isEmpty
+            ? const SizedBox()
+            : goToBasket(context)
       ],
     );
   }
@@ -126,7 +133,8 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
           const SizedBox(
             height: 15,
           ),
-          BodySection(product: product),
+          BodySection(
+              product: product, serviceProvider: widget.serviceProviders),
           index !=
                   Provider.of<ShopProvider>(context, listen: false)
                           .productsList!
@@ -146,15 +154,24 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
                   .productsList!
                   .isEmpty
               ? const SizedBox()
-              : const Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.orange,
-                    ),
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Column(
+                    children: const [
+                      Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.orange,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      )
+                    ],
                   ),
                 )
-          : const SizedBox();
+          : const SizedBox(
+              height: 50,
+            );
     }
   }
 }

@@ -47,7 +47,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             )
           : ListView(
               children: [
-                mainSection(),
+                mainSection(
+                    Provider.of<OrderDetailsProvider>(context, listen: false)
+                        .orderDetailsResponse!),
                 const SizedBox(
                   height: 15,
                 ),

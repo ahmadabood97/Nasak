@@ -26,7 +26,6 @@ class _ShopsScreenState extends State<ShopsScreen> {
   @override
   void initState() {
     Provider.of<HomeProvider>(context, listen: false).clear();
-
     Provider.of<HomeProvider>(context, listen: false).getShops(
         widget.params.serviceId!,
         Provider.of<CountriesProvider>(context, listen: false)

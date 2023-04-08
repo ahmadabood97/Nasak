@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../../../../../../../../../../../config/routes/app_routes.dart';
 import 'bag_icon.dart';
 
@@ -16,7 +18,11 @@ Widget goToBasket(BuildContext context) {
           children: [
             Expanded(
               flex: 1,
-              child: bagIcon(Colors.orange, "88"),
+              child: bagIcon(
+                  Colors.orange,
+                  Provider.of<HomeProvider>(context, listen: true)
+                      .itemInCart
+                      .toString()),
             ),
             const Expanded(
               flex: 3,

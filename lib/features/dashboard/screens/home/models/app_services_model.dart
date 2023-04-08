@@ -1,3 +1,5 @@
+import '../views/screens/dashboard_shops/screens/shops/screens/shop_details/models/shop_model.dart';
+
 class AppServicesResponse {
   String? appVersion;
   String? apiVersion;
@@ -101,6 +103,7 @@ class ServiceProviders {
   String? serviceproviderCats;
   String? locLat;
   String? locLong;
+  List<SpProducts> cart = [];
 
   ServiceProviders(
       {this.id,
