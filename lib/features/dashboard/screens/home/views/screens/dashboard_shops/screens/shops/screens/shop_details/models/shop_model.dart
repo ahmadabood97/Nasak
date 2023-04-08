@@ -222,6 +222,7 @@ class SpProducts {
   List<ProductDetails>? productDetails;
   List<List<ProductDetails>> extraList = [];
   List<String> extraHelpList = [];
+  int quantityInCart = 0;
 
   SpProducts(
       {this.id,

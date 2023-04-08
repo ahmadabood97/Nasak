@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../../models/app_services_model.dart';
 import '../../models/home_model.dart';
+import '../../views/screens/dashboard_shops/screens/shops/screens/shop_details/models/shop_model.dart';
 import '../repo/home_repo.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -29,6 +30,12 @@ class HomeProvider extends ChangeNotifier {
   final List<ServiceCategories> _categoriesList = [];
   List<ServiceCategories> get categoriesList => _categoriesList;
 
+  final List<SpProducts> _cartList = [];
+  List<SpProducts> get cartList => _cartList;
+
+  int _itemInCart = 0;
+  int get itemInCart => _itemInCart;
+
   int page = 0;
   bool hasMore = true;
 
@@ -49,6 +56,51 @@ class HomeProvider extends ChangeNotifier {
     _shopsList.clear();
     getShops(serviceId, locationId);
     notifyListeners();
+  }
+
+  void addToCart(SpProducts product, ServiceProviders serviceProvider) {
+    for (var shopElement in _shopsList) {
+      if (shopElement == serviceProvider) {
+        if (_cartList.isEmpty) {
+          shopElement.cart.add(product);
+          _cartList.add(product);
+          _itemInCart++;
+          notifyListeners();
+        } else {
+          for (int i = 0; i < _cartList.length; i++) {
+            if (_cartList[i].id == product.id) {
+              _cartList[i].quantityInCart += 1;
+              _itemInCart++;
+
+              notifyListeners();
+              break;
+            } else {
+              if (i + 1 == _cartList.length) {
+                shopElement.cart.add(product);
+                _cartList.add(product);
+                _itemInCart++;
+
+                notifyListeners();
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  void getCart(ServiceProviders serviceProvider) {
+    _cartList.clear();
+    for (var shopElement in _shopsList) {
+      if (shopElement == serviceProvider) {
+        log(shopElement.cart.length.toString());
+        for (var element in shopElement.cart) {
+          _cartList.add(element);
+        }
+        notifyListeners();
+      }
+    }
   }
 
   Future<void> getHome(
@@ -98,6 +150,7 @@ class HomeProvider extends ChangeNotifier {
     hasMore = true;
     page = 0;
     _shopsList.clear();
+    _cartList.clear();
     tabSelected = 0;
     catIdSelected = '';
   }

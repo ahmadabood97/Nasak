@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/orders/views/screens/order_details/models/order_details_model.dart';
 
-Widget orderItemCardView() {
+Widget orderItemCardView(OrderItems orderItems) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15),
     child: Row(
@@ -28,7 +29,7 @@ Widget orderItemCardView() {
                 height: 5,
               ),
               Text(
-                'mit Jalapenos, mit Mozzarella, mit Rinderbeef, mit Bacon, amerikanisch, mit Rinderbeef, mit Bacon, amerikanisch',
+                orderItems.attrbutesDescStr.toString(),
                 style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 12,

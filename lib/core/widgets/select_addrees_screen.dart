@@ -15,6 +15,9 @@ class SelectAddressScreen extends StatefulWidget {
 class _SelectAddressScreenState extends State<SelectAddressScreen> {
   @override
   void initState() {
+    Provider.of<CountriesProvider>(context, listen: false)
+        .locationDropdownList
+        .clear();
     for (var element in Provider.of<HomeProvider>(context, listen: false)
         .home!
         .result!

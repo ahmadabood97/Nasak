@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget shopIdentity() {
+import '../../models/order_details_model.dart';
+
+Widget shopIdentity(OrderDetailsResponseModel orderDetails) {
   return Padding(
     padding: const EdgeInsets.all(15.0),
     child: Row(
@@ -9,9 +11,9 @@ Widget shopIdentity() {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Pizza Cab',
-              style: TextStyle(
+            Text(
+              orderDetails.result!.serviceProviderName!,
+              style: const TextStyle(
                   color: Color.fromARGB(255, 2, 45, 82),
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
@@ -20,7 +22,7 @@ Widget shopIdentity() {
               height: 5,
             ),
             Text(
-              'Order #8MQHSV',
+              'Order #${orderDetails.result!.customOrderNumber!}',
               style: TextStyle(
                   color: Colors.black.withOpacity(0.5),
                   fontSize: 15,

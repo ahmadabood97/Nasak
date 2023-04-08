@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget totalOrder() {
+import '../../models/order_details_model.dart';
+
+Widget totalOrder(OrderDetailsResponseModel orderDetails) {
   return Padding(
     padding: const EdgeInsets.all(15.0),
     child: Row(
@@ -30,9 +32,9 @@ Widget totalOrder() {
             )
           ],
         ),
-        const Text(
-          "17.70 \$",
-          style: TextStyle(
+        Text(
+          "${orderDetails.result!.orderTotal!} ${orderDetails.result!.currencySymbol!}",
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Color.fromARGB(255, 2, 45, 82),

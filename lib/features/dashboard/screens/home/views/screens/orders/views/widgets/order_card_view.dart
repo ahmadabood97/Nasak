@@ -47,10 +47,10 @@ Widget orderCardView(BuildContext context, Order order) {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Konig Grill & Burger Haus",
+                            Text(
+                              order.serviceProviderName!,
                               maxLines: 1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14),
@@ -59,7 +59,7 @@ Widget orderCardView(BuildContext context, Order order) {
                               height: 10,
                             ),
                             Text(
-                              "23 October 2022 at 21:03",
+                              order.orderDeliveryDate!,
                               maxLines: 1,
                               style: TextStyle(
                                   overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ Widget orderCardView(BuildContext context, Order order) {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Augustinusstrase 17",
+                              order.orderStatusName!,
                               maxLines: 1,
                               style: TextStyle(
                                   overflow: TextOverflow.ellipsis,
@@ -88,9 +88,9 @@ Widget orderCardView(BuildContext context, Order order) {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text(
-                              "17,70 \$",
-                              style: TextStyle(
+                            Text(
+                              "${order.orderTotal!} ${order.currencySymbol.toString()}",
+                              style: const TextStyle(
                                   color: Colors.orange,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14),

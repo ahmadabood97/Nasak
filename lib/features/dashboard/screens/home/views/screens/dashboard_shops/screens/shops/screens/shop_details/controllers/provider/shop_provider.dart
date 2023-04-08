@@ -39,7 +39,6 @@ class ShopProvider extends ChangeNotifier {
 
   void editIsFav() {
     isFav = true;
-    log("message");
     notifyListeners();
   }
 
