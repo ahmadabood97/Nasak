@@ -141,12 +141,14 @@ class HomeProvider extends ChangeNotifier {
   void getCart(ServiceProviders serviceProvider) {
     _cartList.clear();
     _itemInCart = 0;
+    _subTotal = 0;
     for (var shopElement in _shopsList) {
       if (shopElement == serviceProvider) {
         for (var element in shopElement.cart) {
           _cartList.add(element);
           for (int i = 0; i < element.quantityInCart; i++) {
             _itemInCart++;
+            _subTotal += double.parse(element.price.toString());
           }
         }
         notifyListeners();
