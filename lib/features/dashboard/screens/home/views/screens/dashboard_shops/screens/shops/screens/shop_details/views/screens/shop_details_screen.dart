@@ -90,7 +90,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
         ),
         Provider.of<HomeProvider>(context, listen: true).cartList.isEmpty
             ? const SizedBox()
-            : goToBasket(context)
+            : goToBasket(context, widget.serviceProviders)
       ],
     );
   }

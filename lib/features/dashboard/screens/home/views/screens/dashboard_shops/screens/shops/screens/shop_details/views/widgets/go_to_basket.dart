@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../models/app_services_model.dart';
 import 'bag_icon.dart';
 
-Widget goToBasket(BuildContext context) {
+Widget goToBasket(BuildContext context, ServiceProviders serviceProviders) {
   return Align(
     alignment: Alignment.bottomCenter,
     child: InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.basketRoute),
+      onTap: () => Navigator.pushNamed(context, Routes.basketRoute,
+          arguments: serviceProviders),
       child: Container(
         width: double.infinity,
         height: 50,
