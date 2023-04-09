@@ -24,12 +24,12 @@ Widget goToBasket(BuildContext context) {
                       .itemInCart
                       .toString()),
             ),
-            const Expanded(
+            Expanded(
               flex: 3,
               child: Center(
                 child: Text(
-                  "Go to basket (117.50 \$)",
-                  style: TextStyle(
+                  "Go to basket (${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} \$)",
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),

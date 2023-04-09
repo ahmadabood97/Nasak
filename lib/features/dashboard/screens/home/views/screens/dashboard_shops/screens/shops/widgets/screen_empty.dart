@@ -34,23 +34,23 @@ Widget screenEmpty(IconData icon, String title, String subTitle) {
         const SizedBox(
           height: 30,
         ),
-        Container(
-          height: 50,
-          width: 280,
-          decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(3)),
-              border: Border.all(color: Colors.grey.withOpacity(0.5))),
-          child: const Center(
-            child: Text(
-              "Browse restaurants",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Color.fromARGB(255, 13, 111, 197),
-              ),
-            ),
-          ),
-        )
+        // Container(
+        //   height: 50,
+        //   width: 280,
+        //   decoration: BoxDecoration(
+        //       borderRadius: const BorderRadius.all(Radius.circular(3)),
+        //       border: Border.all(color: Colors.grey.withOpacity(0.5))),
+        //   child: const Center(
+        //     child: Text(
+        //       "Browse restaurants",
+        //       style: TextStyle(
+        //         fontWeight: FontWeight.bold,
+        //         fontSize: 15,
+        //         color: Color.fromARGB(255, 13, 111, 197),
+        //       ),
+        //     ),
+        //   ),
+        // )
       ],
     ),
   );
