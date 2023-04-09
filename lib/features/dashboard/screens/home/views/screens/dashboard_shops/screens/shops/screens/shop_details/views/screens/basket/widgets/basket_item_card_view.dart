@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-Widget basketItemCardView(int index) {
+import '../../../../models/shop_model.dart';
+
+Widget basketItemCardView(SpProducts product) {
   return Slidable(
     endActionPane: ActionPane(
       motion: const StretchMotion(),
@@ -29,16 +31,16 @@ Widget basketItemCardView(int index) {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "$index",
+                          product.quantityInCart.toString(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 5,
                         child: Text(
-                          "Pizza Margherita",
-                          style: TextStyle(
+                          product.name.toString(),
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                       ),
@@ -50,7 +52,7 @@ Widget basketItemCardView(int index) {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      "8.50 \$",
+                      "${product.price} \$",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black.withOpacity(0.6),

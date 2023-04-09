@@ -144,22 +144,37 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            setState(() {
+                                              if (widget
+                                                      .product.quantityToCart >
+                                                  1) {
+                                                widget.product.quantityToCart -=
+                                                    1;
+                                              }
+                                            });
+                                          },
                                           child: const Icon(
                                             Icons.remove,
                                             size: 20,
                                           ),
                                         ),
-                                        const Text(
-                                          "1",
-                                          style: TextStyle(
+                                        Text(
+                                          widget.product.quantityToCart
+                                              .toString(),
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
                                             color: Colors.blue,
                                           ),
                                         ),
                                         GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              setState(() {
+                                                widget.product.quantityToCart +=
+                                                    1;
+                                              });
+                                            },
                                             child:
                                                 const Icon(Icons.add, size: 20))
                                       ],
@@ -170,7 +185,15 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                             Expanded(
                                 flex: 10,
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Provider.of<HomeProvider>(context,
+                                            listen: false)
+                                        .addToCart(widget.product,
+                                            widget.serviceProvider);
+                                    setState(() {
+                                      isExtraOpen = !isExtraOpen;
+                                    });
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
@@ -184,7 +207,9 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                                     height: 40,
                                     child: Center(
                                       child: Text(
-                                        "${widget.product.price} \$",
+                                        widget.product.price != ''
+                                            ? "${double.parse(widget.product.price!) * widget.product.quantityToCart} \$"
+                                            : '1 \$',
                                         style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.white,

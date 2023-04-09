@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../widgets/switch_to_delivery.dart';
@@ -32,15 +34,16 @@ class BasketScreen extends StatelessWidget {
           ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(
               height: 0,
-              // child: Divider(
-              //   thickness: 1,
-              // )
             ),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 7,
+            itemCount: Provider.of<HomeProvider>(context, listen: true)
+                .cartList
+                .length,
             itemBuilder: (context, index) {
-              return basketItemCardView(index + 1);
+              return basketItemCardView(
+                  Provider.of<HomeProvider>(context, listen: true)
+                      .cartList[index]);
             },
           ),
           const SizedBox(

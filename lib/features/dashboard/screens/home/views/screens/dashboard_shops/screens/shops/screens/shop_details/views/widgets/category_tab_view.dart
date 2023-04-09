@@ -25,9 +25,14 @@ Widget categoryTabView(
                                   shopId,
                                   categoriesList[index].id!,
                                   Provider.of<LoginProvider>(context,
-                                          listen: false)
-                                      .loginData!
-                                      .authToken!,
+                                                  listen: false)
+                                              .loginData !=
+                                          null
+                                      ? Provider.of<LoginProvider>(context,
+                                              listen: false)
+                                          .loginData!
+                                          .authToken!
+                                      : '',
                                   context, () {
                             Navigator.pop(context);
                           });

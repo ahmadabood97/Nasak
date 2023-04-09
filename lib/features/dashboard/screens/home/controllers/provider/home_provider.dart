@@ -47,6 +47,8 @@ class HomeProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _newItem = false;
+
   void setTabSelected(
       int value, String catId, String serviceId, String locationId) {
     tabSelected = value;
@@ -62,28 +64,47 @@ class HomeProvider extends ChangeNotifier {
     for (var shopElement in _shopsList) {
       if (shopElement == serviceProvider) {
         if (_cartList.isEmpty) {
+          log("Cart is empty");
+          product.quantityInCart = product.quantityToCart;
+
+          for (int j = 0; j < product.quantityToCart; j++) {
+            _itemInCart += 1;
+          }
+          product.quantityToCart = 1;
           shopElement.cart.add(product);
           _cartList.add(product);
-          _itemInCart++;
           notifyListeners();
         } else {
           for (int i = 0; i < _cartList.length; i++) {
             if (_cartList[i].id == product.id) {
-              _cartList[i].quantityInCart += 1;
-              _itemInCart++;
+              log("Item is here");
+              _cartList[i].quantityInCart += _cartList[i].quantityToCart;
+
+              for (int j = 0; j < _cartList[i].quantityToCart; j++) {
+                _itemInCart += 1;
+              }
+              product.quantityToCart = 1;
 
               notifyListeners();
               break;
-            } else {
-              if (i + 1 == _cartList.length) {
-                shopElement.cart.add(product);
-                _cartList.add(product);
-                _itemInCart++;
-
-                notifyListeners();
-                break;
-              }
             }
+            if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
+              _newItem = true;
+            }
+          }
+          if (_newItem) {
+            log("New Item");
+            product.quantityInCart = product.quantityToCart;
+
+            for (int j = 0; j < product.quantityToCart; j++) {
+              _itemInCart += 1;
+            }
+            product.quantityToCart = 1;
+
+            shopElement.cart.add(product);
+            _cartList.add(product);
+            _newItem = false;
+            notifyListeners();
           }
         }
       }
@@ -92,11 +113,14 @@ class HomeProvider extends ChangeNotifier {
 
   void getCart(ServiceProviders serviceProvider) {
     _cartList.clear();
+    _itemInCart = 0;
     for (var shopElement in _shopsList) {
       if (shopElement == serviceProvider) {
-        log(shopElement.cart.length.toString());
         for (var element in shopElement.cart) {
           _cartList.add(element);
+          for (int i = 0; i < element.quantityInCart; i++) {
+            _itemInCart++;
+          }
         }
         notifyListeners();
       }
