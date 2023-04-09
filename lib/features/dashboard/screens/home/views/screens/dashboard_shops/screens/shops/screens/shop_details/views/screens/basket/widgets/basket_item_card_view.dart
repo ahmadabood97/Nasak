@@ -3,9 +3,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../models/app_services_model.dart';
 import '../../../../models/shop_model.dart';
 
-Widget basketItemCardView(SpProducts product, BuildContext context) {
+Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
+    BuildContext context) {
   return Slidable(
     endActionPane: ActionPane(
       motion: const StretchMotion(),
@@ -25,6 +27,7 @@ Widget basketItemCardView(SpProducts product, BuildContext context) {
                   product.id) {
                 Provider.of<HomeProvider>(context, listen: false)
                     .removeItemFromCart(
+                        serviceProviders,
                         Provider.of<HomeProvider>(context, listen: false)
                             .cartList[i]);
                 break;

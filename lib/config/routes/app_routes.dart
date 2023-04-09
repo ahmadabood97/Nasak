@@ -165,7 +165,8 @@ class AppRoutes {
         );
       case Routes.basketRoute:
         return MaterialPageRoute(
-          builder: (context) => const BasketScreen(),
+          builder: (context) => BasketScreen(
+              serviceProviders: settings.arguments as ServiceProviders),
         );
       case Routes.categoriesRoute:
         return MaterialPageRoute(

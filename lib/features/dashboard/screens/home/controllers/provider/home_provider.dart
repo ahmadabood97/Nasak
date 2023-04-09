@@ -129,8 +129,9 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItemFromCart(SpProducts product) {
+  void removeItemFromCart(ServiceProviders shopElement, SpProducts product) {
     _cartList.remove(product);
+    shopElement.cart.remove(product);
     _itemInCart -= product.quantityInCart;
     for (int i = 0; i < product.quantityInCart; i++) {
       _subTotal -= double.parse(product.price.toString());

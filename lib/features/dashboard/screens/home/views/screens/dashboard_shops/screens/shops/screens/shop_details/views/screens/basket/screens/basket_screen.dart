@@ -3,12 +3,15 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../models/app_services_model.dart';
 import '../../../../../../widgets/screen_empty.dart';
 import '../../../widgets/switch_to_delivery.dart';
 import '../widgets/basket_item_card_view.dart';
 
 class BasketScreen extends StatelessWidget {
-  const BasketScreen({super.key});
+  final ServiceProviders serviceProviders;
+
+  const BasketScreen({super.key, required this.serviceProviders});
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ class BasketScreen extends StatelessWidget {
                     return basketItemCardView(
                         Provider.of<HomeProvider>(context, listen: true)
                             .cartList[index],
+                        serviceProviders,
                         context);
                   },
                 ),
