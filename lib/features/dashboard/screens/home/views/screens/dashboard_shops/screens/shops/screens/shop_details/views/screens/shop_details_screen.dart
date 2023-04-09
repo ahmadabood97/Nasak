@@ -157,20 +157,28 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
               : Padding(
                   padding: const EdgeInsets.only(bottom: 15),
                   child: Column(
-                    children: const [
-                      Center(
+                    children: [
+                      const Center(
                         child: CircularProgressIndicator(
                           color: Colors.orange,
                         ),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: Provider.of<HomeProvider>(context, listen: true)
+                                .cartList
+                                .isEmpty
+                            ? 0
+                            : 50,
                       )
                     ],
                   ),
                 )
-          : const SizedBox(
-              height: 50,
+          : SizedBox(
+              height: Provider.of<HomeProvider>(context, listen: true)
+                      .cartList
+                      .isEmpty
+                  ? 0
+                  : 50,
             );
     }
   }

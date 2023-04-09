@@ -222,7 +222,8 @@ class SpProducts {
   List<ProductDetails>? productDetails;
   List<List<ProductDetails>> extraList = [];
   List<String> extraHelpList = [];
-  int quantityInCart = 0;
+  int quantityInCart = 1;
+  int quantityToCart = 1;
 
   SpProducts(
       {this.id,
