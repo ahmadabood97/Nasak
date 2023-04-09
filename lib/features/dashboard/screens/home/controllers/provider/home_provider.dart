@@ -36,6 +36,9 @@ class HomeProvider extends ChangeNotifier {
   int _itemInCart = 0;
   int get itemInCart => _itemInCart;
 
+  double _subTotal = 0;
+  double get subTotal => _subTotal;
+
   int page = 0;
   bool hasMore = true;
 
@@ -64,51 +67,75 @@ class HomeProvider extends ChangeNotifier {
     for (var shopElement in _shopsList) {
       if (shopElement == serviceProvider) {
         if (_cartList.isEmpty) {
-          log("Cart is empty");
-          product.quantityInCart = product.quantityToCart;
-
-          for (int j = 0; j < product.quantityToCart; j++) {
-            _itemInCart += 1;
-          }
-          product.quantityToCart = 1;
-          shopElement.cart.add(product);
-          _cartList.add(product);
-          notifyListeners();
+          addNewItem(shopElement, product);
         } else {
-          for (int i = 0; i < _cartList.length; i++) {
-            if (_cartList[i].id == product.id) {
-              log("Item is here");
-              _cartList[i].quantityInCart += _cartList[i].quantityToCart;
-
-              for (int j = 0; j < _cartList[i].quantityToCart; j++) {
-                _itemInCart += 1;
-              }
-              product.quantityToCart = 1;
-
-              notifyListeners();
-              break;
-            }
-            if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
-              _newItem = true;
-            }
-          }
+          addItemQuantityInCart(product);
           if (_newItem) {
-            log("New Item");
-            product.quantityInCart = product.quantityToCart;
-
-            for (int j = 0; j < product.quantityToCart; j++) {
-              _itemInCart += 1;
-            }
-            product.quantityToCart = 1;
-
-            shopElement.cart.add(product);
-            _cartList.add(product);
+            addNewItem(shopElement, product);
             _newItem = false;
-            notifyListeners();
           }
         }
       }
     }
+  }
+
+  void addItemQuantityInCart(SpProducts product) {
+    for (int i = 0; i < _cartList.length; i++) {
+      if (_cartList[i].id == product.id) {
+        _cartList[i].quantityInCart += _cartList[i].quantityToCart;
+        for (int j = 0; j < _cartList[i].quantityToCart; j++) {
+          _itemInCart += 1;
+          _subTotal += double.parse(product.price.toString());
+        }
+        product.quantityToCart = 1;
+        notifyListeners();
+        break;
+      }
+      if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
+        _newItem = true;
+      }
+    }
+  }
+
+  void decreaseItemQuantityInCart(SpProducts product) {
+    for (int i = 0; i < _cartList.length; i++) {
+      if (_cartList[i].id == product.id) {
+        _cartList[i].quantityInCart -= _cartList[i].quantityToCart;
+        for (int j = 0; j < _cartList[i].quantityToCart; j++) {
+          _itemInCart -= 1;
+          _subTotal -= double.parse(product.price.toString());
+        }
+        product.quantityToCart = 1;
+        notifyListeners();
+        break;
+      }
+      if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
+        _newItem = true;
+      }
+    }
+  }
+
+  void addNewItem(ServiceProviders shopElement, SpProducts product) {
+    product.quantityInCart = product.quantityToCart;
+
+    for (int j = 0; j < product.quantityToCart; j++) {
+      _itemInCart += 1;
+      _subTotal += double.parse(product.price.toString());
+    }
+    product.quantityToCart = 1;
+
+    shopElement.cart.add(product);
+    _cartList.add(product);
+    notifyListeners();
+  }
+
+  void removeItemFromCart(SpProducts product) {
+    _cartList.remove(product);
+    _itemInCart -= product.quantityInCart;
+    for (int i = 0; i < product.quantityInCart; i++) {
+      _subTotal -= double.parse(product.price.toString());
+    }
+    notifyListeners();
   }
 
   void getCart(ServiceProviders serviceProvider) {

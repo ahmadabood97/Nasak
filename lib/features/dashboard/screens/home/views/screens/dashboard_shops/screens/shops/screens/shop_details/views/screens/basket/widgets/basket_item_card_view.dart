@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../models/shop_model.dart';
 
-Widget basketItemCardView(SpProducts product) {
+Widget basketItemCardView(SpProducts product, BuildContext context) {
   return Slidable(
     endActionPane: ActionPane(
       motion: const StretchMotion(),
       children: [
         SlidableAction(
           backgroundColor: Colors.red,
-          onPressed: (context) {},
+          onPressed: (context) {
+            for (int i = 0;
+                i <
+                    Provider.of<HomeProvider>(context, listen: false)
+                        .cartList
+                        .length;
+                i++) {
+              if (Provider.of<HomeProvider>(context, listen: false)
+                      .cartList[i]
+                      .id ==
+                  product.id) {
+                Provider.of<HomeProvider>(context, listen: false)
+                    .removeItemFromCart(
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .cartList[i]);
+                break;
+              }
+            }
+          },
           icon: Icons.delete,
         )
       ],
@@ -123,23 +143,14 @@ Widget basketItemCardView(SpProducts product) {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3)),
-                          border:
-                              Border.all(color: Colors.grey.withOpacity(0.7))),
-                      width: 35,
-                      height: 30,
-                      child: const Center(
-                        child: Icon(Icons.remove,
-                            color: Color.fromARGB(255, 35, 109, 170)),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
+                    GestureDetector(
+                      onTap: () {
+                        if (product.quantityInCart > 1) {
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .decreaseItemQuantityInCart(product);
+                        }
+                      },
+                      child: Container(
                         decoration: BoxDecoration(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(3)),
@@ -148,11 +159,34 @@ Widget basketItemCardView(SpProducts product) {
                         width: 35,
                         height: 30,
                         child: const Center(
-                          child: Icon(
-                            Icons.add,
-                            color: Color.fromARGB(255, 35, 109, 170),
-                          ),
-                        )),
+                          child: Icon(Icons.remove,
+                              color: Color.fromARGB(255, 35, 109, 170)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .addItemQuantityInCart(product);
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(3)),
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.7))),
+                          width: 35,
+                          height: 30,
+                          child: const Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Color.fromARGB(255, 35, 109, 170),
+                            ),
+                          )),
+                    ),
                   ],
                 ),
               )
