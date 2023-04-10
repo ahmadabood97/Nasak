@@ -103,6 +103,7 @@ class ServiceProviders {
   String? serviceproviderCats;
   String? locLat;
   String? locLong;
+  int? index;
   List<SpProducts> cart = [];
 
   ServiceProviders(

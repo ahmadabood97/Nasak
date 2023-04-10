@@ -88,7 +88,10 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
             buildBody(),
           ],
         ),
-        Provider.of<HomeProvider>(context, listen: true).cartList.isEmpty
+        Provider.of<HomeProvider>(context, listen: true)
+                .shopsList[widget.serviceProviders.index!]
+                .cart
+                .isEmpty
             ? const SizedBox()
             : goToBasket(context, widget.serviceProviders)
       ],
@@ -164,21 +167,13 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
                         ),
                       ),
                       SizedBox(
-                        height: Provider.of<HomeProvider>(context, listen: true)
-                                .cartList
-                                .isEmpty
-                            ? 0
-                            : 50,
+                        height: widget.serviceProviders.cart.isEmpty ? 0 : 50,
                       )
                     ],
                   ),
                 )
           : SizedBox(
-              height: Provider.of<HomeProvider>(context, listen: true)
-                      .cartList
-                      .isEmpty
-                  ? 0
-                  : 50,
+              height: widget.serviceProviders.cart.isEmpty ? 0 : 50,
             );
     }
   }
