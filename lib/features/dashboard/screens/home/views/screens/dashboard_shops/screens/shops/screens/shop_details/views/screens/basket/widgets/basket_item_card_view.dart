@@ -22,9 +22,13 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                         .length;
                 i++) {
               if (Provider.of<HomeProvider>(context, listen: false)
-                      .cartList[i]
-                      .id ==
-                  product.id) {
+                          .cartList[i]
+                          .id ==
+                      product.id &&
+                  Provider.of<HomeProvider>(context, listen: false)
+                          .cartList[i]
+                          .priceWithExtra ==
+                      product.priceWithExtra) {
                 Provider.of<HomeProvider>(context, listen: false)
                     .removeItemFromCart(
                         serviceProviders,
@@ -75,7 +79,7 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      "${product.price} \$",
+                      "${product.priceWithExtra ?? product.price} \$",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black.withOpacity(0.6),

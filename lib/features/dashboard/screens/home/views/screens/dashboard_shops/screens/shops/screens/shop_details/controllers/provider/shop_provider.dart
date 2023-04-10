@@ -64,6 +64,98 @@ class ShopProvider extends ChangeNotifier {
     isFav = false;
   }
 
+  void initialExtraToPrice() {
+    for (int i = 0; i < _productsList.length; i++) {
+      if (_productsList[i].extraList.isNotEmpty) {
+        for (int j = 0; j < _productsList[i].extraList.length; j++) {
+          if (_productsList[i].extraList[j][0].affectPrice! &&
+              _productsList[i].extraList[j][0].isFixedPrice! &&
+              _productsList[i].extraList[j][0].attrType == 1) {
+            _productsList[i].priceWithExtra =
+                _productsList[i].extraList[j][0].optionPriceAdj ??
+                    _productsList[i].priceWithExtra;
+          } else if (_productsList[i].extraList[j][0].affectPrice! &&
+              _productsList[i].extraList[j][0].isExtraPrice! &&
+              _productsList[i].extraList[j][0].attrType == 1) {
+            if (_productsList[i].priceWithExtra != null &&
+                _productsList[i].extraList[j][0].isExtraPrice != null) {
+              double price =
+                  double.parse(_productsList[i].priceWithExtra.toString());
+              double extraPrice = double.parse(
+                  _productsList[i].extraList[j][0].optionPriceAdj.toString());
+              price += extraPrice;
+              _productsList[i].priceWithExtra = price.toString();
+            }
+          }
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void initialExtraToPriceItem(SpProducts product) {
+    if (product.extraList.isNotEmpty) {
+      for (int j = 0; j < product.extraList.length; j++) {
+        if (product.extraList[j][0].affectPrice! &&
+            product.extraList[j][0].isFixedPrice! &&
+            product.extraList[j][0].attrType == 1) {
+          product.priceWithExtra =
+              product.extraList[j][0].optionPriceAdj ?? product.priceWithExtra;
+        } else if (product.extraList[j][0].affectPrice! &&
+            product.extraList[j][0].isExtraPrice! &&
+            product.extraList[j][0].attrType == 1) {
+          if (product.priceWithExtra != null &&
+              product.extraList[j][0].isExtraPrice != null) {
+            double price = double.parse(product.priceWithExtra.toString());
+            double extraPrice =
+                double.parse(product.extraList[j][0].optionPriceAdj.toString());
+            price += extraPrice;
+            product.priceWithExtra = price.toString();
+          }
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void addExtraToPrice(SpProducts product, ProductDetails productDetails) {
+    if (productDetails.affectPrice != null &&
+        productDetails.isFixedPrice != null &&
+        productDetails.affectPrice! &&
+        productDetails.isFixedPrice!) {
+      product.priceWithExtra = productDetails.optionPriceAdj;
+
+      if (product.productDetails != null) {
+        for (var element in product.productDetails!) {
+          if (element.isSelected && element.attrType == 3) {
+            double price = double.parse(product.priceWithExtra.toString());
+            double extraPrice = double.parse(element.optionPriceAdj.toString());
+            price += extraPrice;
+            product.priceWithExtra = price.toString();
+          }
+        }
+      }
+    } else if (productDetails.affectPrice != null &&
+        productDetails.isExtraPrice != null &&
+        productDetails.affectPrice! &&
+        productDetails.isExtraPrice!) {
+      double price = double.parse(product.priceWithExtra.toString());
+      double extraPrice =
+          double.parse(productDetails.optionPriceAdj.toString());
+      price += extraPrice;
+      product.priceWithExtra = price.toString();
+    }
+    notifyListeners();
+  }
+
+  void decreaseExtraToPrice(SpProducts product, ProductDetails productDetails) {
+    double price = double.parse(product.priceWithExtra.toString());
+    double extraPrice = double.parse(productDetails.optionPriceAdj.toString());
+    price -= extraPrice;
+    product.priceWithExtra = price.toString();
+    notifyListeners();
+  }
+
   Future getShopDetails(String shopId, String catId, String token,
       {bool showLoading = false,
       VoidCallback? showShopDetails,
@@ -183,6 +275,8 @@ class ShopProvider extends ChangeNotifier {
               }
               _productsList.addAll(_productsPaginationList);
             }
+
+            initialExtraToPrice();
           }
 
           if (page == 0 && _shopDetailsResponse!.result!.sPcategories != null) {

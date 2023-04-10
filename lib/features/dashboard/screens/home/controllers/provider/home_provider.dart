@@ -81,17 +81,21 @@ class HomeProvider extends ChangeNotifier {
 
   void addItemQuantityInCart(SpProducts product) {
     for (int i = 0; i < _cartList.length; i++) {
-      if (_cartList[i].id == product.id) {
+      if (_cartList[i].id == product.id &&
+          _cartList[i].priceWithExtra == product.priceWithExtra) {
         _cartList[i].quantityInCart += _cartList[i].quantityToCart;
         for (int j = 0; j < _cartList[i].quantityToCart; j++) {
           _itemInCart += 1;
-          _subTotal += double.parse(product.price.toString());
+          _subTotal += product.priceWithExtra != null
+              ? double.parse(product.priceWithExtra!)
+              : double.parse(product.price.toString());
         }
         product.quantityToCart = 1;
         notifyListeners();
         break;
       }
-      if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
+
+      if (i + 1 == _cartList.length) {
         _newItem = true;
       }
     }
@@ -99,11 +103,14 @@ class HomeProvider extends ChangeNotifier {
 
   void decreaseItemQuantityInCart(SpProducts product) {
     for (int i = 0; i < _cartList.length; i++) {
-      if (_cartList[i].id == product.id) {
+      if (_cartList[i].id == product.id &&
+          _cartList[i].priceWithExtra == product.priceWithExtra) {
         _cartList[i].quantityInCart -= _cartList[i].quantityToCart;
         for (int j = 0; j < _cartList[i].quantityToCart; j++) {
           _itemInCart -= 1;
-          _subTotal -= double.parse(product.price.toString());
+          _subTotal -= product.priceWithExtra != null
+              ? double.parse(product.priceWithExtra!)
+              : double.parse(product.price.toString());
         }
         product.quantityToCart = 1;
         notifyListeners();
@@ -120,12 +127,70 @@ class HomeProvider extends ChangeNotifier {
 
     for (int j = 0; j < product.quantityToCart; j++) {
       _itemInCart += 1;
-      _subTotal += double.parse(product.price.toString());
+      _subTotal += product.priceWithExtra != null
+          ? double.parse(product.priceWithExtra!)
+          : double.parse(product.price.toString());
     }
     product.quantityToCart = 1;
 
-    shopElement.cart.add(product);
-    _cartList.add(product);
+    shopElement.cart.add(SpProducts(
+        extraHelpList: product.extraHelpList,
+        extraList: product.extraList,
+        quantityInCart: product.quantityInCart,
+        quantityToCart: product.quantityToCart,
+        additionalShippingCharge: product.additionalShippingCharge,
+        allowCustomerReviews: product.allowCustomerReviews,
+        approvedRatingSum: product.approvedRatingSum,
+        approvedTotalReviews: product.approvedTotalReviews,
+        brandName: product.brandName,
+        categoryGuid: product.categoryGuid,
+        categoryName: product.categoryName,
+        disableBuyButton: product.disableBuyButton,
+        disableWishlistButton: product.disableBuyButton,
+        displayOrder: product.displayOrder,
+        foreignPrice: product.foreignPrice,
+        fullHTMLDescription: product.fullHTMLDescription,
+        id: product.id,
+        markAsNew: product.markAsNew,
+        name: product.name,
+        oldPrice: product.oldPrice,
+        orderMaximumQuantity: product.orderMaximumQuantity,
+        orderMinimumQuantity: product.orderMinimumQuantity,
+        price: product.price,
+        priceWithExtra: product.priceWithExtra,
+        productAttAsJson: product.productAttAsJson,
+        productDetails: product.productDetails,
+        productimgurl: product.productimgurl,
+        shortDescription: product.shortDescription));
+    _cartList.add(SpProducts(
+        extraHelpList: product.extraHelpList,
+        extraList: product.extraList,
+        quantityInCart: product.quantityInCart,
+        quantityToCart: product.quantityToCart,
+        additionalShippingCharge: product.additionalShippingCharge,
+        allowCustomerReviews: product.allowCustomerReviews,
+        approvedRatingSum: product.approvedRatingSum,
+        approvedTotalReviews: product.approvedTotalReviews,
+        brandName: product.brandName,
+        categoryGuid: product.categoryGuid,
+        categoryName: product.categoryName,
+        disableBuyButton: product.disableBuyButton,
+        disableWishlistButton: product.disableBuyButton,
+        displayOrder: product.displayOrder,
+        foreignPrice: product.foreignPrice,
+        fullHTMLDescription: product.fullHTMLDescription,
+        id: product.id,
+        markAsNew: product.markAsNew,
+        name: product.name,
+        oldPrice: product.oldPrice,
+        orderMaximumQuantity: product.orderMaximumQuantity,
+        orderMinimumQuantity: product.orderMinimumQuantity,
+        price: product.price,
+        priceWithExtra: product.priceWithExtra,
+        productAttAsJson: product.productAttAsJson,
+        productDetails: product.productDetails,
+        productimgurl: product.productimgurl,
+        shortDescription: product.shortDescription));
     notifyListeners();
   }
 
@@ -134,7 +199,9 @@ class HomeProvider extends ChangeNotifier {
     shopElement.cart.remove(product);
     _itemInCart -= product.quantityInCart;
     for (int i = 0; i < product.quantityInCart; i++) {
-      _subTotal -= double.parse(product.price.toString());
+      _subTotal -= product.priceWithExtra != null
+          ? double.parse(product.priceWithExtra!)
+          : double.parse(product.price.toString());
     }
     notifyListeners();
   }
@@ -149,7 +216,9 @@ class HomeProvider extends ChangeNotifier {
           _cartList.add(element);
           for (int i = 0; i < element.quantityInCart; i++) {
             _itemInCart++;
-            _subTotal += double.parse(element.price.toString());
+            _subTotal += element.priceWithExtra != null
+                ? double.parse(element.priceWithExtra!)
+                : double.parse(element.price.toString());
           }
         }
         notifyListeners();

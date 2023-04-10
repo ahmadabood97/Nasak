@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/shop_model.dart';
 
 class ExtraCardView extends StatefulWidget {
   final List<ProductDetails> productDetails;
-  const ExtraCardView({super.key, required this.productDetails});
+  final SpProducts product;
+
+  const ExtraCardView(
+      {super.key, required this.productDetails, required this.product});
 
   @override
   State<ExtraCardView> createState() => _ExtraCardViewState();
@@ -51,6 +56,16 @@ class _ExtraCardViewState extends State<ExtraCardView> {
                       setState(() {
                         widget.productDetails[index].isSelected =
                             !widget.productDetails[index].isSelected;
+
+                        if (widget.productDetails[index].isSelected) {
+                          Provider.of<ShopProvider>(context, listen: false)
+                              .addExtraToPrice(
+                                  widget.product, widget.productDetails[index]);
+                        } else {
+                          Provider.of<ShopProvider>(context, listen: false)
+                              .decreaseExtraToPrice(
+                                  widget.product, widget.productDetails[index]);
+                        }
                       });
                     },
                   )
@@ -70,6 +85,10 @@ class _ExtraCardViewState extends State<ExtraCardView> {
                     onChanged: (value) {
                       setState(() {
                         groupValue = value.toString();
+
+                        Provider.of<ShopProvider>(context, listen: false)
+                            .addExtraToPrice(
+                                widget.product, widget.productDetails[index]);
                       });
                     },
                   );
