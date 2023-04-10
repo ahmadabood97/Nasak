@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../models/app_services_model.dart';
@@ -27,6 +28,14 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
         if (widget.product.productAttAsJson != null &&
             widget.product.productAttAsJson!.isNotEmpty) {
           isExtraOpen = !isExtraOpen;
+
+          if (widget.product.productDetails != null) {
+            for (var element in widget.product.productDetails!) {
+              element.isSelected = false;
+            }
+          }
+          Provider.of<ShopProvider>(context, listen: false)
+              .initialExtraToPriceItem(widget.product);
         } else {
           Provider.of<HomeProvider>(context, listen: false)
               .addToCart(widget.product, widget.serviceProvider);
@@ -103,127 +112,133 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
               ],
             ),
             isExtraOpen
-                ? Container(
-                    padding: const EdgeInsets.all(10),
-                    color: const Color.fromARGB(255, 255, 245, 240),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.product.extraList.length,
-                          itemBuilder: (context, index) {
-                            return ExtraCardView(
-                              productDetails: widget.product.extraList[index],
-                            );
-                          },
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                flex: 10,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(3)),
-                                        border: Border.all(
-                                            color:
-                                                Colors.grey.withOpacity(0.5))),
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              if (widget
-                                                      .product.quantityToCart >
-                                                  1) {
-                                                widget.product.quantityToCart -=
-                                                    1;
-                                              }
-                                            });
-                                          },
-                                          child: const Icon(
-                                            Icons.remove,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        Text(
-                                          widget.product.quantityToCart
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                        GestureDetector(
+                ? GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      color: const Color.fromARGB(255, 255, 245, 240),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: widget.product.extraList.length,
+                            itemBuilder: (context, index) {
+                              return ExtraCardView(
+                                productDetails: widget.product.extraList[index],
+                                product: widget.product,
+                              );
+                            },
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  flex: 10,
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(3)),
+                                          border: Border.all(
+                                              color: Colors.grey
+                                                  .withOpacity(0.5))),
+                                      height: 40,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
                                             onTap: () {
                                               setState(() {
-                                                widget.product.quantityToCart +=
-                                                    1;
+                                                if (widget.product
+                                                        .quantityToCart >
+                                                    1) {
+                                                  widget.product
+                                                      .quantityToCart -= 1;
+                                                }
                                               });
                                             },
-                                            child:
-                                                const Icon(Icons.add, size: 20))
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                            const Expanded(flex: 1, child: SizedBox()),
-                            Expanded(
-                                flex: 10,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Provider.of<HomeProvider>(context,
-                                            listen: false)
-                                        .addToCart(widget.product,
-                                            widget.serviceProvider);
-                                    setState(() {
-                                      isExtraOpen = !isExtraOpen;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(3)),
-                                        color: const Color.fromARGB(
-                                            255, 3, 59, 107),
-                                        border: Border.all(
-                                            color:
-                                                Colors.grey.withOpacity(0.5))),
-                                    height: 40,
-                                    child: Center(
-                                      child: Text(
-                                        widget.product.price != ''
-                                            ? "${double.parse(widget.product.price!) * widget.product.quantityToCart} \$"
-                                            : '1 \$',
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                            child: const Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                            ),
+                                          ),
+                                          Text(
+                                            widget.product.quantityToCart
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  widget.product
+                                                      .quantityToCart += 1;
+                                                });
+                                              },
+                                              child: const Icon(Icons.add,
+                                                  size: 20))
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                )),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                                  )),
+                              const Expanded(flex: 1, child: SizedBox()),
+                              Expanded(
+                                  flex: 10,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<HomeProvider>(context,
+                                              listen: false)
+                                          .addToCart(widget.product,
+                                              widget.serviceProvider);
+                                      setState(() {
+                                        isExtraOpen = !isExtraOpen;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(3)),
+                                          color: const Color.fromARGB(
+                                              255, 3, 59, 107),
+                                          border: Border.all(
+                                              color: Colors.grey
+                                                  .withOpacity(0.5))),
+                                      height: 40,
+                                      child: Center(
+                                        child: Text(
+                                          widget.product.priceWithExtra != null
+                                              ? "${widget.product.priceWithExtra!} \$"
+                                              : widget.product.price != ''
+                                                  ? "${double.parse(widget.product.price!) * widget.product.quantityToCart} \$"
+                                                  : '1 \$',
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : const SizedBox()

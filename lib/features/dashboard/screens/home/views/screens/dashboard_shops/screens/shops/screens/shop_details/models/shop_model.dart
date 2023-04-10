@@ -224,30 +224,38 @@ class SpProducts {
   List<String> extraHelpList = [];
   int quantityInCart = 1;
   int quantityToCart = 1;
+  String? priceWithExtra;
 
-  SpProducts(
-      {this.id,
-      this.name,
-      this.displayOrder,
-      this.shortDescription,
-      this.fullHTMLDescription,
-      this.allowCustomerReviews,
-      this.approvedRatingSum,
-      this.approvedTotalReviews,
-      this.disableBuyButton,
-      this.disableWishlistButton,
-      this.markAsNew,
-      this.price,
-      this.oldPrice,
-      this.foreignPrice,
-      this.orderMinimumQuantity,
-      this.orderMaximumQuantity,
-      this.additionalShippingCharge,
-      this.productAttAsJson,
-      this.categoryName,
-      this.categoryGuid,
-      this.brandName,
-      this.productimgurl});
+  SpProducts({
+    this.id,
+    this.name,
+    this.displayOrder,
+    this.shortDescription,
+    this.fullHTMLDescription,
+    this.allowCustomerReviews,
+    this.approvedRatingSum,
+    this.approvedTotalReviews,
+    this.disableBuyButton,
+    this.disableWishlistButton,
+    this.markAsNew,
+    this.price,
+    this.oldPrice,
+    this.foreignPrice,
+    this.orderMinimumQuantity,
+    this.orderMaximumQuantity,
+    this.additionalShippingCharge,
+    this.productAttAsJson,
+    this.categoryName,
+    this.categoryGuid,
+    this.brandName,
+    this.productimgurl,
+    required this.extraHelpList,
+    required this.extraList,
+    this.priceWithExtra,
+    this.productDetails,
+    required this.quantityInCart,
+    required this.quantityToCart,
+  });
 
   SpProducts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
