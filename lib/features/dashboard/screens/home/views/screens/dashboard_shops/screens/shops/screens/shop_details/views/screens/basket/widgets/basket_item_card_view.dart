@@ -15,25 +15,13 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
         SlidableAction(
           backgroundColor: Colors.red,
           onPressed: (context) {
-            for (int i = 0;
-                i <
-                    Provider.of<HomeProvider>(context, listen: false)
-                        .cartList
-                        .length;
-                i++) {
-              if (Provider.of<HomeProvider>(context, listen: false)
-                          .cartList[i]
-                          .id ==
-                      product.id &&
-                  Provider.of<HomeProvider>(context, listen: false)
-                          .cartList[i]
-                          .priceWithExtra ==
+            for (int i = 0; i < serviceProviders.cart.length; i++) {
+              if (serviceProviders.cart[i].id == product.id &&
+                  serviceProviders.cart[i].priceWithExtra ==
                       product.priceWithExtra) {
                 Provider.of<HomeProvider>(context, listen: false)
                     .removeItemFromCart(
-                        serviceProviders,
-                        Provider.of<HomeProvider>(context, listen: false)
-                            .cartList[i]);
+                        serviceProviders, serviceProviders.cart[i]);
                 break;
               }
             }
@@ -154,7 +142,8 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                       onTap: () {
                         if (product.quantityInCart > 1) {
                           Provider.of<HomeProvider>(context, listen: false)
-                              .decreaseItemQuantityInCart(product);
+                              .decreaseItemQuantityInCart(
+                                  product, serviceProviders);
                         }
                       },
                       child: Container(
@@ -177,7 +166,7 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                     GestureDetector(
                       onTap: () {
                         Provider.of<HomeProvider>(context, listen: false)
-                            .addItemQuantityInCart(product);
+                            .addItemQuantityInCart(product, serviceProviders);
                       },
                       child: Container(
                           decoration: BoxDecoration(

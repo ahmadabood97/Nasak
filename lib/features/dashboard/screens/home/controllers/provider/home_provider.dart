@@ -30,9 +30,6 @@ class HomeProvider extends ChangeNotifier {
   final List<ServiceCategories> _categoriesList = [];
   List<ServiceCategories> get categoriesList => _categoriesList;
 
-  final List<SpProducts> _cartList = [];
-  List<SpProducts> get cartList => _cartList;
-
   int _itemInCart = 0;
   int get itemInCart => _itemInCart;
 
@@ -64,27 +61,28 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void addToCart(SpProducts product, ServiceProviders serviceProvider) {
-    for (var shopElement in _shopsList) {
-      if (shopElement == serviceProvider) {
-        if (_cartList.isEmpty) {
-          addNewItem(shopElement, product);
-        } else {
-          addItemQuantityInCart(product);
-          if (_newItem) {
-            addNewItem(shopElement, product);
-            _newItem = false;
-          }
-        }
+    if (serviceProvider.cart.isEmpty) {
+      addNewItem(serviceProvider, product);
+    } else {
+      addItemQuantityInCart(product, serviceProvider);
+      if (_newItem) {
+        addNewItem(serviceProvider, product);
+        _newItem = false;
       }
     }
   }
 
-  void addItemQuantityInCart(SpProducts product) {
-    for (int i = 0; i < _cartList.length; i++) {
-      if (_cartList[i].id == product.id &&
-          _cartList[i].priceWithExtra == product.priceWithExtra) {
-        _cartList[i].quantityInCart += _cartList[i].quantityToCart;
-        for (int j = 0; j < _cartList[i].quantityToCart; j++) {
+  void addItemQuantityInCart(
+    SpProducts product,
+    ServiceProviders shopElement,
+  ) {
+    for (int i = 0; i < shopElement.cart.length; i++) {
+      if (shopElement.cart[i].id == product.id &&
+          shopElement.cart[i].priceWithExtra == product.priceWithExtra) {
+        shopElement.cart[i].quantityInCart +=
+            shopElement.cart[i].quantityToCart;
+
+        for (int j = 0; j < shopElement.cart[i].quantityToCart; j++) {
           _itemInCart += 1;
           _subTotal += product.priceWithExtra != null
               ? double.parse(product.priceWithExtra!)
@@ -95,28 +93,29 @@ class HomeProvider extends ChangeNotifier {
         break;
       }
 
-      if (i + 1 == _cartList.length) {
+      if (i + 1 == shopElement.cart.length) {
         _newItem = true;
       }
     }
   }
 
-  void decreaseItemQuantityInCart(SpProducts product) {
-    for (int i = 0; i < _cartList.length; i++) {
-      if (_cartList[i].id == product.id &&
-          _cartList[i].priceWithExtra == product.priceWithExtra) {
-        _cartList[i].quantityInCart -= _cartList[i].quantityToCart;
-        for (int j = 0; j < _cartList[i].quantityToCart; j++) {
-          _itemInCart -= 1;
-          _subTotal -= product.priceWithExtra != null
-              ? double.parse(product.priceWithExtra!)
-              : double.parse(product.price.toString());
-        }
+  void decreaseItemQuantityInCart(
+      SpProducts product, ServiceProviders shopElement) {
+    for (int i = 0; i < shopElement.cart.length; i++) {
+      if (shopElement.cart[i].id == product.id &&
+          shopElement.cart[i].priceWithExtra == product.priceWithExtra) {
+        shopElement.cart[i].quantityInCart -=
+            shopElement.cart[i].quantityToCart;
+        _itemInCart -= 1;
+        _subTotal -= product.priceWithExtra != null
+            ? double.parse(product.priceWithExtra!)
+            : double.parse(product.price.toString());
         product.quantityToCart = 1;
         notifyListeners();
         break;
       }
-      if (i + 1 == _cartList.length && _cartList[i].id != product.id) {
+      if (i + 1 == shopElement.cart.length &&
+          shopElement.cart[i].id != product.id) {
         _newItem = true;
       }
     }
@@ -162,42 +161,20 @@ class HomeProvider extends ChangeNotifier {
         productDetails: product.productDetails,
         productimgurl: product.productimgurl,
         shortDescription: product.shortDescription));
-    _cartList.add(SpProducts(
-        extraHelpList: product.extraHelpList,
-        extraList: product.extraList,
-        quantityInCart: product.quantityInCart,
-        quantityToCart: product.quantityToCart,
-        additionalShippingCharge: product.additionalShippingCharge,
-        allowCustomerReviews: product.allowCustomerReviews,
-        approvedRatingSum: product.approvedRatingSum,
-        approvedTotalReviews: product.approvedTotalReviews,
-        brandName: product.brandName,
-        categoryGuid: product.categoryGuid,
-        categoryName: product.categoryName,
-        disableBuyButton: product.disableBuyButton,
-        disableWishlistButton: product.disableBuyButton,
-        displayOrder: product.displayOrder,
-        foreignPrice: product.foreignPrice,
-        fullHTMLDescription: product.fullHTMLDescription,
-        id: product.id,
-        markAsNew: product.markAsNew,
-        name: product.name,
-        oldPrice: product.oldPrice,
-        orderMaximumQuantity: product.orderMaximumQuantity,
-        orderMinimumQuantity: product.orderMinimumQuantity,
-        price: product.price,
-        priceWithExtra: product.priceWithExtra,
-        productAttAsJson: product.productAttAsJson,
-        productDetails: product.productDetails,
-        productimgurl: product.productimgurl,
-        shortDescription: product.shortDescription));
+
     notifyListeners();
   }
 
   void removeItemFromCart(ServiceProviders shopElement, SpProducts product) {
-    _cartList.remove(product);
-    shopElement.cart.remove(product);
+    for (var element in shopElement.cart) {
+      if (element.id == product.id &&
+          element.priceWithExtra == product.priceWithExtra) {
+        shopElement.cart.remove(element);
+        break;
+      }
+    }
     _itemInCart -= product.quantityInCart;
+
     for (int i = 0; i < product.quantityInCart; i++) {
       _subTotal -= product.priceWithExtra != null
           ? double.parse(product.priceWithExtra!)
@@ -207,23 +184,18 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void getCart(ServiceProviders serviceProvider) {
-    _cartList.clear();
     _itemInCart = 0;
     _subTotal = 0;
-    for (var shopElement in _shopsList) {
-      if (shopElement == serviceProvider) {
-        for (var element in shopElement.cart) {
-          _cartList.add(element);
-          for (int i = 0; i < element.quantityInCart; i++) {
-            _itemInCart++;
-            _subTotal += element.priceWithExtra != null
-                ? double.parse(element.priceWithExtra!)
-                : double.parse(element.price.toString());
-          }
-        }
-        notifyListeners();
+
+    for (var element in serviceProvider.cart) {
+      for (int i = 0; i < element.quantityInCart; i++) {
+        _itemInCart++;
+        _subTotal += element.priceWithExtra != null
+            ? double.parse(element.priceWithExtra!)
+            : double.parse(element.price.toString());
       }
     }
+    notifyListeners();
   }
 
   Future<void> getHome(
@@ -273,7 +245,6 @@ class HomeProvider extends ChangeNotifier {
     hasMore = true;
     page = 0;
     _shopsList.clear();
-    _cartList.clear();
     tabSelected = 0;
     catIdSelected = '';
   }

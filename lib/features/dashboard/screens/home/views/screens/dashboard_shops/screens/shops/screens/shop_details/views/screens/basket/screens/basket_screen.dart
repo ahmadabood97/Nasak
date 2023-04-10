@@ -32,7 +32,7 @@ class BasketScreen extends StatelessWidget {
               color: Colors.black,
             ),
           )),
-      body: Provider.of<HomeProvider>(context, listen: true).cartList.isEmpty
+      body: serviceProviders.cart.isEmpty
           ? screenEmpty(Icons.shopping_bag, "Fill your basket",
               "Add some items from menu.")
           : Stack(children: [
@@ -44,15 +44,10 @@ class BasketScreen extends StatelessWidget {
                   ),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: Provider.of<HomeProvider>(context, listen: true)
-                      .cartList
-                      .length,
+                  itemCount: serviceProviders.cart.length,
                   itemBuilder: (context, index) {
-                    return basketItemCardView(
-                        Provider.of<HomeProvider>(context, listen: true)
-                            .cartList[index],
-                        serviceProviders,
-                        context);
+                    return basketItemCardView(serviceProviders.cart[index],
+                        serviceProviders, context);
                   },
                 ),
                 const SizedBox(

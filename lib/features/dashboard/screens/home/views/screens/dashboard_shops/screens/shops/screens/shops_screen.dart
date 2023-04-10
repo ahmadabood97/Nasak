@@ -139,6 +139,17 @@ class _ShopsScreenState extends State<ShopsScreen> {
                                       .length +
                                   1,
                               itemBuilder: (context, index) {
+                                if (index <
+                                    Provider.of<HomeProvider>(context,
+                                            listen: true)
+                                        .shopsList
+                                        .length) {
+                                  Provider.of<HomeProvider>(context,
+                                          listen: true)
+                                      .shopsList[index]
+                                      .index = index;
+                                }
+
                                 return index <
                                         Provider.of<HomeProvider>(context,
                                                 listen: true)
