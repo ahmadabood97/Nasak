@@ -94,7 +94,8 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                       Expanded(
                         flex: 5,
                         child: Text(
-                          "O 26cm, mit Ananas, mit Broccoli",
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .getExtras(product),
                           style: TextStyle(
                               fontSize: 12,
                               color: Colors.black.withOpacity(0.6)),
@@ -166,7 +167,8 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                     GestureDetector(
                       onTap: () {
                         Provider.of<HomeProvider>(context, listen: false)
-                            .addItemQuantityInCart(product, serviceProviders);
+                            .increaseItemQuantityInCart(
+                                product, serviceProviders);
                       },
                       child: Container(
                           decoration: BoxDecoration(
