@@ -95,24 +95,45 @@ class ShopProvider extends ChangeNotifier {
 
   void initialExtraToPriceItem(SpProducts product) {
     if (product.extraList.isNotEmpty) {
-      for (int j = 0; j < product.extraList.length; j++) {
-        if (product.extraList[j][0].affectPrice! &&
-            product.extraList[j][0].isFixedPrice! &&
-            product.extraList[j][0].attrType == 1) {
+      for (int i = 0; i < product.extraList.length; i++) {
+        if (product.extraList[i][0].affectPrice! &&
+            product.extraList[i][0].isFixedPrice! &&
+            product.extraList[i][0].attrType == 1) {
           product.priceWithExtra =
-              product.extraList[j][0].optionPriceAdj ?? product.priceWithExtra;
-        } else if (product.extraList[j][0].affectPrice! &&
-            product.extraList[j][0].isExtraPrice! &&
-            product.extraList[j][0].attrType == 1) {
+              product.extraList[i][0].optionPriceAdj ?? product.priceWithExtra;
+        } else if (product.extraList[i][0].affectPrice! &&
+            product.extraList[i][0].isExtraPrice! &&
+            product.extraList[i][0].attrType == 1) {
           if (product.priceWithExtra != null &&
-              product.extraList[j][0].isExtraPrice != null) {
+              product.extraList[i][0].isExtraPrice != null) {
             double price = double.parse(product.priceWithExtra.toString());
             double extraPrice =
-                double.parse(product.extraList[j][0].optionPriceAdj.toString());
+                double.parse(product.extraList[i][0].optionPriceAdj.toString());
             price += extraPrice;
             product.priceWithExtra = price.toString();
           }
         }
+      }
+
+      for (var element in product.extraList) {
+        for (var element in element) {
+          element.isSelected = false;
+        }
+      }
+      for (var element in product.extraList) {
+        if (element[0].attrType == 1) {
+          element[0].isSelected = true;
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void setExtraForItem(
+      List<ProductDetails> productsDetails, ProductDetails productDetails) {
+    for (var element in productsDetails) {
+      if (element.groupguid == productDetails.groupguid) {
+        element.isSelected = false;
       }
     }
     notifyListeners();
@@ -124,7 +145,6 @@ class ShopProvider extends ChangeNotifier {
         productDetails.affectPrice! &&
         productDetails.isFixedPrice!) {
       product.priceWithExtra = productDetails.optionPriceAdj;
-
       if (product.productDetails != null) {
         for (var element in product.productDetails!) {
           if (element.isSelected && element.attrType == 3) {
@@ -145,6 +165,7 @@ class ShopProvider extends ChangeNotifier {
       price += extraPrice;
       product.priceWithExtra = price.toString();
     }
+
     notifyListeners();
   }
 

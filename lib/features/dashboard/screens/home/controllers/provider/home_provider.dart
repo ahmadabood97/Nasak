@@ -64,7 +64,7 @@ class HomeProvider extends ChangeNotifier {
     if (serviceProvider.cart.isEmpty) {
       addNewItem(serviceProvider, product);
     } else {
-      addItemQuantityInCart(product, serviceProvider);
+      increaseItemQuantityInCart(product, serviceProvider);
       if (_newItem) {
         addNewItem(serviceProvider, product);
         _newItem = false;
@@ -72,7 +72,7 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  void addItemQuantityInCart(
+  void increaseItemQuantityInCart(
     SpProducts product,
     ServiceProviders shopElement,
   ) {
@@ -132,6 +132,24 @@ class HomeProvider extends ChangeNotifier {
     }
     product.quantityToCart = 1;
 
+    List<ProductDetails> productDetails = [];
+
+    if (product.productDetails != null) {
+      for (var element in product.productDetails!) {
+        productDetails.add(ProductDetails(
+            isSelected: element.isSelected,
+            affectPrice: element.affectPrice,
+            attrType: element.attrType,
+            groupName: element.groupName,
+            groupguid: element.groupguid,
+            isExtraPrice: element.isExtraPrice,
+            isFixedPrice: element.isFixedPrice,
+            isavaliable: element.isavaliable,
+            optionName: element.optionName,
+            optionPriceAdj: element.optionPriceAdj,
+            optionguid: element.optionguid));
+      }
+    }
     shopElement.cart.add(SpProducts(
         extraHelpList: product.extraHelpList,
         extraList: product.extraList,
@@ -158,7 +176,7 @@ class HomeProvider extends ChangeNotifier {
         price: product.price,
         priceWithExtra: product.priceWithExtra,
         productAttAsJson: product.productAttAsJson,
-        productDetails: product.productDetails,
+        productDetails: productDetails,
         productimgurl: product.productimgurl,
         shortDescription: product.shortDescription));
 
@@ -186,7 +204,6 @@ class HomeProvider extends ChangeNotifier {
   void getCart(ServiceProviders serviceProvider) {
     _itemInCart = 0;
     _subTotal = 0;
-
     for (var element in serviceProvider.cart) {
       for (int i = 0; i < element.quantityInCart; i++) {
         _itemInCart++;
@@ -196,6 +213,32 @@ class HomeProvider extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  String getExtras(SpProducts product) {
+    String extras = '';
+
+    List<ProductDetails> productDetails = [];
+
+    if (product.productDetails != null) {
+      for (int i = 0; i < product.productDetails!.length; i++) {
+        if (product.productDetails![i].isSelected) {
+          productDetails.add(product.productDetails![i]);
+        }
+      }
+
+      for (int i = 0; i < productDetails.length; i++) {
+        if (productDetails[i].isSelected) {
+          if (i + 1 == productDetails.length) {
+            extras += "${productDetails[i].optionName} ";
+          } else {
+            extras += "${productDetails[i].optionName} , ";
+          }
+        }
+      }
+    }
+
+    return extras;
   }
 
   Future<void> getHome(

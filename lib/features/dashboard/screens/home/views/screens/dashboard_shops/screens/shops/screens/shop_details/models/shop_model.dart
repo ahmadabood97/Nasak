@@ -44,7 +44,8 @@ class ProductDetails {
       required this.groupguid,
       required this.optionguid,
       required this.isavaliable,
-      required this.optionPriceAdj});
+      required this.optionPriceAdj,
+      required this.isSelected});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     attrType = json['AttrType'];

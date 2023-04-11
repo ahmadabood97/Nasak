@@ -87,6 +87,11 @@ class _ExtraCardViewState extends State<ExtraCardView> {
                         groupValue = value.toString();
 
                         Provider.of<ShopProvider>(context, listen: false)
+                            .setExtraForItem(widget.productDetails,
+                                widget.productDetails[index]);
+
+                        widget.productDetails[index].isSelected = true;
+                        Provider.of<ShopProvider>(context, listen: false)
                             .addExtraToPrice(
                                 widget.product, widget.productDetails[index]);
                       });
