@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 class ShopDetailsResponse {
   String? appVersion;
   String? apiVersion;
@@ -21,7 +23,8 @@ class ShopDetailsResponse {
   }
 }
 
-class ProductDetails {
+// ignore: must_be_immutable
+class ProductDetails extends Equatable {
   int? attrType;
   bool? affectPrice;
   bool? isFixedPrice;
@@ -59,6 +62,20 @@ class ProductDetails {
     optionPriceAdj = json['optionPriceAdj'];
     isavaliable = json['isavaliable'];
   }
+
+  @override
+  List<Object> get props => [
+        attrType!,
+        affectPrice!,
+        isFixedPrice!,
+        isExtraPrice!,
+        groupName!,
+        optionName!,
+        groupguid!,
+        optionguid!,
+        isavaliable!,
+        isSelected
+      ];
 }
 
 class Result {
@@ -197,7 +214,8 @@ class SPcategories {
   }
 }
 
-class SpProducts {
+// ignore: must_be_immutable
+class SpProducts extends Equatable {
   String? id;
   String? name;
   dynamic displayOrder;
@@ -257,6 +275,9 @@ class SpProducts {
     required this.quantityInCart,
     required this.quantityToCart,
   });
+
+  @override
+  List<Object> get props => [productDetails!];
 
   SpProducts.fromJson(Map<String, dynamic> json) {
     id = json['id'];

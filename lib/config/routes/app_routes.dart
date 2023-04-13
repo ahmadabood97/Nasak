@@ -8,6 +8,8 @@ import '../../features/dashboard/screens/countries/views/screens/countries_scree
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/dashboard/screens/favorites/views/screens/favorites_screen.dart';
 import '../../features/dashboard/screens/home/models/app_services_model.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/add_voucher_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/checkout_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/categories_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/views/screens/category_product_screen.dart';
 
@@ -17,8 +19,6 @@ import '../../features/dashboard/screens/home/views/screens/dashboard_shops/scre
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/search/screens/search_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/views/screens/about_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/basket/screens/basket_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/add_voucher_screen.dart';
-import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/checkout/screens/checkout_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/shop_details_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shops_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';

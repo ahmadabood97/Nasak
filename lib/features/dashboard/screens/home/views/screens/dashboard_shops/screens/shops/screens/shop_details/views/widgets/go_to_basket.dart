@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../../../core/utils/hex_colors.dart';
 import '../../../../../../../../../models/app_services_model.dart';
 import 'bag_icon.dart';
 
@@ -14,7 +15,7 @@ Widget goToBasket(BuildContext context, ServiceProviders serviceProviders) {
       child: Container(
         width: double.infinity,
         height: 50,
-        color: const Color.fromARGB(255, 3, 59, 107),
+        color: HexColor('3359ba'),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

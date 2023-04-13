@@ -3,6 +3,7 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../../../../../core/utils/hex_colors.dart';
 import '../../../../../../../../../../../models/app_services_model.dart';
 import '../../../../../../widgets/screen_empty.dart';
 import '../../../widgets/switch_to_delivery.dart';
@@ -135,7 +136,7 @@ class BasketScreen extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     height: 50,
-                    color: const Color.fromARGB(255, 3, 59, 107),
+                    color: HexColor('3359ba'),
                     child: Center(
                       child: Text(
                         "Go to checkout (${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} \$)",

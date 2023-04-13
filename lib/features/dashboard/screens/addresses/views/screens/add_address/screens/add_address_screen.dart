@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
@@ -9,6 +10,7 @@ import '../../../../../../../auth/screens/login/models/login_response_model.dart
 import '../../../../../../../auth/screens/register/controllers/provider/register_provider.dart';
 import '../../../../../countries/controllers/provider/countries_provider.dart';
 import '../../../../models/address_model.dart';
+import '../widgets/add_location.dart';
 
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});
@@ -19,6 +21,7 @@ class AddAddressScreen extends StatefulWidget {
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
   final GlobalKey<FormState> addAddressFormKey = GlobalKey<FormState>();
+
 
   @override
   void initState() {
@@ -206,6 +209,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           const SizedBox(
             height: 15,
           ),
+ const  AddLocation(),
         ]),
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,6 +12,7 @@ class OrdersRepo {
 
   Future<http.Response> getOrders(
       String serviceId, String token, int page) async {
+    log("Get Orders Token is :$token");
     var headers = {'Authorization': 'Bearer $token'};
     var request = http.Request(
         'GET',

@@ -18,7 +18,9 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
             for (int i = 0; i < serviceProviders.cart.length; i++) {
               if (serviceProviders.cart[i].id == product.id &&
                   serviceProviders.cart[i].priceWithExtra ==
-                      product.priceWithExtra) {
+                      product.priceWithExtra &&
+                  serviceProviders.cart[i].productDetails ==
+                      product.productDetails) {
                 Provider.of<HomeProvider>(context, listen: false)
                     .removeItemFromCart(
                         serviceProviders, serviceProviders.cart[i]);

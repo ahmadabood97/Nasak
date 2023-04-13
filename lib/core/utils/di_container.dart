@@ -12,6 +12,8 @@ import '../../features/dashboard/screens/favorites/controllers/provider/favorite
 import '../../features/dashboard/screens/favorites/controllers/repo/favorite_repo.dart';
 import '../../features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import '../../features/dashboard/screens/home/controllers/repo/home_repo.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/controllers/repo/checkout_repo.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/repo/category_details_repo.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
@@ -41,6 +43,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AboutRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => OrdersRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => OrderDetailsRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => CheckoutRepo(sharedPreferences: sl()));
 
   // Provider
   sl.registerFactory(() => CountriesProvider(countriesRepo: sl()));
@@ -54,7 +57,7 @@ Future<void> init() async {
   sl.registerFactory(() => AboutProvider(aboutRepo: sl()));
   sl.registerFactory(() => OrdersProvider(orderRepo: sl()));
   sl.registerFactory(() => OrderDetailsProvider(orderDetailsRepo: sl()));
-
+  sl.registerFactory(() => CheckoutProvider(checkoutRepo: sl()));
   sl.registerFactory(() => RegisterProvider(
         registerRepo: sl(),
         countriesProvider: sl(),

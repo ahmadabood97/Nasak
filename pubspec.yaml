@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   url_launcher: ^6.1.8
   cached_network_image: ^3.2.1
+  equatable: ^2.0.3
   auto_size_text: ^3.0.0
   flutter_rating_bar: ^4.0.1
   scroll_to_index: ^2.0.0
