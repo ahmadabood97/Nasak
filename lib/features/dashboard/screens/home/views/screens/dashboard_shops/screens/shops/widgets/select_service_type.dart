@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:provider/provider.dart';
 
 class SelectServiceType extends StatefulWidget {
   const SelectServiceType({super.key});
@@ -26,6 +28,9 @@ class _SelectServiceTypeState extends State<SelectServiceType> {
                     onTap: () {
                       setState(() {
                         serviceType = 'Delivery';
+
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .setIsPickup(false);
                       });
                     },
                     child: Container(
@@ -73,6 +78,9 @@ class _SelectServiceTypeState extends State<SelectServiceType> {
                     onTap: () {
                       setState(() {
                         serviceType = 'Pickup';
+
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .setIsPickup(true);
                       });
                     },
                     child: Container(
