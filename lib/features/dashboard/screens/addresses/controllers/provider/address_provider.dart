@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:nasak/features/auth/screens/login/models/login_response_model.dart';
-
 import '../../../../../../core/widgets/loading_alert_dialog.dart';
 import '../../../../../../core/widgets/show_dialog.dart';
 import '../../models/address_model.dart';
@@ -38,6 +40,69 @@ class AddressProvider extends ChangeNotifier {
   TextEditingController get buildNameController => _buildNameController;
   TextEditingController get floorNumController => _floorNumController;
   TextEditingController get entranceNumController => _entranceNumController;
+
+  double? _lat;
+  double? _long;
+  double? get lat => _lat;
+  double? get long => _long;
+  Position? position;
+
+  Marker? _bottomSheetMarker;
+  Marker? get bottomSheetMarker => _bottomSheetMarker;
+
+  pinLocation(LatLng loc, Completer<GoogleMapController> controller) async {
+    await controller.future.then((e) async {
+      double zoom = await e.getZoomLevel();
+      e.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: loc,
+        zoom: zoom,
+      )));
+    });
+    _bottomSheetMarker = Marker(
+        markerId: const MarkerId('bottomsheetloc'),
+        position: loc,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
+    _lat = loc.latitude;
+    _long = loc.longitude;
+
+    log(_lat.toString());
+    log(_long.toString());
+    notifyListeners();
+  }
+
+  determinePosition(Completer<GoogleMapController> controller) async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    log(permission.toString());
+    if (permission == LocationPermission.always) {
+      position = await Geolocator.getCurrentPosition();
+      log("lat : ${position!.latitude}");
+      log("long : ${position!.longitude}");
+
+      _lat = position!.latitude;
+      _long = position!.longitude;
+
+      _bottomSheetMarker = Marker(
+          markerId: const MarkerId('bottomsheetloc'),
+          position: LatLng(_lat!, _long!),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
+
+      await controller.future.then((e) async {
+        double zoom = await e.getZoomLevel();
+        e.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(_lat!, _long!),
+          zoom: zoom,
+        )));
+      });
+    }
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    notifyListeners();
+  }
 
   Future<void> getAddress(
       {bool firstRequest = false,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../../../../../../../../../../../core/utils/hex_colors.dart';
-import '../../../widgets/bag_icon.dart';
+import '../../../../../../../../../core/widgets/show_dialog.dart';
+import '../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
+import '../../../dashboard_shops/screens/shops/screens/shop_details/views/widgets/bag_icon.dart';
 import '../widgets/agree_terms.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/delivery_address.dart';
@@ -141,8 +145,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
           Center(
-              child: customButton(
-                  HexColor('3359ba'), 'Order and pay', Colors.white))
+              child: GestureDetector(
+            onTap: () {
+              if (Provider.of<LoginProvider>(context, listen: false)
+                      .loginData !=
+                  null) {
+                Provider.of<CheckoutProvider>(context, listen: false).checkout(
+                    context: context,
+                    stopLoading: () {
+                      Navigator.pop(context);
+                    },
+                    token: Provider.of<LoginProvider>(context, listen: false)
+                        .loginData!
+                        .authToken);
+              } else {
+                showCustomDialog(context, 'Please Login...');
+              }
+            },
+            child:
+                customButton(HexColor('3359ba'), 'Order and pay', Colors.white),
+          ))
         ],
       ),
     );

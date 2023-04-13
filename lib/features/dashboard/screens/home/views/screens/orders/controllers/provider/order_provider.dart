@@ -68,6 +68,11 @@ class OrdersProvider extends ChangeNotifier {
           }
           _isLoading = false;
           notifyListeners();
+        } else if (json.decode(apiResponse.body)['statusCode'] == 204) {
+          getData = null;
+          _isLoading = false;
+          notifyListeners();
+          log("Get Orders Is Empty");
         } else {
           getData = null;
           _isLoading = false;

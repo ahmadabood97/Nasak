@@ -148,8 +148,12 @@ class ShopProvider extends ChangeNotifier {
       if (product.productDetails != null) {
         for (var element in product.productDetails!) {
           if (element.isSelected && element.attrType == 3) {
-            double price = double.parse(product.priceWithExtra.toString());
-            double extraPrice = double.parse(element.optionPriceAdj.toString());
+            double price = product.priceWithExtra == null
+                ? 0
+                : double.parse(product.priceWithExtra.toString());
+            double extraPrice = element.optionPriceAdj == null
+                ? 0
+                : double.parse(element.optionPriceAdj.toString());
             price += extraPrice;
             product.priceWithExtra = price.toString();
           }
@@ -159,9 +163,12 @@ class ShopProvider extends ChangeNotifier {
         productDetails.isExtraPrice != null &&
         productDetails.affectPrice! &&
         productDetails.isExtraPrice!) {
-      double price = double.parse(product.priceWithExtra.toString());
-      double extraPrice =
-          double.parse(productDetails.optionPriceAdj.toString());
+      double price = product.priceWithExtra == null
+          ? 0
+          : double.parse(product.priceWithExtra.toString());
+      double extraPrice = productDetails.optionPriceAdj == null
+          ? 0
+          : double.parse(productDetails.optionPriceAdj.toString());
       price += extraPrice;
       product.priceWithExtra = price.toString();
     }
@@ -171,7 +178,9 @@ class ShopProvider extends ChangeNotifier {
 
   void decreaseExtraToPrice(SpProducts product, ProductDetails productDetails) {
     double price = double.parse(product.priceWithExtra.toString());
-    double extraPrice = double.parse(productDetails.optionPriceAdj.toString());
+    double extraPrice = productDetails.optionPriceAdj == null
+        ? 0
+        : double.parse(productDetails.optionPriceAdj.toString());
     price -= extraPrice;
     product.priceWithExtra = price.toString();
     notifyListeners();

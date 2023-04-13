@@ -48,6 +48,7 @@ class HomeProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   bool _newItem = false;
+  bool _addQuantity = false;
 
   void setTabSelected(
       int value, String catId, String serviceId, String locationId) {
@@ -76,24 +77,50 @@ class HomeProvider extends ChangeNotifier {
     SpProducts product,
     ServiceProviders shopElement,
   ) {
+    _addQuantity = false;
     for (int i = 0; i < shopElement.cart.length; i++) {
-      if (shopElement.cart[i].id == product.id &&
-          shopElement.cart[i].priceWithExtra == product.priceWithExtra) {
-        shopElement.cart[i].quantityInCart +=
-            shopElement.cart[i].quantityToCart;
-
-        for (int j = 0; j < shopElement.cart[i].quantityToCart; j++) {
-          _itemInCart += 1;
-          _subTotal += product.priceWithExtra != null
-              ? double.parse(product.priceWithExtra!)
-              : double.parse(product.price.toString());
+      if (product.productDetails != null &&
+          product.productDetails!.isNotEmpty) {
+        if (shopElement.cart[i].id == product.id &&
+            shopElement.cart[i].priceWithExtra == product.priceWithExtra &&
+            shopElement.cart[i].productDetails!.length ==
+                product.productDetails!.length) {
+          for (int j = 0; j < product.productDetails!.length; j++) {
+            if (shopElement.cart[i].productDetails![j] !=
+                product.productDetails![j]) {
+              break;
+            } else if (j + 1 == product.productDetails!.length) {
+              _addQuantity = true;
+              shopElement.cart[i].quantityInCart += product.quantityToCart;
+              for (int j = 0; j < product.quantityToCart; j++) {
+                _itemInCart += 1;
+                _subTotal += product.priceWithExtra != null
+                    ? double.parse(product.priceWithExtra!)
+                    : double.parse(product.price.toString());
+              }
+              product.quantityToCart = 1;
+              notifyListeners();
+              break;
+            }
+          }
         }
-        product.quantityToCart = 1;
-        notifyListeners();
-        break;
+      } else {
+        if (shopElement.cart[i].id == product.id &&
+            shopElement.cart[i].priceWithExtra == product.priceWithExtra) {
+          shopElement.cart[i].quantityInCart += product.quantityToCart;
+          for (int j = 0; j < product.quantityToCart; j++) {
+            _itemInCart += 1;
+            _subTotal += product.priceWithExtra != null
+                ? double.parse(product.priceWithExtra!)
+                : double.parse(product.price.toString());
+          }
+          product.quantityToCart = 1;
+          notifyListeners();
+          break;
+        }
       }
 
-      if (i + 1 == shopElement.cart.length) {
+      if (i + 1 == shopElement.cart.length && !_addQuantity) {
         _newItem = true;
       }
     }
@@ -103,7 +130,9 @@ class HomeProvider extends ChangeNotifier {
       SpProducts product, ServiceProviders shopElement) {
     for (int i = 0; i < shopElement.cart.length; i++) {
       if (shopElement.cart[i].id == product.id &&
-          shopElement.cart[i].priceWithExtra == product.priceWithExtra) {
+          shopElement.cart[i].priceWithExtra == product.priceWithExtra &&
+          shopElement.cart[i].productDetails!.length ==
+              product.productDetails!.length) {
         shopElement.cart[i].quantityInCart -=
             shopElement.cart[i].quantityToCart;
         _itemInCart -= 1;
@@ -122,6 +151,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void addNewItem(ServiceProviders shopElement, SpProducts product) {
+    log("add new item");
     product.quantityInCart = product.quantityToCart;
 
     for (int j = 0; j < product.quantityToCart; j++) {
@@ -186,7 +216,8 @@ class HomeProvider extends ChangeNotifier {
   void removeItemFromCart(ServiceProviders shopElement, SpProducts product) {
     for (var element in shopElement.cart) {
       if (element.id == product.id &&
-          element.priceWithExtra == product.priceWithExtra) {
+          element.priceWithExtra == product.priceWithExtra &&
+          element.productDetails == product.productDetails) {
         shopElement.cart.remove(element);
         break;
       }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../../../../../../core/utils/hex_colors.dart';
-import '../../../../../../widgets/custom_button.dart';
+import '../../../dashboard_shops/screens/shops/widgets/custom_button.dart';
 
 Widget doHaveAccount(BuildContext context) {
   return Column(
