@@ -64,7 +64,8 @@ class AppRoutes {
     switch (settings.name) {
       case Routes.checkoutRoute:
         return MaterialPageRoute(
-          builder: (context) => const CheckoutScreen(),
+          builder: (context) => CheckoutScreen(
+              serviceProviders: settings.arguments as ServiceProviders),
         );
       case Routes.selectAddressRoute:
         return MaterialPageRoute(

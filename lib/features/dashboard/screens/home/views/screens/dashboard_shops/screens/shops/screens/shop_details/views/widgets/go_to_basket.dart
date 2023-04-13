@@ -10,8 +10,12 @@ Widget goToBasket(BuildContext context, ServiceProviders serviceProviders) {
   return Align(
     alignment: Alignment.bottomCenter,
     child: InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.basketRoute,
-          arguments: serviceProviders),
+      onTap: () {
+        Provider.of<HomeProvider>(context, listen: false)
+            .setOrderItemsList(serviceProviders.cart);
+        Navigator.pushNamed(context, Routes.basketRoute,
+            arguments: serviceProviders);
+      },
       child: Container(
         width: double.infinity,
         height: 50,

@@ -17,11 +17,15 @@ class CountriesProvider extends ChangeNotifier {
   CountriesResponse? _countries;
   CountriesResponse? get countries => _countries;
 
+  Currencies? _currency;
+  Currencies? get currency => _currency;
+
   List<String> countryDropdownList = [];
 
   List<String> locationDropdownList = [];
 
   Countries countriesValue = Countries();
+
   DeliveryLocations locationSelectedValue = DeliveryLocations();
 
   bool? getData;
@@ -90,12 +94,9 @@ class CountriesProvider extends ChangeNotifier {
     return countriesRepo.getLocationData();
   }
 
-  dynamic getCountryData() async {
-    if (await countriesRepo.getCountryData() != null) {
-      Countries country = await countriesRepo.getCountryData();
-      countriesValue = country;
-      notifyListeners();
-    }
-    return countriesRepo.getCountryData();
+  Future<dynamic> getCountryData() async {
+    countriesValue = await countriesRepo.getCountryData();
+    notifyListeners();
+    return countriesValue;
   }
 }

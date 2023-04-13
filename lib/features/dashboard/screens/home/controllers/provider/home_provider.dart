@@ -4,9 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nasak/features/dashboard/screens/countries/models/countries_model.dart';
 
 import '../../models/app_services_model.dart';
 import '../../models/home_model.dart';
+import '../../views/screens/checkout/models/checkout_model.dart';
 import '../../views/screens/dashboard_shops/screens/shops/screens/shop_details/models/shop_model.dart';
 import '../repo/home_repo.dart';
 
@@ -30,6 +32,15 @@ class HomeProvider extends ChangeNotifier {
   final List<ServiceCategories> _categoriesList = [];
   List<ServiceCategories> get categoriesList => _categoriesList;
 
+  List<OrderItems> _orderItemsList = [];
+  List<OrderItems> get orderItemsList => _orderItemsList;
+
+  Currencies? _currency;
+  Currencies? get currency => _currency;
+
+  bool _isPickup = false;
+  bool? get isPickup => _isPickup;
+
   int _itemInCart = 0;
   int get itemInCart => _itemInCart;
 
@@ -49,6 +60,45 @@ class HomeProvider extends ChangeNotifier {
 
   bool _newItem = false;
   bool _addQuantity = false;
+
+  List<ProductAttrbutes> _productAttrbutes = [];
+
+  void setOrderItemsList(List<SpProducts> cart) {
+    _orderItemsList = [];
+    for (var item in cart) {
+      _productAttrbutes = [];
+
+      if (item.productDetails != null) {
+        for (var detail in item.productDetails!) {
+          _productAttrbutes.add(ProductAttrbutes(
+              groupGuid: detail.groupguid,
+              selectedOptionGuid: detail.optionguid));
+        }
+      }
+      _orderItemsList.add(OrderItems(
+          finalPrice: item.priceWithExtra,
+          isSpecialOfferItem: false,
+          priceIncl: '',
+          productAttrbutes: _productAttrbutes,
+          productGuid: item.id,
+          quantity: item.quantityInCart.toString(),
+          unitPrice: ''));
+    }
+    notifyListeners();
+  }
+
+  void setCurrency(Countries country) {
+    for (var element in _home!.result!.currencies!) {
+      if (element.id == country.currencyId) {
+        _currency = element;
+      }
+    }
+  }
+
+  void setIsPickup(bool value) {
+    _isPickup = value;
+    notifyListeners();
+  }
 
   void setTabSelected(
       int value, String catId, String serviceId, String locationId) {
@@ -151,7 +201,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void addNewItem(ServiceProviders shopElement, SpProducts product) {
-    log("add new item");
     product.quantityInCart = product.quantityToCart;
 
     for (int j = 0; j < product.quantityToCart; j++) {
