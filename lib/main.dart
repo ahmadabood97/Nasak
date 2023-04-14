@@ -1,5 +1,9 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+// import 'package:intl/intl.dart';
+import 'package:nasak/features/splash/views/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'config/routes/app_routes.dart';
 import 'core/utils/connect.dart';
@@ -18,7 +22,6 @@ import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/sh
 import 'features/dashboard/screens/home/views/screens/offers/controllers/provider/offer_provider.dart';
 import 'features/dashboard/screens/home/views/screens/orders/controllers/provider/order_provider.dart';
 import 'features/dashboard/screens/home/views/screens/orders/views/screens/order_details/controllers/provider/order_details_provider.dart';
-import 'features/splash/views/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,3 +71,41 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// class MyScreen extends StatefulWidget {
+//   const MyScreen({super.key});
+
+//   @override
+//   // ignore: library_private_types_in_public_api
+//   _MyScreenState createState() => _MyScreenState();
+// }
+
+// class _MyScreenState extends State<MyScreen> {
+//   final _currentDate = DateTime.now();
+//   final _dayFormatter = DateFormat('d');
+//   final _monthFormatter = DateFormat('MMM');
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final dates = <Widget>[];
+
+//     for (int i = 0; i < 5; i++) {
+//       final date = _currentDate.add(Duration(days: i));
+//       dates.add(Column(
+//         children: [
+//           Text(_dayFormatter.format(date)),
+//           Text(_monthFormatter.format(date)),
+//         ],
+//       ));
+//     }
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Tests'),
+//       ),
+//       body: Row(
+//         children: dates.map((widget) => Expanded(child: widget)).toList(),
+//       ),
+//     );
+//   }
+// }
