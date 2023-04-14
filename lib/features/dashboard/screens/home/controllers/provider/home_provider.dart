@@ -181,8 +181,7 @@ class HomeProvider extends ChangeNotifier {
     for (int i = 0; i < shopElement.cart.length; i++) {
       if (shopElement.cart[i].id == product.id &&
           shopElement.cart[i].priceWithExtra == product.priceWithExtra &&
-          shopElement.cart[i].productDetails!.length ==
-              product.productDetails!.length) {
+          shopElement.cart[i].productDetails! == product.productDetails!) {
         shopElement.cart[i].quantityInCart -=
             shopElement.cart[i].quantityToCart;
         _itemInCart -= 1;
