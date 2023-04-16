@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../../../../../../../core/widgets/loading_alert_dialog.dart';
 import '../../../../../../../../../core/widgets/show_dialog.dart';
+import '../../models/checkout_model.dart';
 import '../repo/checkout_repo.dart';
 
 class CheckoutProvider extends ChangeNotifier {
@@ -17,7 +18,7 @@ class CheckoutProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> checkout(
+  Future<void> checkout(CheckoutModel checkoutModel,
       {bool firstRequest = false,
       VoidCallback? stopLoading,
       String? token,

@@ -34,6 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, Routes.countriesRoute,
             arguments: "SplashScreen");
       } else {
+        Provider.of<HomeProvider>(context, listen: false).setCurrency(
+            Provider.of<CountriesProvider>(context, listen: false)
+                .countriesValue);
         Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
       }
     });

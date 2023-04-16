@@ -1,5 +1,9 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+// import 'package:intl/intl.dart';
+import 'package:nasak/features/splash/views/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'config/routes/app_routes.dart';
 import 'core/utils/connect.dart';
@@ -19,7 +23,6 @@ import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/sh
 import 'features/dashboard/screens/home/views/screens/offers/controllers/provider/offer_provider.dart';
 import 'features/dashboard/screens/home/views/screens/orders/controllers/provider/order_provider.dart';
 import 'features/dashboard/screens/home/views/screens/orders/views/screens/order_details/controllers/provider/order_details_provider.dart';
-import 'features/splash/views/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,7 +74,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-  // DateTime time = DateTime.now(); // Here you can get your current local time
-  //   time.add(Duration(minutes: 120));
-  //   print(time);

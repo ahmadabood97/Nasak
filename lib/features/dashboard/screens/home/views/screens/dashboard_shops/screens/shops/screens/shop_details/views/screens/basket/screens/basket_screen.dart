@@ -131,8 +131,10 @@ class BasketScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: InkWell(
-                  onTap: () =>
-                      Navigator.pushNamed(context, Routes.checkoutRoute),
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.checkoutRoute,
+                        arguments: serviceProviders);
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 50,

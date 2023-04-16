@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/models/app_services_model.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/models/checkout_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../../../../../../core/utils/assets_manager.dart';
@@ -18,7 +21,9 @@ import '../widgets/select_data.dart';
 import 'delivery_date_time/controllers/provider/delivery_date_time_provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+  final ServiceProviders serviceProviders;
+
+  const CheckoutScreen({super.key, required this.serviceProviders});
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -200,10 +205,35 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       .loginData !=
                   null) {
                 Provider.of<CheckoutProvider>(context, listen: false).checkout(
-                    context: context,
-                    stopLoading: () {
-                      Navigator.pop(context);
-                    },
+                    CheckoutModel(
+                      currencyId:
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .currency!
+                              .id!,
+                      currencyRate: int.parse(
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .currency!
+                              .rate!),
+                      customerCurrencyCode:
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .currency!
+                              .symbol!,
+                      customerGuid:
+                          Provider.of<LoginProvider>(context, listen: false)
+                              .loginData!
+                              .id!,
+                      ispickupOrder:
+                          Provider.of<HomeProvider>(context, listen: true)
+                              .isPickup,
+                      serviceProiderGuid: widget.serviceProviders.id,
+                      orderItems:
+                          Provider.of<HomeProvider>(context, listen: false)
+                              .orderItemsList,
+                      paymentMethodGuid: 'A707B7CE-8A65-41B2-A8D1-8B5C8AE78F8E',
+                    ),
+                    context: context, stopLoading: () {
+                  Navigator.pop(context);
+                },
                     token: Provider.of<LoginProvider>(context, listen: false)
                         .loginData!
                         .authToken);

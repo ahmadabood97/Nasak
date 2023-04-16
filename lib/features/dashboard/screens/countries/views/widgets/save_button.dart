@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/config/routes/app_routes.dart';
 import 'package:nasak/features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../core/utils/hex_colors.dart';
 
@@ -30,9 +31,19 @@ class SaveButton extends StatelessWidget {
 
               if (screen == "SplashScreen") {
                 Navigator.pushReplacementNamed(context, Routes.dashboardRoute);
+                Provider.of<CountriesProvider>(context, listen: false)
+                    .getCountryData();
+                Provider.of<HomeProvider>(context, listen: false).setCurrency(
+                    Provider.of<CountriesProvider>(context, listen: false)
+                        .countriesValue);
               } else if (screen == "HomeScreen") {
                 Navigator.pop(context);
                 Navigator.pop(context);
+                Provider.of<CountriesProvider>(context, listen: false)
+                    .getCountryData();
+                Provider.of<HomeProvider>(context, listen: false).setCurrency(
+                    Provider.of<CountriesProvider>(context, listen: false)
+                        .countriesValue);
               }
             }
           },

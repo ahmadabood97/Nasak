@@ -48,7 +48,6 @@ class LoginRepo {
         Map<String, dynamic> map =
             await jsonDecode(sharedPreferences.get('UserData') as String);
         log(map.toString());
-
         return LoginResponseModel.fromJson(map);
       } else {
         log('null');
