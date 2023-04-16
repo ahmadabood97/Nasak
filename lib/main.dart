@@ -12,6 +12,7 @@ import 'features/dashboard/screens/countries/controllers/provider/countries_prov
 import 'features/dashboard/screens/favorites/controllers/provider/favorite_provider.dart';
 import 'features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
+import 'features/dashboard/screens/home/views/screens/checkout/views/screens/delivery_date_time/controllers/provider/delivery_date_time_provider.dart';
 import 'features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/controllers/provider/category_details_provider.dart';
 import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/controllers/provider/about_provider.dart';
@@ -46,6 +47,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => di.sl<OrdersProvider>()),
         ChangeNotifierProvider(create: (context) => di.sl<CheckoutProvider>()),
         ChangeNotifierProvider(
+            create: (context) => di.sl<DeliveryDateTimeProvider>()),
+        ChangeNotifierProvider(
             create: (context) => di.sl<OrderDetailsProvider>()),
         ChangeNotifierProvider(
             create: (context) => di.sl<CategoryDetailsProvider>()),
@@ -68,3 +71,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+  // DateTime time = DateTime.now(); // Here you can get your current local time
+  //   time.add(Duration(minutes: 120));
+  //   print(time);

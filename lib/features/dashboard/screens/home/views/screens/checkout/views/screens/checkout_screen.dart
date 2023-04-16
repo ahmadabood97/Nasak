@@ -7,12 +7,15 @@ import '../../../../../../../../../../../../../../../core/utils/hex_colors.dart'
 import '../../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../dashboard_shops/screens/shops/screens/shop_details/views/widgets/bag_icon.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 import '../widgets/agree_terms.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/delivery_address.dart';
 import '../widgets/do_have_account.dart';
 import '../widgets/personal_details.dart';
 import '../widgets/select_data.dart';
+import 'delivery_date_time/controllers/provider/delivery_date_time_provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -22,6 +25,20 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  @override
+  void initState() {
+    Provider.of<DeliveryDateTimeProvider>(context, listen: false)
+        .setDeliveryDateList(7);
+    Provider.of<DeliveryDateTimeProvider>(context, listen: false)
+        .setDeliveryTimeList(
+            startHour: 4,
+            lastHour: 17,
+            interval: 30,
+            perparingTime: 30,
+            offest: 180);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,11 +85,43 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
-                  child: selectData(
-                      icon: Icons.timer,
-                      subtitle: 'As soon as Possible',
-                      title: 'Delivery time',
-                      image: ''),
+                  child: GestureDetector(
+                    onTap: () {
+                      Provider.of<DeliveryDateTimeProvider>(context,
+                              listen: false)
+                          .setDeliveryDateList(7);
+                      Navigator.pushNamed(context, Routes.deleveryDateRoute);
+                    },
+                    child: selectData(
+                        icon: Icons.date_range,
+                        subtitle: Provider.of<DeliveryDateTimeProvider>(context,
+                                listen: true)
+                            .daySelectedString,
+                        title: 'Delivery date',
+                        image: ''),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: GestureDetector(
+                    onTap: () {
+                      Provider.of<DeliveryDateTimeProvider>(context,
+                              listen: false)
+                          .setDeliveryTimeList(
+                              startHour: 4,
+                              lastHour: 17,
+                              interval: 30,
+                              perparingTime: 30,
+                              offest: 180);
+                      Navigator.pushNamed(context, Routes.deleveryTimeRoute);
+                    },
+                    child: selectData(
+                        icon: Icons.timer,
+                        subtitle:
+                            "${DateFormat('HH').format(Provider.of<DeliveryDateTimeProvider>(context, listen: true).timeSelected!)}:${DateFormat('mm').format(Provider.of<DeliveryDateTimeProvider>(context, listen: true).timeSelected!)} ",
+                        title: 'Delivery time',
+                        image: ''),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

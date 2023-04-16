@@ -44,7 +44,10 @@ class AppBarSection extends SliverAppBar {
   }) : super(elevation: 1, pinned: true, forceElevated: true);
 
   @override
-  Color? get backgroundColor => Colors.orange;
+  Color? get backgroundColor =>
+      Provider.of<ShopProvider>(context, listen: true).isLoading
+          ? Colors.white
+          : Colors.orange;
 
   @override
   Widget? get leading {
@@ -110,13 +113,20 @@ class AppBarSection extends SliverAppBar {
   PreferredSizeWidget? get bottom {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
-      child: Container(
-          width: double.infinity,
-          color: const Color.fromARGB(255, 255, 245, 240),
-          child: categoryTabView(
-              Provider.of<ShopProvider>(context, listen: true).categoriesList!,
-              serviceProviders.id!,
-              context)),
+      child: Provider.of<ShopProvider>(context, listen: true).isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
+            )
+          : Container(
+              width: double.infinity,
+              color: const Color.fromARGB(255, 255, 245, 240),
+              child: categoryTabView(
+                  Provider.of<ShopProvider>(context, listen: true)
+                      .categoriesList!,
+                  serviceProviders.id!,
+                  context)),
     );
   }
 
