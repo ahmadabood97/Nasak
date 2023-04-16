@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../core/utils/constants.dart';
-import '../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../../../../controllers/provider/home_provider.dart';
 import '../../../../../../models/app_services_model.dart';
-import '../screens/shop_details/controllers/provider/shop_provider.dart';
 import 'icon_with_text.dart';
 
 Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
@@ -14,23 +12,10 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
       padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
-          Provider.of<ShopProvider>(context, listen: false).clear();
           Provider.of<HomeProvider>(context, listen: false)
               .getCart(serviceProviders);
-          Provider.of<ShopProvider>(context, listen: false).getShopDetails(
-              serviceProviders.id!,
-              '',
-              Provider.of<LoginProvider>(context, listen: false).loginData !=
-                      null
-                  ? Provider.of<LoginProvider>(context, listen: false)
-                      .loginData!
-                      .authToken!
-                  : "", showShopDetails: () {
-            Navigator.pushNamed(context, Routes.shopDetailsRoute,
-                arguments: serviceProviders);
-          }, closeLoading: () {
-            Navigator.pop(context);
-          }, context: context, showLoading: true);
+          Navigator.pushNamed(context, Routes.shopDetailsRoute,
+              arguments: serviceProviders);
         },
         child: Stack(
           alignment: Alignment.bottomCenter,

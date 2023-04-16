@@ -33,6 +33,20 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
 
   @override
   void initState() {
+    Provider.of<ShopProvider>(context, listen: false).clear();
+
+    Provider.of<ShopProvider>(context, listen: false).getShopDetails(
+        widget.serviceProviders.id!,
+        '',
+        Provider.of<LoginProvider>(context, listen: false).loginData != null
+            ? Provider.of<LoginProvider>(context, listen: false)
+                .loginData!
+                .authToken!
+            : "",
+        showShopDetails: () {}, closeLoading: () {
+      Navigator.pop(context);
+    }, context: context);
+
     tabController = TabController(
         length: Provider.of<ShopProvider>(context, listen: false)
             .categoriesList!
@@ -126,7 +140,11 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
   }
 
   Widget buildBodySection(int index) {
-    if (index <
+    if (Provider.of<ShopProvider>(context, listen: true).isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(color: Colors.orange),
+      );
+    } else if (index <
         Provider.of<ShopProvider>(context, listen: true).productsList!.length) {
       SpProducts product =
           Provider.of<ShopProvider>(context, listen: true).productsList![index];

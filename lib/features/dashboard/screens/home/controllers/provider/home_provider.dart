@@ -262,13 +262,12 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void removeItemFromCart(ServiceProviders shopElement, SpProducts product) {
-    for (var element in shopElement.cart) {
-      if (element.id == product.id &&
-          element.priceWithExtra == product.priceWithExtra &&
-          element.productDetails == product.productDetails) {
-        shopElement.cart.remove(element);
-        break;
-      }
+    {
+      shopElement.cart.removeWhere(
+        (element) => (element.id == product.id &&
+            element.priceWithExtra == product.priceWithExtra &&
+            element.productDetails == product.productDetails),
+      );
     }
     _itemInCart -= product.quantityInCart;
 

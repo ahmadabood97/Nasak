@@ -10,6 +10,8 @@ import '../../features/dashboard/screens/favorites/views/screens/favorites_scree
 import '../../features/dashboard/screens/home/models/app_services_model.dart';
 import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/add_voucher_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/checkout_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/delivery_date_time/views/screens/delivery_date_screen.dart';
+import '../../features/dashboard/screens/home/views/screens/checkout/views/screens/delivery_date_time/views/screens/delivery_time_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/categories_screen.dart';
 import '../../features/dashboard/screens/home/views/screens/dashboard_categories/screens/categories/views/screens/category_products/views/screens/category_product_screen.dart';
 
@@ -57,6 +59,8 @@ class Routes {
   static const String dashboardShopRoute = '/dashboardShop';
   static const String dashboardCategoryRoute = '/dashboardCategory';
   static const String selectAddressRoute = '/selectAddress';
+  static const String deleveryTimeRoute = '/deleveryTime';
+  static const String deleveryDateRoute = '/deleveryDate';
 }
 
 class AppRoutes {
@@ -66,6 +70,14 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => CheckoutScreen(
               serviceProviders: settings.arguments as ServiceProviders),
+        );
+      case Routes.deleveryTimeRoute:
+        return MaterialPageRoute(
+          builder: (context) => const DeliveryTimeScreen(),
+        );
+      case Routes.deleveryDateRoute:
+        return MaterialPageRoute(
+          builder: (context) => const DeliveryDateScreen(),
         );
       case Routes.selectAddressRoute:
         return MaterialPageRoute(
