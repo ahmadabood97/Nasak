@@ -3,8 +3,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:nasak/features/auth/screens/register/controllers/provider/register_provider.dart';
 import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/utils/hex_colors.dart';
 
 class TextFieldCustom extends StatelessWidget {
@@ -22,7 +22,7 @@ class TextFieldCustom extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
             type == 'password_login'
                 ? Text(
@@ -54,39 +54,61 @@ class TextFieldCustom extends StatelessWidget {
                             : type == "address_name"
                                 ? Provider.of<AddressProvider>(context, listen: true)
                                     .addressNameController
-                                : type == "firstname_signup"
-                                    ? Provider.of<RegisterProvider>(context, listen: true)
-                                        .firstNameController
-                                    : type == "lastname_signup"
-                                        ? Provider.of<RegisterProvider>(context, listen: true)
-                                            .lastNameController
-                                        : type == "username_signup"
-                                            ? Provider.of<RegisterProvider>(context, listen: true)
-                                                .userNameController
-                                            : type == "phone_signup"
-                                                ? Provider.of<RegisterProvider>(context,
+                                : type == "address_entrance_num_checkout"
+                                    ? Provider.of<CheckoutProvider>(context, listen: true)
+                                        .entranceNumCheckoutController
+                                    : type == "address_floor_num_checkout"
+                                        ? Provider.of<CheckoutProvider>(context, listen: true)
+                                            .floorNumCheckoutController
+                                        : type == "address_build_name_checkout"
+                                            ? Provider.of<CheckoutProvider>(
+                                                    context,
+                                                    listen: true)
+                                                .buildNameCheckoutController
+                                            : type ==
+                                                    "address_extra_desc_checkout"
+                                                ? Provider.of<CheckoutProvider>(
+                                                        context,
                                                         listen: true)
-                                                    .phoneController
-                                                : type == "password_signup"
-                                                    ? Provider.of<RegisterProvider>(
+                                                    .addressExtraCheckoutController
+                                                : type ==
+                                                        "address_name_checkout"
+                                                    ? Provider.of<CheckoutProvider>(
                                                             context,
                                                             listen: true)
-                                                        .passwordController
-                                                    : type == "phone_login"
-                                                        ? Provider.of<LoginProvider>(
-                                                                context,
-                                                                listen: true)
-                                                            .phoneController
-                                                        : type == "password_login"
-                                                            ? Provider.of<LoginProvider>(context, listen: true).passwordController
-                                                            : null,
-            validator: type == "firstname_signup"
+                                                        .addressNameCheckoutController
+                                                    : type == "first_name_checkout"
+                                                        ? Provider.of<CheckoutProvider>(context, listen: true).firstNameCheckoutController
+                                                        : type == "last_name_checkout"
+                                                            ? Provider.of<CheckoutProvider>(context, listen: true).lastNameCheckoutController
+                                                            : type == "email_checkout"
+                                                                ? Provider.of<CheckoutProvider>(context, listen: true).emailCheckoutController
+                                                                : type == "phone_checkout"
+                                                                    ? Provider.of<CheckoutProvider>(context, listen: true).phoneCheckoutController
+                                                                    : type == "note"
+                                                                        ? Provider.of<CheckoutProvider>(context, listen: true).noteCheckoutController
+                                                                        : type == "firstname_signup"
+                                                                            ? Provider.of<RegisterProvider>(context, listen: true).firstNameController
+                                                                            : type == "lastname_signup"
+                                                                                ? Provider.of<RegisterProvider>(context, listen: true).lastNameController
+                                                                                : type == "username_signup"
+                                                                                    ? Provider.of<RegisterProvider>(context, listen: true).userNameController
+                                                                                    : type == "phone_signup"
+                                                                                        ? Provider.of<RegisterProvider>(context, listen: true).phoneController
+                                                                                        : type == "password_signup"
+                                                                                            ? Provider.of<RegisterProvider>(context, listen: true).passwordController
+                                                                                            : type == "phone_login"
+                                                                                                ? Provider.of<LoginProvider>(context, listen: true).phoneController
+                                                                                                : type == "password_login"
+                                                                                                    ? Provider.of<LoginProvider>(context, listen: true).passwordController
+                                                                                                    : null,
+            validator: type == "firstname_signup" || type == "first_name_checkout"
                 ? RequiredValidator(errorText: "First Name is requierd")
-                : type == "lastname_signup"
+                : type == "lastname_signup" || type == "last_name_checkout"
                     ? RequiredValidator(errorText: "Last Name is requierd")
                     : type == "username_signup"
                         ? RequiredValidator(errorText: "Username is requierd")
-                        : type == "phone_login" || type == "phone_signup"
+                        : type == "phone_login" || type == "phone_signup" || type == "phone_checkout"
                             ? MultiValidator([
                                 RequiredValidator(
                                     errorText: "Phone is requierd"),
@@ -107,9 +129,17 @@ class TextFieldCustom extends StatelessWidget {
               filled: true,
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.all(10.0),
+              focusedErrorBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
+              errorBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                borderSide: BorderSide(width: 1, color: Colors.red),
+              ),
               focusedBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
-                borderSide: BorderSide(width: 1, color: Colors.blue),
+                borderSide: BorderSide(width: 1, color: Colors.orange),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide:

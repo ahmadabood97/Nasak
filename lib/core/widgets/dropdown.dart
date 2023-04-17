@@ -10,7 +10,8 @@ Widget dropDown(String hint, String value, List<String> items, String title,
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(title, style: const TextStyle(fontSize: 12)),
+      Text(title,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
       const SizedBox(
         height: 10,
       ),

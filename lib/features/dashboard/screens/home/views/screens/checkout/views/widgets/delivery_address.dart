@@ -5,71 +5,57 @@ import '../../../../../../../../../../../../../../../core/widgets/text_field_cus
 Widget deliveryAddress() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
+    children: const [
+      Text(
         'Delivery address',
         style: TextStyle(
             color: Color.fromARGB(255, 3, 59, 107),
             fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
-      const SizedBox(
+      SizedBox(
         height: 25,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "Street and house number",
         type: 'name',
       ),
-      const SizedBox(
+      SizedBox(
         height: 15,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "Postcode",
         type: 'num',
       ),
-      const SizedBox(
+      SizedBox(
         height: 15,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "City",
         type: 'name',
       ),
-      const SizedBox(
+      SizedBox(
         height: 15,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "Floor (optional)",
         type: 'num',
       ),
-      const SizedBox(
+      SizedBox(
         height: 15,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "Company name (optional)",
         type: 'name',
       ),
-      const SizedBox(
+      SizedBox(
         height: 15,
       ),
-      const TextFieldCustom(
+      TextFieldCustom(
         title: "Add note for delivery (optional)",
         type: 'note',
       ),
-      const SizedBox(
-        height: 10,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Save this note for your next order',
-            style: TextStyle(fontSize: 12),
-          ),
-          Switch(
-              activeColor: Colors.orange, value: true, onChanged: (value) {}),
-        ],
-      ),
-      const SizedBox(
+      SizedBox(
         height: 25,
       ),
     ],

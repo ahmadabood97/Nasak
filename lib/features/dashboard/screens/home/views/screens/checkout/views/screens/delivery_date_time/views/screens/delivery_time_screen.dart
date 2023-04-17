@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import '../../../../../../../../../../../../core/utils/constants.dart';
+import '../../../../../../../../../countries/controllers/provider/countries_provider.dart';
 import '../../controllers/provider/delivery_date_time_provider.dart';
 
 class DeliveryTimeScreen extends StatefulWidget {
@@ -22,11 +24,21 @@ class _DeliveryTimeScreenState extends State<DeliveryTimeScreen> {
             onTap: () {
               Provider.of<DeliveryDateTimeProvider>(context, listen: false)
                   .setDeliveryTimeList(
-                      startHour: 4,
-                      lastHour: 17,
+                      startHour: Constants.startHour,
+                      lastHour: Constants.endHour,
                       interval: 30,
                       perparingTime: 30,
-                      offest: 180);
+                      offest:
+                          Provider.of<CountriesProvider>(context, listen: false)
+                                      .countriesValue
+                                      .timeZoneOffsetOnUtc !=
+                                  null
+                              ? (60 *
+                                  Provider.of<CountriesProvider>(context,
+                                          listen: false)
+                                      .countriesValue
+                                      .timeZoneOffsetOnUtc!)
+                              : 0);
             },
             child: const Text(
               "Delivery Time",

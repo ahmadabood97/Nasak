@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../controllers/provider/home_provider.dart';
 import '../../models/about_model.dart';
 
 Widget offerCardView(BuildContext context, SpOffers item) {
@@ -91,7 +93,7 @@ Widget offerCardView(BuildContext context, SpOffers item) {
                             Row(
                               children: [
                                 Text(
-                                  "${item.totalSpecialOfferPrice!} \$",
+                                  "${item.totalSpecialOfferPrice!} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                                   style: const TextStyle(
                                       color: Colors.orange,
                                       fontWeight: FontWeight.bold,
@@ -100,9 +102,9 @@ Widget offerCardView(BuildContext context, SpOffers item) {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const Text(
-                                  "25,70 \$",
-                                  style: TextStyle(
+                                Text(
+                                  "${item.totalSpecialOfferPrice} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
+                                  style: const TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,

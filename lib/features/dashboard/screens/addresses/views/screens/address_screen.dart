@@ -54,16 +54,12 @@ class _AddressScreenState extends State<AddressScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: Provider.of<AddressProvider>(context, listen: true)
-                            .addressList !=
-                        null
-                    ? Provider.of<AddressProvider>(context, listen: true)
-                        .addressList!
-                        .length
-                    : 0,
+                    .addressList
+                    .length,
                 itemBuilder: (context, index) => addressCardView(
                     context,
                     Provider.of<AddressProvider>(context, listen: false)
-                        .addressList![index]),
+                        .addressList[index]),
               ),
             ),
           ],

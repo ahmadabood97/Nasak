@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../core/widgets/dropdown.dart';
+import '../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../core/widgets/text_field_custom.dart';
 import '../../../../../../../auth/screens/login/models/login_response_model.dart';
 import '../../../../../../../auth/screens/register/controllers/provider/register_provider.dart';
@@ -21,7 +21,6 @@ class AddAddressScreen extends StatefulWidget {
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
   final GlobalKey<FormState> addAddressFormKey = GlobalKey<FormState>();
-
 
   @override
   void initState() {
@@ -67,53 +66,62 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             InkWell(
               onTap: () async {
                 if (addAddressFormKey.currentState!.validate()) {
-                  LoginResponseModel userData =
-                      Provider.of<LoginProvider>(context, listen: false)
-                          .loginData!;
-                  if (!mounted) return;
-                  Provider.of<RegisterProvider>(context, listen: false)
-                      .setCountryCityReigonId();
-                  Provider.of<AddressProvider>(context, listen: false)
-                      .addAddress(
-                    context: context,
-                    addersses: Addersses(
-                        addressExtraDesc:
-                            Provider.of<AddressProvider>(context, listen: false)
-                                .addressExtraController
-                                .text,
-                        addressName:
-                            Provider.of<AddressProvider>(context, listen: false)
-                                .addressNameController
-                                .text,
-                        buildName: Provider.of<AddressProvider>(context, listen: false)
-                            .buildNameController
-                            .text,
-                        cityGuid: Provider.of<RegisterProvider>(context, listen: false)
-                            .cityId,
-                        countryGuid:
-                            Provider.of<RegisterProvider>(context, listen: false)
-                                .countryId,
-                        entranceNum:
-                            Provider.of<AddressProvider>(context, listen: false)
-                                .entranceNumController
-                                .text,
-                        firstname: userData.firstName,
-                        floorNum:
-                            Provider.of<AddressProvider>(context, listen: false)
-                                .floorNumController
-                                .text,
-                        lastname: userData.lastName,
-                        locLat: '30',
-                        locLong: '30',
-                        phonenumber: userData.primaryPhoneNum,
-                        regionGuid:
-                            Provider.of<RegisterProvider>(context, listen: false).reigonId,
-                        userAddress: "${Provider.of<RegisterProvider>(context, listen: false).countrySelectedValue}-${Provider.of<RegisterProvider>(context, listen: false).citySelectedValue}-${Provider.of<RegisterProvider>(context, listen: false).reigonSelectedValue}"),
-                    userData: userData,
-                    stopLoading: () {
-                      Navigator.pop(context);
-                    },
-                  );
+                  if (Provider.of<AddressProvider>(context, listen: false)
+                              .lat !=
+                          null &&
+                      Provider.of<AddressProvider>(context, listen: false)
+                              .long !=
+                          null) {
+                    LoginResponseModel userData =
+                        Provider.of<LoginProvider>(context, listen: false)
+                            .loginData!;
+                    if (!mounted) return;
+                    Provider.of<RegisterProvider>(context, listen: false)
+                        .setCountryCityReigonId();
+                    Provider.of<AddressProvider>(context, listen: false)
+                        .addAddress(
+                      context: context,
+                      addersses: Addersses(
+                          addressExtraDesc:
+                              Provider.of<AddressProvider>(context, listen: false)
+                                  .addressExtraController
+                                  .text,
+                          addressName:
+                              Provider.of<AddressProvider>(context, listen: false)
+                                  .addressNameController
+                                  .text,
+                          buildName:
+                              Provider.of<AddressProvider>(context, listen: false)
+                                  .buildNameController
+                                  .text,
+                          cityGuid: Provider.of<RegisterProvider>(context, listen: false)
+                              .cityId,
+                          countryGuid:
+                              Provider.of<RegisterProvider>(context, listen: false)
+                                  .countryId,
+                          entranceNum:
+                              Provider.of<AddressProvider>(context, listen: false)
+                                  .entranceNumController
+                                  .text,
+                          firstname: userData.firstName,
+                          floorNum:
+                              Provider.of<AddressProvider>(context, listen: false)
+                                  .floorNumController
+                                  .text,
+                          lastname: userData.lastName,
+                          locLat: Provider.of<AddressProvider>(context, listen: false).lat.toString(),
+                          locLong: Provider.of<AddressProvider>(context, listen: false).long.toString(),
+                          phonenumber: userData.primaryPhoneNum,
+                          regionGuid: Provider.of<RegisterProvider>(context, listen: false).reigonId,
+                          userAddress: "${Provider.of<RegisterProvider>(context, listen: false).countrySelectedValue}-${Provider.of<RegisterProvider>(context, listen: false).citySelectedValue}-${Provider.of<RegisterProvider>(context, listen: false).reigonSelectedValue}"),
+                      userData: userData,
+                      stopLoading: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  } else {
+                    showCustomDialog(context, 'Please select your location...');
+                  }
                 }
               },
               child: const Padding(
@@ -147,37 +155,29 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           const SizedBox(
             height: 15,
           ),
-          Column(
-            children: [
-              dropDown(
-                  'Select your city',
-                  Provider.of<RegisterProvider>(context, listen: true)
-                      .citySelectedValue,
-                  Provider.of<RegisterProvider>(context, listen: true)
-                      .citiesDropdownList,
-                  'City',
-                  context,
-                  "SignUpScreen"),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
+          dropDown(
+              'Select your city',
+              Provider.of<RegisterProvider>(context, listen: true)
+                  .citySelectedValue,
+              Provider.of<RegisterProvider>(context, listen: true)
+                  .citiesDropdownList,
+              'City',
+              context,
+              "SignUpScreen"),
+          const SizedBox(
+            height: 15,
           ),
-          Column(
-            children: [
-              dropDown(
-                  'Select your reigon',
-                  Provider.of<RegisterProvider>(context, listen: true)
-                      .reigonSelectedValue,
-                  Provider.of<RegisterProvider>(context, listen: true)
-                      .reigonDropdownList,
-                  'Reigon',
-                  context,
-                  "SignUpScreen"),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
+          dropDown(
+              'Select your reigon',
+              Provider.of<RegisterProvider>(context, listen: true)
+                  .reigonSelectedValue,
+              Provider.of<RegisterProvider>(context, listen: true)
+                  .reigonDropdownList,
+              'Reigon',
+              context,
+              "SignUpScreen"),
+          const SizedBox(
+            height: 15,
           ),
           const TextFieldCustom(title: "Address Name", type: "address_name"),
           const SizedBox(
@@ -209,7 +209,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           const SizedBox(
             height: 15,
           ),
- const  AddLocation(),
+          const AddLocation(),
         ]),
       ),
     );

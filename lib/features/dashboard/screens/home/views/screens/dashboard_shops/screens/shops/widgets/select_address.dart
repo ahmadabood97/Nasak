@@ -29,7 +29,7 @@ class SelectAddress extends StatelessWidget {
             flex: 6,
             child: InkWell(
               onTap: () => Navigator.pushNamed(
-                  context, Routes.selectAddressRoute,
+                  context, Routes.selectLocationRoute,
                   arguments: serviceId),
               child: Center(
                 child: Text(

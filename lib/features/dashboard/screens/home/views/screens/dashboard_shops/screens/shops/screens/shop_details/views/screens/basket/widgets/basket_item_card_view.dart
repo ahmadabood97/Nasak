@@ -69,7 +69,7 @@ Widget basketItemCardView(SpProducts product, ServiceProviders serviceProviders,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      "${product.priceWithExtra ?? product.price} \$",
+                      "${product.priceWithExtra ?? product.price} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black.withOpacity(0.6),

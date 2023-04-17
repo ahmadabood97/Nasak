@@ -77,7 +77,8 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                         Padding(
                           padding: const EdgeInsets.only(
                               bottom: 8, right: 8, left: 8),
-                          child: Text("${widget.product.price} \$",
+                          child: Text(
+                              "${widget.product.price} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                               style: const TextStyle(
                                   color: Colors.orange,
                                   fontSize: 15,
@@ -220,10 +221,10 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                                       child: Center(
                                         child: Text(
                                           widget.product.priceWithExtra != null
-                                              ? "${widget.product.priceWithExtra!} \$"
+                                              ? "${widget.product.priceWithExtra!} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}"
                                               : widget.product.price != ''
-                                                  ? "${double.parse(widget.product.price!) * widget.product.quantityToCart} \$"
-                                                  : '1 \$',
+                                                  ? "${double.parse(widget.product.price!) * widget.product.quantityToCart} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}"
+                                                  : '1 ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}',
                                           style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.white,

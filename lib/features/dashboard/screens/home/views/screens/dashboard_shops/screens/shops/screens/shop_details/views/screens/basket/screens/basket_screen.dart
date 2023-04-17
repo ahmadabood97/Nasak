@@ -69,7 +69,7 @@ class BasketScreen extends StatelessWidget {
                                 color: Colors.black.withOpacity(0.5)),
                           ),
                           Text(
-                            "${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} \$",
+                            "${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -91,7 +91,7 @@ class BasketScreen extends StatelessWidget {
                                 color: Colors.black.withOpacity(0.5)),
                           ),
                           Text(
-                            "0 \$",
+                            "0 ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -113,7 +113,7 @@ class BasketScreen extends StatelessWidget {
                                 color: Colors.black),
                           ),
                           Text(
-                            "${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} \$",
+                            "${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -132,6 +132,8 @@ class BasketScreen extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: InkWell(
                   onTap: () {
+                    Provider.of<HomeProvider>(context, listen: false)
+                        .setOrderItemsList(serviceProviders.cart);
                     Navigator.pushNamed(context, Routes.checkoutRoute,
                         arguments: serviceProviders);
                   },
@@ -141,7 +143,7 @@ class BasketScreen extends StatelessWidget {
                     color: HexColor('3359ba'),
                     child: Center(
                       child: Text(
-                        "Go to checkout (${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} \$)",
+                        "Go to checkout (${Provider.of<HomeProvider>(context, listen: true).subTotal.toString()} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!})",
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),

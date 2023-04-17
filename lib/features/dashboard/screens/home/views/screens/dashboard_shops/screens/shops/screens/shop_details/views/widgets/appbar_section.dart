@@ -114,11 +114,7 @@ class AppBarSection extends SliverAppBar {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Provider.of<ShopProvider>(context, listen: true).isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            )
+          ? const SizedBox()
           : Container(
               width: double.infinity,
               color: const Color.fromARGB(255, 255, 245, 240),

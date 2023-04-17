@@ -14,8 +14,8 @@ Widget doHaveAccount(BuildContext context) {
               child: Text(
                 "Do you have an account?",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 2, 48, 88),
-                ),
+                    color: Color.fromARGB(255, 2, 48, 88),
+                    fontWeight: FontWeight.bold),
               )),
           Expanded(
               flex: 1,

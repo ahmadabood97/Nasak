@@ -21,8 +21,8 @@ class AddressProvider extends ChangeNotifier {
   AddressResponseModel? _addressData;
   AddressResponseModel? get addressData => _addressData;
 
-  List<Addersses>? _addressList;
-  List<Addersses>? get addressList => _addressList;
+  List<Addersses> _addressList = [];
+  List<Addersses> get addressList => _addressList;
 
   bool? getData;
 
@@ -165,8 +165,8 @@ class AddressProvider extends ChangeNotifier {
           getData = true;
           Addersses address =
               Addersses.fromJson(json.decode(apiResponse.body)['result']);
-          _addressList ??= [];
-          _addressList!.add(address);
+          _addressList = [];
+          _addressList.add(address);
           _isLoading = false;
           stopLoading!();
           stopLoading();

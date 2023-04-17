@@ -118,7 +118,9 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           iconWithText("10-20 min", Icons.timer_outlined),
-                          iconWithText("1.5 \$", Icons.badge_outlined),
+                          iconWithText(
+                              "1.5 ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
+                              Icons.badge_outlined),
                           iconWithText(
                               "Min. 10.00 ", Icons.delivery_dining_outlined)
                         ],
