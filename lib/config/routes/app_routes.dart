@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/widgets/select_addrees_screen.dart';
+import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/views/screens/select_address_screen.dart';
+import '../../core/widgets/select_location_screen.dart';
 import '../../features/auth/screens/login/views/screens/signin_screen.dart';
 import '../../features/auth/screens/register/views/screens/signup_screen.dart';
 import '../../features/dashboard/screens/addresses/views/screens/add_address/screens/add_address_screen.dart';
@@ -58,9 +59,10 @@ class Routes {
   static const String categoryProductRoute = '/categoryProduct';
   static const String dashboardShopRoute = '/dashboardShop';
   static const String dashboardCategoryRoute = '/dashboardCategory';
-  static const String selectAddressRoute = '/selectAddress';
+  static const String selectLocationRoute = '/selectLocation';
   static const String deleveryTimeRoute = '/deleveryTime';
   static const String deleveryDateRoute = '/deleveryDate';
+  static const String selectAddressRoute = '/selectAddress';
 }
 
 class AppRoutes {
@@ -71,6 +73,10 @@ class AppRoutes {
           builder: (context) => CheckoutScreen(
               serviceProviders: settings.arguments as ServiceProviders),
         );
+      case Routes.selectAddressRoute:
+        return MaterialPageRoute(
+          builder: (context) => const SelectAddressScreen(),
+        );
       case Routes.deleveryTimeRoute:
         return MaterialPageRoute(
           builder: (context) => const DeliveryTimeScreen(),
@@ -79,10 +85,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const DeliveryDateScreen(),
         );
-      case Routes.selectAddressRoute:
+      case Routes.selectLocationRoute:
         return MaterialPageRoute(
           builder: (context) =>
-              SelectAddressScreen(serviceId: settings.arguments as String),
+              SelectLocationScreen(serviceId: settings.arguments as String),
         );
       case Routes.countriesRoute:
         return MaterialPageRoute(

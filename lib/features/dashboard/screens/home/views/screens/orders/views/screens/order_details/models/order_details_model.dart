@@ -56,7 +56,7 @@ class Result {
   String? paymentStatusName;
   String? paymentMethodSystemName;
   String? customerCurrencyCode;
-  int? currencyRate;
+  double? currencyRate;
   dynamic orderSubTotalDiscount;
   dynamic orderShippingFees;
   dynamic paymentMethodAdditionalFees;
@@ -132,7 +132,7 @@ class Result {
     paymentStatusName = json['paymentStatusName'];
     paymentMethodSystemName = json['paymentMethodSystemName'];
     customerCurrencyCode = json['customerCurrencyCode'];
-    currencyRate = json['currencyRate'];
+    currencyRate = json['currencyRate'].toDouble();
     orderSubTotalDiscount = json['orderSubTotalDiscount'];
     orderShippingFees = json['orderShippingFees'];
     paymentMethodAdditionalFees = json['paymentMethodAdditionalFees'];

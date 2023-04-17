@@ -76,13 +76,17 @@ class HomeProvider extends ChangeNotifier {
         }
       }
       _orderItemsList.add(OrderItems(
-          finalPrice: item.priceWithExtra,
+          finalPrice: item.priceWithExtra != null
+              ? (double.parse(item.priceWithExtra.toString()) *
+                      item.quantityInCart)
+                  .toString()
+              : '${double.parse(item.price!) * double.parse(item.quantityInCart.toString())}',
           isSpecialOfferItem: false,
-          priceIncl: '',
+          priceIncl: item.priceWithExtra ?? item.price,
           productAttrbutes: _productAttrbutes,
           productGuid: item.id,
           quantity: item.quantityInCart.toString(),
-          unitPrice: ''));
+          unitPrice: item.price));
     }
     notifyListeners();
   }

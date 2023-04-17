@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-// import 'package:intl/intl.dart';
 import 'package:nasak/features/splash/views/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'config/routes/app_routes.dart';

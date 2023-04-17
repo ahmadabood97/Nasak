@@ -141,9 +141,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
 
   Widget buildBodySection(int index) {
     if (Provider.of<ShopProvider>(context, listen: true).isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.orange),
-      );
+      return const SizedBox();
     } else if (index <
         Provider.of<ShopProvider>(context, listen: true).productsList!.length) {
       SpProducts product =

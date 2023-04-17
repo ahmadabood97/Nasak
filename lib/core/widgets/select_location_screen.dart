@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 
 import '../../features/dashboard/screens/home/controllers/provider/home_provider.dart';
 
-class SelectAddressScreen extends StatefulWidget {
+class SelectLocationScreen extends StatefulWidget {
   final String serviceId;
-  const SelectAddressScreen({super.key, required this.serviceId});
+  const SelectLocationScreen({super.key, required this.serviceId});
 
   @override
-  State<SelectAddressScreen> createState() => _SelectAddressScreenState();
+  State<SelectLocationScreen> createState() => _SelectLocationScreenState();
 }
 
-class _SelectAddressScreenState extends State<SelectAddressScreen> {
+class _SelectLocationScreenState extends State<SelectLocationScreen> {
   @override
   void initState() {
     Provider.of<CountriesProvider>(context, listen: false)
@@ -36,7 +36,7 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
           elevation: 0,
           backgroundColor: Colors.orange,
           title: const Text(
-            "Select Address",
+            "Select Location",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           )),
       body: ListView.separated(

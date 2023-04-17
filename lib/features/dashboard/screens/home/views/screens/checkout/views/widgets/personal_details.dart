@@ -5,36 +5,45 @@ import '../../../../../../../../../../../../../../../core/widgets/text_field_cus
 Widget personalDetails() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: const [
-      Text(
+    children: [
+      const Text(
         'Personal details',
         style: TextStyle(
             color: Color.fromARGB(255, 3, 59, 107),
             fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
-      SizedBox(
+      const SizedBox(
         height: 25,
       ),
-      TextFieldCustom(
-        title: "First and last name",
-        type: 'name',
+      Row(
+        children: const [
+          Expanded(
+              flex: 8,
+              child: TextFieldCustom(
+                  title: "First Name", type: "first_name_checkout")),
+          Expanded(flex: 1, child: SizedBox()),
+          Expanded(
+              flex: 8,
+              child: TextFieldCustom(
+                  title: "Last Name", type: "last_name_checkout")),
+        ],
       ),
-      SizedBox(
+      const SizedBox(
         height: 15,
       ),
-      TextFieldCustom(
+      const TextFieldCustom(
         title: "Email address",
-        type: 'email',
+        type: 'email_checkout',
       ),
-      SizedBox(
+      const SizedBox(
         height: 15,
       ),
-      TextFieldCustom(
+      const TextFieldCustom(
         title: "Phone number",
-        type: 'phone',
+        type: 'phone_checkout',
       ),
-      SizedBox(
+      const SizedBox(
         height: 15,
       ),
     ],
