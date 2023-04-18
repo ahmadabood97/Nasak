@@ -3,6 +3,8 @@ import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/
 import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../core/utils/constants.dart';
+
 class SelectAddressScreen extends StatefulWidget {
   const SelectAddressScreen({super.key});
 
@@ -16,7 +18,7 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             "Select Address",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

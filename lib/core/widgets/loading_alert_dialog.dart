@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
+
 loading(BuildContext context) {
   return showDialog(
       context: context,
@@ -10,10 +12,10 @@ loading(BuildContext context) {
           child: AlertDialog(
             backgroundColor: Colors.white,
             content: Row(
-              children: const [
-                CircularProgressIndicator(color: Colors.orange),
-                SizedBox(width: 16),
-                Text(
+              children: [
+                CircularProgressIndicator(color: Constants.primaryColor),
+                const SizedBox(width: 16),
+                const Text(
                   "Please wait...",
                   style: TextStyle(color: Colors.black),
                 )

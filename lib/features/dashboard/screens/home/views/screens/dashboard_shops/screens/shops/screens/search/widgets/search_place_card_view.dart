@@ -58,20 +58,20 @@ Widget searchPlaceCardView(BuildContext context) {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.star,
-                                  color: Colors.orange,
+                                  color: Constants.primaryColor,
                                   size: 20,
                                 ),
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                const Text(
+                                Text(
                                   "4.3",
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
+                                    color: Constants.primaryColor,
                                   ),
                                 ),
                                 const SizedBox(

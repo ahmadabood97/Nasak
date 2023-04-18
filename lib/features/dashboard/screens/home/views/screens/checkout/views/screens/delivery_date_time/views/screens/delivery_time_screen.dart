@@ -19,7 +19,7 @@ class _DeliveryTimeScreenState extends State<DeliveryTimeScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: GestureDetector(
             onTap: () {
               Provider.of<DeliveryDateTimeProvider>(context, listen: false)
@@ -56,7 +56,7 @@ class _DeliveryTimeScreenState extends State<DeliveryTimeScreen> {
             .deliveryTimeList
             .length,
         itemBuilder: (context, index) => RadioListTile(
-          activeColor: Colors.orange,
+          activeColor: Constants.primaryColor,
           contentPadding: const EdgeInsets.all(0),
           title: Text(
             "${DateFormat('HH').format(Provider.of<DeliveryDateTimeProvider>(context, listen: true).deliveryTimeList[index])}:${DateFormat('mm').format(Provider.of<DeliveryDateTimeProvider>(context, listen: true).deliveryTimeList[index])}",

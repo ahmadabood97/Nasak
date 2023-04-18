@@ -6,7 +6,9 @@ import 'package:nasak/features/dashboard/screens/favorites/controllers/provider/
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../../../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../../../../core/utils/helper.dart';
+import '../../../../../../../../../../../../../core/widgets/appbar_loading.dart';
 import '../../../../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../../../../../../../models/app_services_model.dart';
 import '../../controllers/provider/shop_provider.dart';
@@ -47,7 +49,7 @@ class AppBarSection extends SliverAppBar {
   Color? get backgroundColor =>
       Provider.of<ShopProvider>(context, listen: true).isLoading
           ? Colors.white
-          : Colors.orange;
+          : Constants.primaryColor;
 
   @override
   Widget? get leading {
@@ -59,7 +61,7 @@ class AppBarSection extends SliverAppBar {
         },
         icon: Icon(
           Icons.arrow_back,
-          color: isCollapsed ? Colors.orange : Colors.white,
+          color: isCollapsed ? Constants.primaryColor : Colors.white,
         ),
       ),
     );
@@ -114,7 +116,7 @@ class AppBarSection extends SliverAppBar {
     return PreferredSize(
       preferredSize: const Size.fromHeight(48),
       child: Provider.of<ShopProvider>(context, listen: true).isLoading
-          ? const SizedBox()
+          ? appbarLoading()
           : Container(
               width: double.infinity,
               color: const Color.fromARGB(255, 255, 245, 240),
@@ -210,9 +212,9 @@ class AppBarSection extends SliverAppBar {
                                             direction: Axis.horizontal,
                                             allowHalfRating: true,
                                             itemCount: 5,
-                                            itemBuilder: (context, _) =>
-                                                const Icon(Icons.star,
-                                                    color: Colors.orange),
+                                            itemBuilder: (context, _) => Icon(
+                                                Icons.star,
+                                                color: Constants.primaryColor),
                                             onRatingUpdate: (rating) {},
                                           ),
                                           const SizedBox(
@@ -220,10 +222,10 @@ class AppBarSection extends SliverAppBar {
                                           ),
                                           Text(
                                             "${serviceProviders.approvedTotalReviews!} reviews",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.orange),
+                                                color: Constants.primaryColor),
                                           )
                                         ],
                                       ),

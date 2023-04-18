@@ -3,6 +3,7 @@ import 'package:nasak/features/dashboard/screens/countries/controllers/provider/
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../core/utils/constants.dart';
 
 class SelectAddress extends StatelessWidget {
   final String serviceId;
@@ -12,7 +13,7 @@ class SelectAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange,
+      color: Constants.primaryColor,
       height: 50,
       width: double.infinity,
       child: Row(

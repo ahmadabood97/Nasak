@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../core/utils/constants.dart';
+
 Widget signoutSection(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, top: 17, bottom: 25),
@@ -16,12 +18,12 @@ Widget signoutSection(BuildContext context) {
             onTap: () {
               Provider.of<LoginProvider>(context, listen: false).logout();
             },
-            child: const ListTile(
+            child: ListTile(
               leading: Icon(
                 Icons.power_settings_new,
-                color: Color.fromARGB(255, 24, 15, 77),
+                color: Constants.primaryColor,
               ),
-              title: Text("Sign out"),
+              title: const Text("Sign out"),
             ),
           ),
         ],

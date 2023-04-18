@@ -3,6 +3,7 @@ import 'package:nasak/features/dashboard/screens/countries/controllers/provider/
 import 'package:provider/provider.dart';
 
 import '../../features/dashboard/screens/home/controllers/provider/home_provider.dart';
+import '../utils/constants.dart';
 
 class SelectLocationScreen extends StatefulWidget {
   final String serviceId;
@@ -34,7 +35,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             "Select Location",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

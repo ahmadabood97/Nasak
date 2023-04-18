@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 
@@ -24,12 +25,12 @@ class _FavoriteSectionState extends State<FavoriteSection> {
           showCustomDialog(context, 'Please Login...');
         }
       },
-      child: const ListTile(
+      child: ListTile(
         leading: Icon(
           Icons.favorite,
-          color: Color.fromARGB(255, 24, 15, 77),
+          color: Constants.primaryColor,
         ),
-        title: Text("Favourites"),
+        title: const Text("Favourites"),
       ),
     );
   }

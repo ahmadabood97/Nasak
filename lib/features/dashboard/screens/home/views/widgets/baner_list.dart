@@ -7,7 +7,8 @@ import '../../../../../../core/utils/constants.dart';
 import '../../controllers/provider/home_provider.dart';
 
 class BanerList extends StatefulWidget {
-  const BanerList({super.key});
+  final String url;
+  const BanerList({super.key, required this.url});
 
   @override
   State<BanerList> createState() => _BanerListState();
@@ -67,7 +68,7 @@ class _BanerListState extends State<BanerList> {
                                 //     .result!
                                 //     .mainBanners![id]
                                 //     .img!
-                                "https://static.vecteezy.com/system/resources/previews/003/692/287/original/big-sale-discount-promotion-banner-template-with-blank-product-podium-scene-graphic-free-vector.jpg",
+                                widget.url,
                             height: 120,
                             fit: BoxFit.cover,
                           ),
@@ -94,7 +95,9 @@ class _BanerListState extends State<BanerList> {
               width: 8,
               margin: const EdgeInsets.only(left: 16),
               decoration: BoxDecoration(
-                color: numberOfBanner == index ? Colors.orange : Colors.black38,
+                color: numberOfBanner == index
+                    ? Constants.primaryColor
+                    : Colors.black38,
                 borderRadius: BorderRadius.circular(50),
               ),
             ),

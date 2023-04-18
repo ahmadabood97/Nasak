@@ -13,6 +13,8 @@ class ServicesSection extends StatefulWidget {
 }
 
 class _ServicesSectionState extends State<ServicesSection> {
+  final controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,22 +22,41 @@ class _ServicesSectionState extends State<ServicesSection> {
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(3)),
       ),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 1.2),
-        itemCount: Provider.of<HomeProvider>(context, listen: false)
-            .home!
-            .result!
-            .appServices!
-            .length,
-        primary: false,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ServiceCardView(index: index),
-          );
-        },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: List.generate(
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .home!
+                            .result!
+                            .appServices!
+                            .length,
+                        (index) => index % 2 == 0
+                            ? ServiceCardView(index: index)
+                            : const SizedBox()),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: List.generate(
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .home!
+                            .result!
+                            .appServices!
+                            .length,
+                        (index) => index % 2 == 1
+                            ? ServiceCardView(index: index)
+                            : const SizedBox()),
+                  )),
+            ],
+          ),
+        ),
       ),
     );
   }

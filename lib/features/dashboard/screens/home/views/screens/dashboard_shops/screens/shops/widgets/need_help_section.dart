@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../core/utils/constants.dart';
+
 Widget needHelpSection() {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, top: 17),
@@ -8,13 +10,13 @@ Widget needHelpSection() {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(3))),
       width: double.infinity,
-      child: const ListTile(
+      child: ListTile(
         leading: Icon(
           Icons.info,
-          color: Color.fromARGB(255, 24, 15, 77),
+          color: Constants.primaryColor,
         ),
-        title: Text("Need help?"),
-        trailing: Icon(
+        title: const Text("Need help?"),
+        trailing: const Icon(
           Icons.keyboard_arrow_down_sharp,
           color: Color.fromARGB(255, 24, 15, 77),
         ),

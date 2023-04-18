@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/core/utils/hex_colors.dart';
 import '../../../../../../../../../../../../../../core/utils/assets_manager.dart';
+import '../../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../models/category_details.dart';
 
 Widget categoryProductCardView(CatProducts catProducts, BuildContext context) {
@@ -47,10 +48,10 @@ Widget categoryProductCardView(CatProducts catProducts, BuildContext context) {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               catProducts.name!,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 12,
                   height: 1,
-                  color: Colors.orange,
+                  color: Constants.primaryColor,
                   fontWeight: FontWeight.bold),
             ),
           ),

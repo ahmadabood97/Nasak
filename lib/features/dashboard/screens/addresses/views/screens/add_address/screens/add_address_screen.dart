@@ -3,6 +3,7 @@ import 'package:nasak/features/auth/screens/login/controllers/provider/login_pro
 import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../core/widgets/dropdown.dart';
 import '../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../core/widgets/text_field_custom.dart';
@@ -57,7 +58,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Add Address',
             style: TextStyle(color: Colors.white, fontSize: 15),

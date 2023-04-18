@@ -3,6 +3,7 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../models/app_services_model.dart';
 import '../../models/shop_model.dart';
 import 'extra_card_view.dart';
@@ -79,8 +80,8 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                               bottom: 8, right: 8, left: 8),
                           child: Text(
                               "${widget.product.price} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
-                              style: const TextStyle(
-                                  color: Colors.orange,
+                              style: TextStyle(
+                                  color: Constants.primaryColor,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),

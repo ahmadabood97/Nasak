@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/signout_section.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import 'address_section.dart';
@@ -43,12 +44,12 @@ class _BodyDrawerState extends State<BodyDrawer> {
               children: [
                 InkWell(
                   onTap: () => Navigator.pushNamed(context, Routes.inboxRoute),
-                  child: const ListTile(
+                  child: ListTile(
                     leading: Icon(
                       Icons.mail,
-                      color: Color.fromARGB(255, 24, 15, 77),
+                      color: Constants.primaryColor,
                     ),
-                    title: Text("Inbox"),
+                    title: const Text("Inbox"),
                   ),
                 ),
                 Divider(
@@ -67,12 +68,12 @@ class _BodyDrawerState extends State<BodyDrawer> {
                       showCustomDialog(context, 'Please Login...');
                     }
                   },
-                  child: const ListTile(
+                  child: ListTile(
                     leading: Icon(
                       Icons.shopping_bag,
-                      color: Color.fromARGB(255, 24, 15, 77),
+                      color: Constants.primaryColor,
                     ),
-                    title: Text("Orders"),
+                    title: const Text("Orders"),
                   ),
                 ),
                 Divider(
@@ -92,12 +93,12 @@ class _BodyDrawerState extends State<BodyDrawer> {
                   thickness: 1,
                   color: Colors.grey.withOpacity(0.1),
                 ),
-                const ListTile(
+                ListTile(
                   leading: Icon(
                     Icons.card_membership_rounded,
-                    color: Color.fromARGB(255, 24, 15, 77),
+                    color: Constants.primaryColor,
                   ),
-                  title: Text("Gift cards"),
+                  title: const Text("Gift cards"),
                 ),
               ],
             ),

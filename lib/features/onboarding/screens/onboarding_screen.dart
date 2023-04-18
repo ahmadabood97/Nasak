@@ -45,7 +45,7 @@
 //                       child: Text(
 //                         'SECURED BACKUP',
 //                         style: TextStyle(
-//                           color: Colors.orange,
+//                           color: HexColor('f07a60'),
 //                           fontWeight: FontWeight.bold,
 //                           fontSize: 23.0,
 //                           wordSpacing: 1,
@@ -104,7 +104,7 @@
 //                       child: Text(
 //                         'SECURED BACKUP',
 //                         style: TextStyle(
-//                           color: Colors.orange,
+//                           color: HexColor('f07a60'),
 //                           fontWeight: FontWeight.bold,
 //                           fontSize: 23.0,
 //                           wordSpacing: 1,
@@ -163,7 +163,7 @@
 //                       child: Text(
 //                         'SECURED BACKUP',
 //                         style: TextStyle(
-//                           color: Colors.orange,
+//                           color: HexColor('f07a60'),
 //                           fontWeight: FontWeight.bold,
 //                           fontSize: 23.0,
 //                           wordSpacing: 1,
@@ -196,7 +196,7 @@
 //   Material _skipButton({void Function(int)? setIndex}) {
 //     return Material(
 //       borderRadius: defaultSkipButtonBorderRadius,
-//       color: Colors.orange,
+//       color: HexColor('f07a60'),
 //       child: InkWell(
 //         borderRadius: defaultSkipButtonBorderRadius,
 //         onTap: () {
@@ -253,7 +253,7 @@
 //                       pagesLength: pagesLength,
 //                       indicator: Indicator(
 //                         closedIndicator: const ClosedIndicator(
-//                             color: Colors.orange, borderWidth: 2),
+//                             color: HexColor('f07a60'), borderWidth: 2),
 //                         activeIndicator: const ActiveIndicator(
 //                             color: Colors.grey, borderWidth: 2),
 //                         indicatorDesign: IndicatorDesign.line(

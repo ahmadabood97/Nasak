@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../core/utils/constants.dart';
 import '../../models/order_model.dart';
 
 Widget orderCardView(BuildContext context, Order order) {
@@ -90,8 +91,8 @@ Widget orderCardView(BuildContext context, Order order) {
                             ),
                             Text(
                               "${order.orderTotal!} ${order.currencySymbol.toString()}",
-                              style: const TextStyle(
-                                  color: Colors.orange,
+                              style: TextStyle(
+                                  color: Constants.primaryColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14),
                             )

@@ -5,6 +5,7 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:provider/provider.dart';
 
 import '../../../../config/routes/app_routes.dart';
+import '../../../../core/utils/constants.dart';
 import '../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../../dashboard/screens/countries/controllers/provider/countries_provider.dart';
 
@@ -19,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Provider.of<CountriesProvider>(context, listen: false).getCountryData();
+
     Provider.of<CountriesProvider>(context, listen: false).getLocationData();
     Provider.of<CountriesProvider>(context, listen: false).getCountries();
     Provider.of<LoginProvider>(context, listen: false).getUserData();
@@ -61,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
               "Nasak Delivery App ",
               style: GoogleFonts.alike(
                 textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: Colors.orange,
+                    color: Constants.primaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 22),
               ),

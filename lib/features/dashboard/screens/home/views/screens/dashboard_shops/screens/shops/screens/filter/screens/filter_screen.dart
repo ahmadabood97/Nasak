@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../../../core/utils/hex_colors.dart';
 import '../../../../../../../../../../../../core/widgets/dropdown.dart';
 
@@ -95,7 +96,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     fontWeight: FontWeight.bold),
               ),
               Switch(
-                  activeColor: Colors.orange,
+                  activeColor: Constants.primaryColor,
                   value: isDelivery,
                   onChanged: (value) {
                     setState(() {
@@ -126,7 +127,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 shrinkWrap: true,
                 itemCount: radioList.length,
                 itemBuilder: (context, index) => RadioListTile(
-                  activeColor: Colors.orange,
+                  activeColor: Constants.primaryColor,
                   contentPadding: const EdgeInsets.all(0),
                   title: Text(
                     radioList[index],
@@ -169,7 +170,7 @@ class _FilterScreenState extends State<FilterScreen> {
             allowHalfRating: true,
             itemCount: 5,
             itemBuilder: (context, _) =>
-                const Icon(Icons.star, color: Colors.orange),
+                Icon(Icons.star, color: Constants.primaryColor),
             onRatingUpdate: (rating) {},
           ),
           const SizedBox(
@@ -194,7 +195,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 shrinkWrap: true,
                 itemCount: checkList.length,
                 itemBuilder: (context, index) => CheckboxListTile(
-                  activeColor: Colors.orange,
+                  activeColor: Constants.primaryColor,
                   contentPadding: const EdgeInsets.only(
                       left: 10, right: 10, top: 0, bottom: 0),
                   side: const BorderSide(width: 1, color: Colors.grey),

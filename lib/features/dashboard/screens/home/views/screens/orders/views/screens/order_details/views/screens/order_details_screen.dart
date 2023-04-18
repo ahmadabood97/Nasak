@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/orders/views/screens/order_details/controllers/provider/order_details_provider.dart';
 import 'package:provider/provider.dart';
+import '../../../../../../../../../../../../core/utils/constants.dart';
 import '../widgets/address_details.dart';
 import '../widgets/main_section.dart';
 import '../widgets/need_help.dart';
@@ -27,7 +28,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       backgroundColor: const Color.fromARGB(255, 255, 250, 248),
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Order details',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -40,9 +41,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
           )),
       body: Provider.of<OrderDetailsProvider>(context, listen: true).isLoading
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(
-                color: Colors.orange,
+                color: Constants.primaryColor,
               ),
             )
           : ListView(

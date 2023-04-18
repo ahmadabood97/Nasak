@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/favorites/controllers/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/utils/constants.dart';
 import '../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../widgets/favorite_item_card_view.dart';
+import '../widgets/favorite_loading.dart';
 
 class FavoritesScreen extends StatefulWidget {
   final String serviceId;
@@ -32,18 +34,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        backgroundColor: Colors.orange,
+        backgroundColor: Constants.primaryColor,
         title: const Text(
           'Favorite',
           style: TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
       body: Provider.of<FavoriteProvider>(context, listen: true).isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            )
+          ? favoriteLoading()
           : Provider.of<FavoriteProvider>(context, listen: true)
                   .favoriteList
                   .isEmpty

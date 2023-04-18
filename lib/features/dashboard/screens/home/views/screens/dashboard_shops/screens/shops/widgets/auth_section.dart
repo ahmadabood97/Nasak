@@ -37,8 +37,12 @@ class _AuthSectionState extends State<AuthSection> {
                 onTap: () => Navigator.pushReplacementNamed(
                     context, Routes.signupRoute,
                     arguments: 'home'),
-                child: customButton(context, "Create account", Colors.white,
-                    HexColor('3359ba')),
+                child: customButton(
+                  context,
+                  "Create account",
+                  Colors.white,
+                  const Color.fromARGB(255, 24, 15, 77),
+                ),
               )),
         ],
       ),

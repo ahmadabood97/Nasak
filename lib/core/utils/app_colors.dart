@@ -11,7 +11,6 @@ class AppColors {
   static Color black = Colors.black;
   static Color red = Colors.red;
   static Color grey = Colors.grey;
-  static Color orange = Colors.orange;
   static Color lightGreen = HexColor('#71B24D');
   static Color darkGreen = HexColor('#1CBB50');
   static Color blue = HexColor('#1E90FF');

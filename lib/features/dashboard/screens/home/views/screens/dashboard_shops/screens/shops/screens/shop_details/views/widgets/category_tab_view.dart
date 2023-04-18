@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../../controllers/provider/shop_provider.dart';
 import '../../models/shop_model.dart';
@@ -46,7 +47,7 @@ Widget categoryTabView(
                                               listen: true)
                                           .tabSelected ==
                                       index
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.white,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(50))),

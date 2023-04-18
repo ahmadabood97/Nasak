@@ -49,14 +49,14 @@ Widget searchItemCardView(BuildContext context) {
                               flex: 1,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
+                                children: [
                                   Text(
                                     "2.50 \$",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 15,
-                                        color: Colors.orange,
+                                        color: Constants.primaryColor,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -80,20 +80,20 @@ Widget searchItemCardView(BuildContext context) {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         Icons.star,
-                                        color: Colors.orange,
+                                        color: Constants.primaryColor,
                                         size: 20,
                                       ),
                                       const SizedBox(
                                         width: 3,
                                       ),
-                                      const Text(
+                                      Text(
                                         "4.3",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.orange,
+                                          color: Constants.primaryColor,
                                         ),
                                       ),
                                       const SizedBox(

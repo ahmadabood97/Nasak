@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../core/utils/constants.dart';
 import '../../../../../controllers/provider/home_provider.dart';
 import '../../models/offers_model.dart';
 
@@ -94,8 +95,8 @@ Widget offerCardView(BuildContext context, Offer item) {
                               children: [
                                 Text(
                                   "${item.totalSpecialOfferPrice!} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
-                                  style: const TextStyle(
-                                      color: Colors.orange,
+                                  style: TextStyle(
+                                      color: Constants.primaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14),
                                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/countries/views/widgets/save_button.dart';
 import 'package:provider/provider.dart';
+import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/widgets/dropdown.dart';
 import '../../../home/controllers/provider/home_provider.dart';
 import '../../controllers/provider/countries_provider.dart';
@@ -53,7 +54,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Countries',
             style: TextStyle(color: Colors.white, fontSize: 15),

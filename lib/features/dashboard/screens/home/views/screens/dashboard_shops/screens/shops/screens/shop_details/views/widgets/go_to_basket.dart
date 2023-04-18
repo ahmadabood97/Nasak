@@ -52,7 +52,7 @@ Widget goToBasket(BuildContext context, ServiceProviders serviceProviders) {
             Expanded(
               flex: 1,
               child: bagIcon(
-                  Colors.orange,
+                  Constants.primaryColor,
                   Provider.of<HomeProvider>(context, listen: true)
                       .itemInCart
                       .toString()),

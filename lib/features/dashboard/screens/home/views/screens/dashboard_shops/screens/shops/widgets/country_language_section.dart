@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../config/routes/app_routes.dart';
 import '../../../../../../../../../../core/utils/assets_manager.dart';
+import '../../../../../../../../../../core/utils/constants.dart';
 
 Widget countryLanguageSection(BuildContext context) {
   return Padding(
@@ -28,9 +29,9 @@ Widget countryLanguageSection(BuildContext context) {
                   arguments: "HomeScreen");
             },
             child: ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Icons.flag,
-                color: Color.fromARGB(255, 24, 15, 77),
+                color: Constants.primaryColor,
               ),
               title: const Text("Country"),
               trailing: Image.asset(
@@ -45,13 +46,13 @@ Widget countryLanguageSection(BuildContext context) {
             thickness: 1,
             color: Colors.grey.withOpacity(0.1),
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(
               Icons.language,
-              color: Color.fromARGB(255, 24, 15, 77),
+              color: Constants.primaryColor,
             ),
-            title: Text("Language"),
-            trailing: Text("English"),
+            title: const Text("Language"),
+            trailing: const Text("English"),
           ),
         ],
       ),

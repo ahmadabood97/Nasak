@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../../../../core/utils/constants.dart';
+
 class CategoryCardView extends StatefulWidget {
   final String title;
   const CategoryCardView({super.key, required this.title});
@@ -85,9 +87,9 @@ class _CategoryCardViewState extends State<CategoryCardView> {
                                   isShowMore = true;
                                 });
                               },
-                              child: const Text(
+                              child: Text(
                                 "Show more",
-                                style: TextStyle(color: Colors.orange),
+                                style: TextStyle(color: Constants.primaryColor),
                               ),
                             )
                           ],
@@ -100,9 +102,9 @@ class _CategoryCardViewState extends State<CategoryCardView> {
                                   isShowMore = false;
                                 });
                               },
-                              child: const Text(
+                              child: Text(
                                 "Show less",
-                                style: TextStyle(color: Colors.orange),
+                                style: TextStyle(color: Constants.primaryColor),
                               ),
                             )
                           : const SizedBox(),

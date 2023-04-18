@@ -3,6 +3,8 @@ import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_sh
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/views/screens/about/models/about_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../../../../core/utils/constants.dart';
+
 Widget deliveryTimes(
     BuildContext context,
     TodayDeliveryPeroid todayDeliveryPeroid,
@@ -33,9 +35,9 @@ Widget deliveryTimes(
         height: 15,
       ),
       Provider.of<AboutProvider>(context, listen: true).isLoading
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(
-                color: Colors.orange,
+                color: Constants.primaryColor,
               ),
             )
           : Container(

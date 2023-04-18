@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/constants.dart';
 import '../home/views/screens/dashboard_shops/screens/shops/widgets/screen_empty.dart';
 
 class InboxScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class InboxScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.orange,
+            backgroundColor: Constants.primaryColor,
             title: const Text(
               'Inbox',
               style: TextStyle(color: Colors.white, fontSize: 15),
