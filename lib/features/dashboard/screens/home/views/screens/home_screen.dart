@@ -19,18 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //     elevation: 0,
-        //     backgroundColor: HexColor('c2a993'),
-        //     leading: InkWell(
-        //       onTap: () {
-        //         Scaffold.of(context).openDrawer();
-        //       },
-        //       child: Icon(
-        //         Icons.menu,
-        //         color: HexColor('506485'),
-        //       ),
-        //     )),
         body: Provider.of<HomeProvider>(context, listen: true).isLoading
             ? Center(
                 child: CircularProgressIndicator(

@@ -3,7 +3,6 @@ import 'package:nasak/config/routes/app_routes.dart';
 import 'package:nasak/features/dashboard/screens/countries/controllers/provider/countries_provider.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
-import '../../../../../../core/utils/hex_colors.dart';
 
 class SaveButton extends StatelessWidget {
   final GlobalKey<FormState> countryFormKey;
@@ -48,9 +47,9 @@ class SaveButton extends StatelessWidget {
             }
           },
           child: Container(
-            decoration: BoxDecoration(
-                color: HexColor('3359ba'),
-                borderRadius: const BorderRadius.all(Radius.circular(3))),
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 24, 15, 77),
+                borderRadius: BorderRadius.all(Radius.circular(3))),
             height: 50,
             width: 200,
             child: const Center(

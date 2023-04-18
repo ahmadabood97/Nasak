@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../models/app_services_model.dart';
 import '../../models/shop_model.dart';
-import 'items_shop_card_view.dart';
+import 'item_shop_card_view.dart';
 
 class BodySection extends StatefulWidget {
   final SpProducts product;
@@ -24,7 +24,7 @@ class _BodySectionState extends State<BodySection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ItemsShopCardView(
+          ItemShopCardView(
             product: widget.product,
             serviceProvider: widget.serviceProvider,
           ),
