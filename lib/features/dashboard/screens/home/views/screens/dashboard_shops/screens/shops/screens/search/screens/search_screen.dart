@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../../../core/utils/constants.dart';
 import '../widgets/search_item_card_view.dart';
 import '../widgets/search_place_card_view.dart';
 
@@ -20,9 +21,9 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
           elevation: 1,
           backgroundColor: Colors.white,
-          title: const TextField(
-            cursorColor: Colors.orange,
-            decoration: InputDecoration(
+          title: TextField(
+            cursorColor: Constants.primaryColor,
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search by place or item',
                 hintStyle: TextStyle(color: Colors.grey)),
@@ -89,19 +90,19 @@ class _SearchScreenState extends State<SearchScreen> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Places"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == "Places"
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(
@@ -136,19 +137,19 @@ class _SearchScreenState extends State<SearchScreen> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Items"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == 'Items'
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(

@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nasak/core/utils/hex_colors.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/widgets/services_section.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../../../../../../../config/routes/app_routes.dart';
-import '../../../../../../../../../../core/utils/assets_manager.dart';
 import '../../../../../../../countries/controllers/provider/countries_provider.dart';
 import '../../../../../../controllers/provider/home_provider.dart';
 import '../../../../../../models/home_model.dart';
@@ -50,37 +50,41 @@ class _ServiceCardViewState extends State<ServiceCardView> {
                       .id!));
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(3)),
-          border: Border.all(color: Colors.grey.withOpacity(0.5)),
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Image.asset(
-                  ImageAssets.resturantIcon,
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 125,
+            child: Card(
+              elevation: 5,
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://www.tastingtable.com/img/gallery/is-it-dangerous-to-use-avocado-oil-for-deep-frying/l-intro-1658707935.jpg',
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Text(
-                Provider.of<HomeProvider>(context, listen: false)
-                    .home!
-                    .result!
-                    .appServices![widget.index]
-                    .displayname!,
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
-        ),
+          ),
+          Positioned(
+              bottom: 5,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: HexColor('bb6b62'), shape: BoxShape.circle),
+                child: CachedNetworkImage(
+                    width: 75,
+                    height: 75,
+                    imageUrl:
+                        'https://cdn-icons-png.flaticon.com/512/1996/1996055.png'),
+              )),
+        ],
       ),
     );
   }

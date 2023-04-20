@@ -3,6 +3,7 @@ import 'package:nasak/features/auth/screens/login/controllers/provider/login_pro
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../models/app_services_model.dart';
 import '../../controllers/provider/shop_provider.dart';
 import '../../example_data.dart';
@@ -10,6 +11,7 @@ import '../../models/shop_model.dart';
 import '../widgets/appbar_section.dart';
 import '../widgets/body_section.dart';
 import '../widgets/go_to_basket.dart';
+import '../widgets/shop_details_loading.dart';
 
 class ShopDetailsScreen extends StatefulWidget {
   final ServiceProviders serviceProviders;
@@ -43,9 +45,8 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
                 .loginData!
                 .authToken!
             : "",
-        showShopDetails: () {}, closeLoading: () {
-      Navigator.pop(context);
-    }, context: context);
+        showShopDetails: () {},
+        context: context);
 
     tabController = TabController(
         length: Provider.of<ShopProvider>(context, listen: false)
@@ -141,7 +142,7 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
 
   Widget buildBodySection(int index) {
     if (Provider.of<ShopProvider>(context, listen: true).isLoading) {
-      return const SizedBox();
+      return shopDetailsLoading();
     } else if (index <
         Provider.of<ShopProvider>(context, listen: true).productsList!.length) {
       SpProducts product =
@@ -177,9 +178,9 @@ class ShopDetailsScreenState extends State<ShopDetailsScreen>
                   padding: const EdgeInsets.only(bottom: 15),
                   child: Column(
                     children: [
-                      const Center(
+                      Center(
                         child: CircularProgressIndicator(
-                          color: Colors.orange,
+                          color: Constants.primaryColor,
                         ),
                       ),
                       SizedBox(

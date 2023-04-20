@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../core/utils/constants.dart';
 import '../../../../controllers/provider/address_provider.dart';
 
 class AddLocation extends StatefulWidget {
@@ -80,7 +81,8 @@ class _AddLocationState extends State<AddLocation> {
           ),
           ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.orange),
+              backgroundColor:
+                  MaterialStateProperty.all(Constants.primaryColor),
             ),
             onPressed: () {
               Provider.of<AddressProvider>(context, listen: false)

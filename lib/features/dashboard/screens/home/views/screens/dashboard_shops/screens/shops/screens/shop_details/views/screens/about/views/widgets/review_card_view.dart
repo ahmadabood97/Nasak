@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../models/about_model.dart';
 
 Widget reviewCardView(SpReviews review) {
@@ -14,8 +15,8 @@ Widget reviewCardView(SpReviews review) {
       children: [
         Text(
           review.title.toString(),
-          style: const TextStyle(
-              color: Colors.orange, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Constants.primaryColor, fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           height: 10,
@@ -45,7 +46,7 @@ Widget reviewCardView(SpReviews review) {
               allowHalfRating: true,
               itemCount: 5,
               itemBuilder: (context, _) =>
-                  const Icon(Icons.star, color: Colors.orange),
+                  Icon(Icons.star, color: Constants.primaryColor),
               onRatingUpdate: (rating) {},
             ),
           ],
@@ -72,7 +73,7 @@ Widget reviewCardView(SpReviews review) {
               allowHalfRating: true,
               itemCount: 5,
               itemBuilder: (context, _) =>
-                  const Icon(Icons.star, color: Colors.orange),
+                  Icon(Icons.star, color: Constants.primaryColor),
               onRatingUpdate: (rating) {},
             ),
           ],

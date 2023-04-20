@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/auth/screens/login/controllers/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../../../../../../../config/routes/app_routes.dart';
+import '../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../core/widgets/no_more_data.dart';
 import '../../controllers/provider/order_provider.dart';
 import '../widgets/order_card_view.dart';
+import '../widgets/order_loading.dart';
 
 class OrdersScreen extends StatefulWidget {
   final String? serviceId;
@@ -46,7 +48,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Scaffold(
         appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.orange,
+            backgroundColor: Constants.primaryColor,
             title: const Text(
               'Orders',
               style: TextStyle(color: Colors.white, fontSize: 15),
@@ -59,11 +61,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               ),
             )),
         body: Provider.of<OrdersProvider>(context, listen: true).isLoading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ),
-              )
+            ? orderLoading()
             : Provider.of<OrdersProvider>(context, listen: true)
                     .ordersList!
                     .isEmpty

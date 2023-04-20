@@ -3,7 +3,10 @@ import 'package:nasak/config/routes/app_routes.dart';
 import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/address_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../core/utils/constants.dart';
+import '../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 import '../widgets/address_card_view.dart';
+import '../widgets/address_loading.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -14,11 +17,25 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
   @override
+  void initState() {
+    Provider.of<AddressProvider>(context, listen: false).getAddress(
+      context: context,
+      token: Provider.of<LoginProvider>(context, listen: false)
+          .loginData!
+          .authToken!,
+      stopLoading: () {
+        Navigator.pop(context);
+      },
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Addresses',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -46,22 +63,26 @@ class _AddressScreenState extends State<AddressScreen> {
         ),
         body: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              child: ListView.separated(
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 10),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: Provider.of<AddressProvider>(context, listen: true)
-                    .addressList
-                    .length,
-                itemBuilder: (context, index) => addressCardView(
-                    context,
-                    Provider.of<AddressProvider>(context, listen: false)
-                        .addressList[index]),
-              ),
-            ),
+            Provider.of<AddressProvider>(context, listen: true).isLoading
+                ? addressLoading()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount:
+                          Provider.of<AddressProvider>(context, listen: true)
+                              .addressList
+                              .length,
+                      itemBuilder: (context, index) => addressCardView(
+                          context,
+                          Provider.of<AddressProvider>(context, listen: false)
+                              .addressList[index]),
+                    ),
+                  ),
           ],
         ));
   }

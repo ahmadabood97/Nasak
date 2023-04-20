@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../../../core/utils/constants.dart';
 import '../../models/order_details_model.dart';
 
 Widget totalOrder(OrderDetailsResponseModel orderDetails) {
@@ -11,8 +12,8 @@ Widget totalOrder(OrderDetailsResponseModel orderDetails) {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "Total",
               style: TextStyle(
                 fontSize: 14,
@@ -20,13 +21,13 @@ Widget totalOrder(OrderDetailsResponseModel orderDetails) {
                 color: Color.fromARGB(255, 2, 45, 82),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               "View your receipt",
               style: TextStyle(
-                  color: Colors.orange,
+                  color: Constants.primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 14),
             )

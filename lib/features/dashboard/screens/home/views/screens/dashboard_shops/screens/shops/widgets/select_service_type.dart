@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../core/utils/constants.dart';
+
 class SelectServiceType extends StatefulWidget {
   const SelectServiceType({super.key});
 
@@ -42,19 +44,19 @@ class _SelectServiceTypeState extends State<SelectServiceType> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Delivery"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == "Delivery"
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(
@@ -92,19 +94,19 @@ class _SelectServiceTypeState extends State<SelectServiceType> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Pickup"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == 'Pickup'
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(

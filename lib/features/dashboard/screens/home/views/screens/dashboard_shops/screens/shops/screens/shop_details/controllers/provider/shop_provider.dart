@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../../../../../../../../../../core/widgets/loading_alert_dialog.dart';
 import '../../models/shop_model.dart';
 import '../repo/shop_repo.dart';
 
@@ -48,8 +47,7 @@ class ShopProvider extends ChangeNotifier {
     catIdSelected = catId;
     hasMore = true;
     page = 0;
-    getShopDetails(shopId, catId, token,
-        showLoading: true, closeLoading: closeLoading, context: context);
+    getShopDetails(shopId, catId, token, context: context);
     notifyListeners();
   }
 
@@ -187,16 +185,9 @@ class ShopProvider extends ChangeNotifier {
   }
 
   Future getShopDetails(String shopId, String catId, String token,
-      {bool showLoading = false,
-      VoidCallback? showShopDetails,
-      VoidCallback? closeLoading,
-      BuildContext? context}) async {
+      {VoidCallback? showShopDetails, BuildContext? context}) async {
     getData = null;
     _isLoading = true;
-
-    if (showLoading) {
-      loading(context!);
-    }
 
     try {
       final result = await InternetAddress.lookup('example.com');
@@ -207,9 +198,6 @@ class ShopProvider extends ChangeNotifier {
         if (json.decode(apiResponse.body)['statusCode'] == 200) {
           log("Get Shops Details Success");
 
-          if (showLoading) {
-            closeLoading!();
-          }
           getData = true;
           _shopDetailsResponse =
               ShopDetailsResponse.fromJson(json.decode(apiResponse.body));

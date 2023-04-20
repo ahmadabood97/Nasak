@@ -4,6 +4,7 @@ import 'package:nasak/features/dashboard/screens/countries/models/countries_mode
 import 'package:nasak/features/dashboard/screens/home/models/home_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../../models/app_services_model.dart';
 import '../../controllers/provider/category_details_provider.dart';
 import '../widgets/category_tab_view.dart';
@@ -51,7 +52,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.orange,
+        backgroundColor: Constants.primaryColor,
         title: Text(
           widget.params.category.name!,
           style: const TextStyle(color: Colors.white, fontSize: 15),

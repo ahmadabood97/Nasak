@@ -4,6 +4,7 @@ import 'package:nasak/features/dashboard/screens/countries/controllers/provider/
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../../config/routes/app_routes.dart';
+import '../../../../../../core/utils/constants.dart';
 import '../../../../../../core/utils/hex_colors.dart';
 import '../../../../../../core/widgets/dropdown.dart';
 import '../../../../../../core/widgets/text_field_custom.dart';
@@ -160,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           CheckboxListTile(
             contentPadding: const EdgeInsets.only(left: 10, right: 10),
-            activeColor: Colors.orange,
+            activeColor: Constants.primaryColor,
             side: const BorderSide(width: 1, color: Colors.grey),
             title: const Text(
               "Yes, I want to receive discounts, loyalty offers, and other updates.",

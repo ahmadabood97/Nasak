@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../../../../../../../../../core/widgets/text_field_custom.dart';
+import '../../../../../../../../../core/utils/constants.dart';
 import '../widgets/custom_button.dart';
 
 class AddVoucherScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class AddVoucherScreen extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 255, 245, 240),
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Add voucher',
             style: TextStyle(color: Colors.white, fontSize: 15),
@@ -36,15 +37,15 @@ class AddVoucherScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.local_offer,
-                        color: Colors.orange,
+                        color: Constants.primaryColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
-                      Text(
+                      const Text(
                         'Add voucher',
                         style: TextStyle(
                             color: Color.fromARGB(255, 3, 59, 107),

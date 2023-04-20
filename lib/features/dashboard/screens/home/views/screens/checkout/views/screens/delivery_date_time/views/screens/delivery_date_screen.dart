@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
+import '../../../../../../../../../../../../core/utils/constants.dart';
+
 class DeliveryDateScreen extends StatefulWidget {
   const DeliveryDateScreen({super.key});
 
@@ -17,7 +19,7 @@ class _DeliveryDateScreenState extends State<DeliveryDateScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             "Delivery Date",
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -33,7 +35,7 @@ class _DeliveryDateScreenState extends State<DeliveryDateScreen> {
             .deliveryDateList
             .length,
         itemBuilder: (context, index) => RadioListTile(
-          activeColor: Colors.orange,
+          activeColor: Constants.primaryColor,
           contentPadding: const EdgeInsets.all(0),
           title: Text(
             index == 0

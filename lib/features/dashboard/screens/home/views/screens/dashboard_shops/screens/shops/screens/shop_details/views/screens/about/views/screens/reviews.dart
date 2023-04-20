@@ -21,9 +21,9 @@ class Reviews extends StatelessWidget {
                     SizedBox(
                       height: Constants.getHeight(context) * 0.3,
                     ),
-                    const Center(
+                    Center(
                       child: CircularProgressIndicator(
-                        color: Colors.orange,
+                        color: Constants.primaryColor,
                       ),
                     ),
                   ],

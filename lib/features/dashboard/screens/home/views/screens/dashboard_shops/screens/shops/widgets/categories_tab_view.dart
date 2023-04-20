@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../models/app_services_model.dart';
 
 Widget categoriesTabView(
@@ -37,7 +38,7 @@ Widget categoriesTabView(
                                                 listen: true)
                                             .tabSelected ==
                                         index
-                                    ? Colors.orange
+                                    ? Constants.primaryColor
                                     : Colors.white,
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(50))),

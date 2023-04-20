@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
 
@@ -44,51 +45,51 @@ class _BottomBarContainerShopsState extends State<BottomBarContainerShops> {
           widget._pageController.jumpToPage(index);
         }
       },
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: const Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.home,
-            color: Colors.orange,
+            color: Constants.primaryColor,
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.home_outlined,
             color: Color.fromARGB(255, 24, 15, 77),
           ),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: const Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.local_offer,
-            color: Colors.orange,
+            color: Constants.primaryColor,
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.local_offer_outlined,
             color: Color.fromARGB(255, 24, 15, 77),
           ),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: const Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.favorite,
-            color: Colors.orange,
+            color: Constants.primaryColor,
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.favorite_outline,
             color: Color.fromARGB(255, 24, 15, 77),
           ),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: const Color.fromARGB(255, 255, 243, 228),
           label: '',
           activeIcon: Icon(
             Icons.playlist_add_check_circle_rounded,
-            color: Colors.orange,
+            color: Constants.primaryColor,
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.playlist_add_check_circle_outlined,
             color: Color.fromARGB(255, 24, 15, 77),
           ),

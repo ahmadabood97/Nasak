@@ -55,7 +55,7 @@ Widget headSection(BuildContext context) {
                   allowHalfRating: true,
                   itemCount: 5,
                   itemBuilder: (context, _) =>
-                      const Icon(Icons.star, color: Colors.orange),
+                      Icon(Icons.star, color: Constants.primaryColor),
                   onRatingUpdate: (rating) {},
                 ),
                 const SizedBox(

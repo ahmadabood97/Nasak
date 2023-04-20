@@ -95,7 +95,9 @@ class CountriesProvider extends ChangeNotifier {
   }
 
   Future<dynamic> getCountryData() async {
-    countriesValue = await countriesRepo.getCountryData();
+    if (await countriesRepo.getCountryData() != null) {
+      countriesValue = await countriesRepo.getCountryData();
+    }
     notifyListeners();
     return countriesValue;
   }

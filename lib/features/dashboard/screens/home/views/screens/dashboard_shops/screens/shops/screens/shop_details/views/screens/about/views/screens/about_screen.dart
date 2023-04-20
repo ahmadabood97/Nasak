@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../controllers/provider/about_provider.dart';
 import 'info.dart';
 import 'offers.dart';
@@ -29,12 +30,12 @@ class _AboutScreenState extends State<AboutScreen> {
         appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 1,
-            bottom: const TabBar(
-              labelColor: Colors.orange,
-              indicatorColor: Colors.orange,
-              labelStyle: TextStyle(fontSize: 15),
+            bottom: TabBar(
+              labelColor: Constants.primaryColor,
+              indicatorColor: Constants.primaryColor,
+              labelStyle: const TextStyle(fontSize: 15),
               unselectedLabelColor: Colors.black,
-              tabs: [
+              tabs: const [
                 Tab(
                   text: 'Info',
                 ),

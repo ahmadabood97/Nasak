@@ -10,7 +10,7 @@ class HeaderDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange,
+      color: Constants.primaryColor,
       height: Constants.getHeight(context) * 0.2,
       child: Center(
           child: Row(
@@ -24,9 +24,9 @@ class HeaderDrawer extends StatelessWidget {
               shape: BoxShape.circle,
               color: Colors.white,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.emoji_emotions,
-              color: Colors.orange,
+              color: Constants.primaryColor,
               size: 30,
             ),
           ),

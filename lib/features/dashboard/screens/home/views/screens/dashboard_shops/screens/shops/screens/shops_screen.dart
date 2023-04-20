@@ -3,7 +3,7 @@ import 'package:nasak/features/dashboard/screens/countries/controllers/provider/
 import 'package:provider/provider.dart';
 
 import '../../../../../../../../../../core/utils/constants.dart';
-import '../../../../../../../../../../core/widgets/circular_progress_indicator.dart';
+import '../../../../../../../../../../core/widgets/appbar_loading.dart';
 import '../../../../../../../../../../core/widgets/no_more_data.dart';
 import '../../../../../../controllers/provider/home_provider.dart';
 import '../widgets/categories_tab_view.dart';
@@ -11,6 +11,7 @@ import '../widgets/select_address.dart';
 import '../widgets/select_service_type.dart';
 import '../widgets/services_section.dart';
 import '../widgets/shop_item_card.dart';
+import '../widgets/shop_loading.dart';
 
 class ShopsScreen extends StatefulWidget {
   final ParamsServiceSection params;
@@ -88,7 +89,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
                   )
                 ],
             body: RefreshIndicator(
-              color: Colors.orange,
+              color: Constants.primaryColor,
               onRefresh: () {
                 return Provider.of<HomeProvider>(context, listen: false)
                     .refresh(
@@ -101,16 +102,18 @@ class _ShopsScreenState extends State<ShopsScreen> {
                 controller: controller,
                 padding: EdgeInsets.zero,
                 children: [
-                  categoriesTabView(
-                      context,
-                      Provider.of<HomeProvider>(context, listen: true)
-                          .categoriesShopsList,
-                      widget.params.serviceId!,
-                      Provider.of<CountriesProvider>(context, listen: true)
-                          .locationSelectedValue
-                          .id!),
                   Provider.of<HomeProvider>(context, listen: true).isLoading
-                      ? progressIndicator(context)
+                      ? appbarLoading()
+                      : categoriesTabView(
+                          context,
+                          Provider.of<HomeProvider>(context, listen: true)
+                              .categoriesShopsList,
+                          widget.params.serviceId!,
+                          Provider.of<CountriesProvider>(context, listen: true)
+                              .locationSelectedValue
+                              .id!),
+                  Provider.of<HomeProvider>(context, listen: true).isLoading
+                      ? shopLoading()
                       : Provider.of<HomeProvider>(context, listen: true)
                               .shopsList
                               .isEmpty

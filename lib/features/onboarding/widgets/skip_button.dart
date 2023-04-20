@@ -4,7 +4,7 @@
 // Material skipButton({int? index, void Function(int)? setIndex}) {
 //   return Material(
 //     borderRadius: defaultSkipButtonBorderRadius,
-//     color: Colors.orange,
+//     color: HexColor('f07a60'),
 //     child: InkWell(
 //       borderRadius: defaultSkipButtonBorderRadius,
 //       onTap: () {

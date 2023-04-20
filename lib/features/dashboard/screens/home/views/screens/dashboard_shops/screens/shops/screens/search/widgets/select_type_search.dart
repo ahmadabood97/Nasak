@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../../../core/utils/constants.dart';
+
 class SelectTypeSearch extends StatefulWidget {
   const SelectTypeSearch({super.key});
 
@@ -37,19 +39,19 @@ class SelectTypeSearchState extends State<SelectTypeSearch> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Places"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == "Places"
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(
@@ -84,19 +86,19 @@ class SelectTypeSearchState extends State<SelectTypeSearch> {
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: serviceType == "Items"
-                                  ? Colors.orange
+                                  ? Constants.primaryColor
                                   : Colors.black),
                         ))),
                   ),
                   serviceType == 'Items'
-                      ? const Positioned(
+                      ? Positioned(
                           bottom: 0,
                           left: 0,
                           right: 0,
                           child: Divider(
                             height: 3,
                             thickness: 2,
-                            color: Colors.orange,
+                            color: Constants.primaryColor,
                           ),
                         )
                       : Positioned(

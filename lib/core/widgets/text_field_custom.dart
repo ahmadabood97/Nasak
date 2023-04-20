@@ -6,6 +6,7 @@ import 'package:nasak/features/dashboard/screens/addresses/controllers/provider/
 import 'package:nasak/features/dashboard/screens/home/views/screens/checkout/controllers/provider/checkout_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../core/utils/hex_colors.dart';
+import '../utils/constants.dart';
 
 class TextFieldCustom extends StatelessWidget {
   final String title;
@@ -137,9 +138,9 @@ class TextFieldCustom extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(4)),
                 borderSide: BorderSide(width: 1, color: Colors.red),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-                borderSide: BorderSide(width: 1, color: Colors.orange),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                borderSide: BorderSide(width: 1, color: Constants.primaryColor),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide:

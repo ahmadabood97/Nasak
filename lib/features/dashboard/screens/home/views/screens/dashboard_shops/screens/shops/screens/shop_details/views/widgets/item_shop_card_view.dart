@@ -3,22 +3,23 @@ import 'package:nasak/features/dashboard/screens/home/controllers/provider/home_
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../../../models/app_services_model.dart';
 import '../../models/shop_model.dart';
 import 'extra_card_view.dart';
 
-class ItemsShopCardView extends StatefulWidget {
+class ItemShopCardView extends StatefulWidget {
   final SpProducts product;
   final ServiceProviders serviceProvider;
 
-  const ItemsShopCardView(
+  const ItemShopCardView(
       {super.key, required this.product, required this.serviceProvider});
 
   @override
-  State<ItemsShopCardView> createState() => _ItemsShopCardViewState();
+  State<ItemShopCardView> createState() => _ItemShopCardViewState();
 }
 
-class _ItemsShopCardViewState extends State<ItemsShopCardView> {
+class _ItemShopCardViewState extends State<ItemShopCardView> {
   bool isExtraOpen = false;
 
   @override
@@ -44,7 +45,7 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(3)),
-            border: Border.all(color: Colors.grey)),
+            border: Border.all(color: Constants.primaryColor)),
         child: Column(
           children: [
             Row(
@@ -79,8 +80,8 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                               bottom: 8, right: 8, left: 8),
                           child: Text(
                               "${widget.product.price} ${Provider.of<HomeProvider>(context, listen: true).currency!.symbol!}",
-                              style: const TextStyle(
-                                  color: Colors.orange,
+                              style: TextStyle(
+                                  color: Constants.primaryColor,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),
@@ -91,13 +92,13 @@ class _ItemsShopCardViewState extends State<ItemsShopCardView> {
                     child: Container(
                       height: 40,
                       width: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
-                            color: Colors.grey,
+                            color: Constants.primaryColor,
                           ),
                           left: BorderSide(
-                            color: Colors.grey,
+                            color: Constants.primaryColor,
                           ),
                         ),
                       ),

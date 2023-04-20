@@ -11,9 +11,9 @@ class Offers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider.of<AboutProvider>(context, listen: true).isLoading
-        ? const Center(
+        ? Center(
             child: CircularProgressIndicator(
-              color: Colors.orange,
+              color: Constants.primaryColor,
             ),
           )
         : Provider.of<AboutProvider>(context, listen: true)

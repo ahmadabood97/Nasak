@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../../../../../../../../core/utils/constants.dart';
 import '../../../../../../../controllers/provider/home_provider.dart';
 import '../../../../../dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../widgets/category_card_view.dart';
@@ -25,7 +26,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.orange,
+        backgroundColor: Constants.primaryColor,
         title: const Text(
           'Categories',
           style: TextStyle(color: Colors.white, fontSize: 15),
@@ -35,9 +36,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       .appServicesResponse ==
                   null ||
               Provider.of<HomeProvider>(context, listen: true).isLoading
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(
-                color: Colors.orange,
+                color: Constants.primaryColor,
               ),
             )
           : Provider.of<HomeProvider>(context, listen: false)

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nasak/core/widgets/no_more_data.dart';
 import 'package:provider/provider.dart';
+import '../../../../../../../../../core/utils/constants.dart';
 import '../../../dashboard_shops/screens/shops/widgets/services_section.dart';
 import '../../controllers/provider/offer_provider.dart';
 import '../widgets/offer_card_view.dart';
+import '../widgets/offer_loading.dart';
 
 class OffersScreen extends StatefulWidget {
   final ParamsServiceSection params;
@@ -41,18 +43,14 @@ class _OffersScreenState extends State<OffersScreen> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.orange,
+          backgroundColor: Constants.primaryColor,
           title: const Text(
             'Offers',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ),
         body: Provider.of<OffersProvider>(context, listen: true).isLoading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ),
-              )
+            ? offerLoading()
             : Provider.of<OffersProvider>(context, listen: true)
                     .offersList!
                     .isEmpty

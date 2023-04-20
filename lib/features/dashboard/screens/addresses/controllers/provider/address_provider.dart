@@ -110,8 +110,8 @@ class AddressProvider extends ChangeNotifier {
       BuildContext? context,
       String? token}) async {
     getData = null;
-
-    loading(context!);
+    _isLoading = true;
+    _addressList = [];
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -122,16 +122,14 @@ class AddressProvider extends ChangeNotifier {
               AddressResponseModel.fromJson(json.decode(apiResponse.body));
           _addressList = _addressData!.result!.addersses!;
           _isLoading = false;
-          stopLoading!();
           log("Get Address Success");
 
           notifyListeners();
         } else {
           getData = null;
           _isLoading = false;
-          stopLoading!();
           // ignore: use_build_context_synchronously
-          showCustomDialog(context, "You dont have any address");
+          showCustomDialog(context!, "You dont have any address");
           notifyListeners();
           log("Get Address Failed");
         }
@@ -139,8 +137,7 @@ class AddressProvider extends ChangeNotifier {
     } on SocketException catch (_) {
       getData = null;
       _isLoading = false;
-      stopLoading!();
-      showCustomDialog(context, "Check your internet and try again...");
+      showCustomDialog(context!, "Check your internet and try again...");
       notifyListeners();
       log("Get Address Failed");
     }

@@ -79,9 +79,9 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.star,
-                                  color: Colors.orange,
+                                  color: Constants.primaryColor,
                                   size: 20,
                                 ),
                                 const SizedBox(
@@ -89,10 +89,10 @@ Widget shopItemCard(ServiceProviders serviceProviders, BuildContext context) =>
                                 ),
                                 Text(
                                   serviceProviders.approvedRatingSum.toString(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
+                                    color: Constants.primaryColor,
                                   ),
                                 ),
                                 const SizedBox(

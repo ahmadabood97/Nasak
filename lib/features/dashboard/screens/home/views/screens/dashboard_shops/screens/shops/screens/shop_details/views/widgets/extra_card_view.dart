@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nasak/features/dashboard/screens/home/views/screens/dashboard_shops/screens/shops/screens/shop_details/controllers/provider/shop_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../../../../../../../../core/utils/constants.dart';
 import '../../models/shop_model.dart';
 
 class ExtraCardView extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ExtraCardViewState extends State<ExtraCardView> {
           itemBuilder: (context, index) {
             return widget.productDetails[0].attrType == 3
                 ? CheckboxListTile(
-                    activeColor: Colors.orange,
+                    activeColor: Constants.primaryColor,
                     contentPadding: const EdgeInsets.all(0),
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text(
@@ -70,7 +71,7 @@ class _ExtraCardViewState extends State<ExtraCardView> {
                     },
                   )
                 : RadioListTile(
-                    activeColor: Colors.orange,
+                    activeColor: Constants.primaryColor,
                     contentPadding: const EdgeInsets.all(0),
                     title: Text(
                       widget.productDetails[index].optionName!,

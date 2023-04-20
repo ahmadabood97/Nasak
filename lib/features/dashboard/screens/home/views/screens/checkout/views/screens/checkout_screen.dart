@@ -12,7 +12,6 @@ import '../../../../../../../../../core/widgets/dropdown.dart';
 import '../../../../../../../../../core/widgets/show_dialog.dart';
 import '../../../../../../../../../core/widgets/text_field_custom.dart';
 import '../../../../../../../../auth/screens/login/controllers/provider/login_provider.dart';
-import '../../../../../../../../auth/screens/login/models/login_response_model.dart';
 import '../../../../../../../../auth/screens/register/controllers/provider/register_provider.dart';
 import '../../../../../../addresses/controllers/provider/address_provider.dart';
 import '../../../../../../addresses/views/screens/add_address/widgets/add_location.dart';
@@ -86,7 +85,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               : const Color.fromARGB(255, 255, 245, 240),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.orange,
+        backgroundColor: Constants.primaryColor,
         title: const Text(
           'Complete your order',
           style: TextStyle(color: Colors.white, fontSize: 15),
@@ -134,21 +133,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                LoginResponseModel userData =
-                                    Provider.of<LoginProvider>(context,
-                                            listen: false)
-                                        .loginData!;
-                                Provider.of<AddressProvider>(context,
-                                        listen: false)
-                                    .getAddress(
-                                  context: context,
-                                  token: userData.authToken,
-                                  stopLoading: () {
-                                    Navigator.pop(context);
-                                    Navigator.pushNamed(
-                                        context, Routes.selectAddressRoute);
-                                  },
-                                );
+                                Navigator.pushNamed(
+                                    context, Routes.selectAddressRoute);
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(15),

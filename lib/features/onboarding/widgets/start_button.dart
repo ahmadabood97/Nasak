@@ -6,7 +6,7 @@
 // startButton(BuildContext context) {
 //   return Material(
 //     borderRadius: defaultProceedButtonBorderRadius,
-//     color: Colors.orange,
+//     color: HexColor('f07a60'),
 //     child: InkWell(
 //       borderRadius: defaultProceedButtonBorderRadius,
 //       onTap: () {

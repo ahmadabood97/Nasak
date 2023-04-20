@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/utils/hex_colors.dart';
 import '../../../core/widgets/show_dialog.dart';
 import '../../auth/screens/login/controllers/provider/login_provider.dart';
 
@@ -25,7 +26,7 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
       showSelectedLabels: false,
       showUnselectedLabels: false,
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: HexColor('f8b6a8'),
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.black,
       unselectedLabelStyle: const TextStyle(color: Colors.grey),
@@ -42,41 +43,41 @@ class _BottomBarContainerState extends State<BottomBarContainer> {
           widget._pageController.jumpToPage(index);
         }
       },
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: HexColor('f8b6a8'),
           label: '',
           activeIcon: Icon(
             Icons.home,
-            color: Colors.orange,
+            color: HexColor('193449'),
           ),
           icon: Icon(
             Icons.home_outlined,
-            color: Color.fromARGB(255, 24, 15, 77),
+            color: HexColor('857d92'),
           ),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: HexColor('f8b6a8'),
           label: '',
           activeIcon: Icon(
             Icons.favorite,
-            color: Colors.orange,
+            color: HexColor('193449'),
           ),
           icon: Icon(
             Icons.favorite_outline,
-            color: Color.fromARGB(255, 24, 15, 77),
+            color: HexColor('857d92'),
           ),
         ),
         BottomNavigationBarItem(
-          backgroundColor: Color.fromARGB(255, 255, 243, 228),
+          backgroundColor: HexColor('f8b6a8'),
           label: '',
           activeIcon: Icon(
             Icons.settings,
-            color: Colors.orange,
+            color: HexColor('193449'),
           ),
           icon: Icon(
             Icons.settings_outlined,
-            color: Color.fromARGB(255, 24, 15, 77),
+            color: HexColor('857d92'),
           ),
         ),
       ],
